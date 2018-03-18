@@ -31,7 +31,7 @@ and open the template in the editor.
            <a href="pinboard.jsp" style="color:#cccccc">Home</a>
        </div>
        <ul class="nav justify-content-end">
-         <li class="nav-item"><a class="nav-link" href="settings.jsp" style="color:#cccccc">Settings</a></li>
+         <li class="nav-item"><a class="nav-link" href="settings" style="color:#cccccc">Settings</a></li>
          <li class="nav-item"><a class="nav-link" href="statistics" style="color:#cccccc">Statistics</a></li>
        </ul>
      </div>
