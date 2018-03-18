@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -35,5 +36,34 @@ and open the template in the editor.
        </ul>
      </div>
    </nav> 
+        <div style="margin-top: 5%; margin-left: 30%">
+            <form action="settings" method="post">
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="text" name="email" value="${accountinfo.email}"/>
+                </div>   
+                <div class="form-group">
+                    <label>Username: </label>
+                    <input type="text" name="username" value="${accountinfo.username}"/>
+                </div>   
+                <div class="form-group">
+                    <label>First name: </label>
+                    <input type="text" name="fname" value="${accountinfo.fname}"/>
+                </div>   
+                <div class="form-group">
+                    <label>Last name:</label>
+                    <input type="text" name="lname" value="${accountinfo.lname}"/>
+                </div>   
+                <div class="form-group">
+                    <label>Country:</label>
+                    <input type="text" name="country" value="${accountinfo.country}"/>
+                </div>   
+                <div class="form-group">
+                    <label>Gender:</label>
+                    <input type="text" name="gender" value="${accountinfo.gender}"/>
+                </div>   
+                <input type="submit" value="Update">
+            </form>
+        </div>
     </body>
 </html>

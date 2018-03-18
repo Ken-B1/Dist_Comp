@@ -5,6 +5,7 @@
  */
 package Servlets;
 
+import Entities.Account;
 import Entities.Statistics;
 import java.io.IOException;
 import java.util.List;
@@ -14,36 +15,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import tests.StatisticsFacade;
+import tests.AccountFacade;
 
 /**
  *
  * @author ken
  */
-@WebServlet(name = "StatisticsServlet", urlPatterns = {"/statistics"})
-public class StatisticsServlet extends HttpServlet {
-    //Statistics bean for fetching entries
-    @EJB
-    StatisticsFacade statisticsBean;
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        //Retrieve all logins for this user and display them on the page
-        // TODO: Make this xss resistant??
-        List<Statistics> logins = statisticsBean.findAll();
-        request.setAttribute("logins", logins);
-        request.getRequestDispatcher("statistics.jsp").forward(request, response);
-    }
+@WebServlet(name = "SettingsServlet", urlPatterns = {"/settings"})
+public class SettingsServlet extends HttpServlet {
 
+    @EJB
+    private AccountFacade accountbean;
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -56,7 +38,9 @@ public class StatisticsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        Account account = accountbean.getAccount();
+        request.setAttribute("accountinfo", account);
+        request.getRequestDispatcher("settings.jsp").forward(request, response);
     }
 
     /**
@@ -70,7 +54,15 @@ public class StatisticsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        Account account = new Account();
+        account.setEmail(request.getParameter("email"));
+        account.setUsername(request.getParameter("username"));
+        account.setFname(request.getParameter("fname"));
+        account.setLname(request.getParameter("lname"));
+        account.setCountry(request.getParameter("country"));
+        account.setGender(request.getParameter("gender"));
+        accountbean.updateAccount(account);
+        request.getRequestDispatcher("settings.jsp").forward(request, response);
     }
 
     /**
