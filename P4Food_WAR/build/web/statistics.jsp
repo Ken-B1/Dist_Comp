@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -35,6 +36,15 @@ and open the template in the editor.
        </ul>
      </div>
    </nav> 
+   <table>
+    <c:forEach items="${logins}" var="entry">
+        <tr>
+            <td>${entry.id}</td>
+            <td>${entry.name}</td>
+            <td>${entry.timestamp}</td>
+        </tr>
+    </c:forEach>
+   </table>
     </body>
 </html>
 
