@@ -39,9 +39,10 @@ public class StatisticsServlet extends HttpServlet {
             throws ServletException, IOException {
         
         //Retrieve all logins for this user and display them on the page
+        // TODO: Make this xss resistant??
         List<Statistics> logins = statisticsBean.findAll();
         request.setAttribute("logins", logins);
-        request.getRequestDispatcher("statistics.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/statistics.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

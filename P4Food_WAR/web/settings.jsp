@@ -31,7 +31,7 @@ and open the template in the editor.
        </div>
        <ul class="nav justify-content-end">
          <li class="nav-item"><a class="nav-link" href="settings.jsp" style="color:#cccccc">Settings</a></li>
-         <li class="nav-item"><a class="nav-link" href="statistics.jsp" style="color:#cccccc">Statistics</a></li>
+         <li class="nav-item"><a class="nav-link" href="statistics" style="color:#cccccc">Statistics</a></li>
        </ul>
      </div>
    </nav> 
