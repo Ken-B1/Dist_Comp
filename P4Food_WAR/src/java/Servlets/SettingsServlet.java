@@ -62,6 +62,7 @@ public class SettingsServlet extends HttpServlet {
         account.setCountry(request.getParameter("country"));
         account.setGender(request.getParameter("gender"));
         accountbean.updateAccount(account);
+        request.getRequestDispatcher("settings.jsp").forward(request, response);
     }
 
     /**
