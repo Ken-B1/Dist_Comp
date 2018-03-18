@@ -1,3 +1,10 @@
+<%-- 
+    Document   : signup
+    Created on : 18-mrt-2018, 11:29:23
+    Author     : ken
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -20,7 +27,7 @@ and open the template in the editor.
         <div class="container">
         <div align="center" class="panel panel-default" style="margin-top: 10%;">
             <div class="panel-body" style="background-color: white; padding: 50px 20px 40px 20px; width: 40%; border-radius: 20px; border:solid; border-width: 1px; border-color: #bbbbbb">
-                <form action="index.html">
+                <form action="index.jsp">
                     <div class="form-group">
                         <label>Email:</label>
                         <input type="text" id="username" />
@@ -47,7 +54,7 @@ and open the template in the editor.
                     </div>
                     <button type="submit" class="btn btn-default" style="background-color: #ffffff;border: solid;  border-width: 1px; border-color: #aaaaaa">Submit</button>
                 </form>
-                <p style="padding-top: 20px"><a href="index.html">Sign in</a></p>
+                <p style="padding-top: 20px"><a href="index.jsp">Sign in</a></p>
             </div>
         </div>
         </div>

@@ -1,3 +1,10 @@
+<%-- 
+    Document   : pinboard
+    Created on : 18-mrt-2018, 11:29:31
+    Author     : ken
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -20,11 +27,11 @@ and open the template in the editor.
     <nav class="navbar bg-dark sticky-top" style="border-bottom:solid; border-width: 1px; border-color: #aaaaaa">
      <div class="container-fluid">
        <div class="navbar-header">
-           <a href="Pinboard.html" style="color:#cccccc">Home</a>
+           <a href="pinboard.jsp" style="color:#cccccc">Home</a>
        </div>
        <ul class="nav justify-content-end">
-         <li class="nav-item"><a class="nav-link" href="Settings.html" style="color:#cccccc">Settings</a></li>
-         <li class="nav-item"><a class="nav-link" href="Statistics.html" style="color:#cccccc">Statistics</a></li>
+         <li class="nav-item"><a class="nav-link" href="settings.jsp" style="color:#cccccc">Settings</a></li>
+         <li class="nav-item"><a class="nav-link" href="statistics.jsp" style="color:#cccccc">Statistics</a></li>
        </ul>
      </div>
    </nav> 
