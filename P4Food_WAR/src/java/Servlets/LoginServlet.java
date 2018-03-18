@@ -3,30 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package TestPackage;
+package Servlets;
 
 import Entities.Statistics;
-import tests.StatisticsFacade;
-
 import java.io.IOException;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import tests.StatisticsFacade;
 
 /**
  *
  * @author ken
  */
-@WebServlet(name = "TestServlet", urlPatterns = {"/TestServlet"})
-public class TestServlet extends HttpServlet {
+@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
+public class LoginServlet extends HttpServlet {
+    //Class that handles login requests
     
+    //Statistics entity and bean to execute store for statistics
+    private Statistics statisticsEntity;
     @EJB
-    private StatisticsFacade testbean;
-    private Statistics statistics;
+    private StatisticsFacade statisticsBean;
+    
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,9 +40,10 @@ public class TestServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        testbean.test();
-        response.setContentType("text/html;charset=UTF-8");
-        response.sendRedirect("index.html");
+        
+        //Save login attempt to statistics page
+        statisticsBean.test();
+        response.sendRedirect("pinboard.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

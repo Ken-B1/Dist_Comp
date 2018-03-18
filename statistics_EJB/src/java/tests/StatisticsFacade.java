@@ -6,6 +6,7 @@
 package tests;
 
 import Entities.Statistics;
+import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -34,6 +35,7 @@ public class StatisticsFacade extends AbstractFacade<Statistics> {
         
         Statistics stats = new Statistics();
         stats.setName("Ken2");
+        stats.setTimestamp(new Date(System.currentTimeMillis()));
         getEntityManager().persist(stats);
     }
     

@@ -27,7 +27,7 @@ and open the template in the editor.
         <div class="container">
         <div align="center" class="panel panel-default" style="margin-top: 10%;">
             <div class="panel-body" style="background-color: white; padding: 50px 20px 40px 20px; width: 40%; border-radius: 20px; border:solid; border-width: 1px; border-color: #bbbbbb">
-                <form action="pinboard.jsp">
+                <form action="login">
                     <div class="form-group">
                         <label>Username:</label>
                         <input type="text" id="username" />
@@ -36,7 +36,7 @@ and open the template in the editor.
                         <label>Password:</label>
                         <input type="password" id="password" />
                     </div>
-                    <button type="submit" class="btn btn-default"  style="background-color: #ffffff;border: solid;  border-width: 1px; border-color: #aaaaaa">Submit</button>
+                    <input type="submit" value="Submit" class="btn btn-default" style="background-color: #ffffff;border: solid;  border-width: 1px; border-color: #aaaaaa">
                 </form>
                 <p style="padding-top: 20px">No account yet? <a href="signup.jsp">Sign up</a></p>
             </div>

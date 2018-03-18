@@ -6,6 +6,7 @@
 package Entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -28,7 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Statistics.findAll", query = "SELECT s FROM Statistics s")
     , @NamedQuery(name = "Statistics.findById", query = "SELECT s FROM Statistics s WHERE s.id = :id")
-    , @NamedQuery(name = "Statistics.findByName", query = "SELECT s FROM Statistics s WHERE s.name = :name")})
+    , @NamedQuery(name = "Statistics.findByName", query = "SELECT s FROM Statistics s WHERE s.name = :name")
+    , @NamedQuery(name = "Statistics.findByTimestamp", query = "SELECT s FROM Statistics s WHERE s.timestamp = :timestamp")})
 public class Statistics implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,6 +44,9 @@ public class Statistics implements Serializable {
     @Size(max = 50)
     @Column(name = "NAME")
     private String name;
+    @Column(name = "TIMESTAMP")
+    @Temporal(TemporalType.TIME)
+    private Date timestamp;
 
     public Statistics() {
     }
@@ -62,6 +69,14 @@ public class Statistics implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
     @Override
