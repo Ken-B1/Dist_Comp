@@ -25,3 +25,4 @@ TODO.txt
 *.aux
 *.synctex.gz
 
+*.out
