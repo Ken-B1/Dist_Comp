@@ -7,6 +7,7 @@ package tests;
 
 import Entities.Statistics;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -37,6 +38,10 @@ public class StatisticsFacade extends AbstractFacade<Statistics> {
         stats.setName(username);
         stats.setTimestamp(new Date(System.currentTimeMillis()));
         getEntityManager().persist(stats);
+    }
+    
+    public List<Statistics> getStatistics(final String username) {
+        return em.createNamedQuery("Statistics.findByName").setParameter("name", username).getResultList();
     }
     
 }

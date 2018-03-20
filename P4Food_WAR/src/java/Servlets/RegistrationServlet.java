@@ -51,10 +51,10 @@ public class RegistrationServlet extends HttpServlet {
             throws ServletException, IOException {
         
         Account account = new Account();
+        
         String email = request.getParameter("email");
-        System.out.println("Value:" + email);
         account.setEmail(request.getParameter("email"));
-        account.setUsername("Temporary");
+        account.setUsername(request.getParameter("username"));
         account.setPassword(request.getParameter("password"));
         account.setFname(request.getParameter("fname"));
         account.setLname(request.getParameter("lname"));
