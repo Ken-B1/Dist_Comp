@@ -27,14 +27,14 @@ and open the template in the editor.
         <div class="container">
         <div align="center" class="panel panel-default" style="margin-top: 10%;">
             <div class="panel-body" style="background-color: white; padding: 50px 20px 40px 20px; width: 40%; border-radius: 20px; border:solid; border-width: 1px; border-color: #bbbbbb">
-                <form action="login">
+                <form action="login" method="post">
                     <div class="form-group">
                         <label>Username:</label>
-                        <input type="text" id="username" />
+                        <input type="text" name="username" />
                     </div>
                     <div class="form-group">
                         <label>Password:</label>
-                        <input type="password" id="password" />
+                        <input type="password" name="password" />
                     </div>
                     <input type="submit" value="Submit" class="btn btn-default" style="background-color: #ffffff;border: solid;  border-width: 1px; border-color: #aaaaaa">
                 </form>

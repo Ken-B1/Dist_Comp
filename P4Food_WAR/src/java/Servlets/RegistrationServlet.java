@@ -13,23 +13,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import tests.AccountFacade;
 
 /**
  *
  * @author ken
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
-public class LoginServlet extends HttpServlet {
-    //Class that handles login requests
-    
-    //Statistics entity and bean to execute store for statistics
-    private Account account;
+@WebServlet(name = "RegistrationServlet", urlPatterns = {"/Registration"})
+public class RegistrationServlet extends HttpServlet {
     @EJB
-    private AccountFacade loginBean;
-    
-
+    private AccountFacade accfac;
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -42,7 +35,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("signup.jsp");
     }
 
     /**
@@ -56,19 +49,19 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                // Log the user into his/her account and redirect depending on outcome
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
         
-        Boolean success = loginBean.login(username, password);
-        if(success) {
-            request.getSession().setAttribute("user", username);
-            response.sendRedirect("pinboard.jsp");
-        }else{
-            response.sendRedirect("login");
-        }
-        //HttpSession session = request.getSession();
-        
+        Account account = new Account();
+        String email = request.getParameter("email");
+        System.out.println("Value:" + email);
+        account.setEmail(request.getParameter("email"));
+        account.setUsername("Temporary");
+        account.setPassword(request.getParameter("password"));
+        account.setFname(request.getParameter("fname"));
+        account.setLname(request.getParameter("lname"));
+        account.setCountry(request.getParameter("country"));
+        account.setGender(request.getParameter("gender"));
+
+        accfac.createAccount(account);
     }
 
     /**

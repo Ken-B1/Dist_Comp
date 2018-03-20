@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index
-    Created on : 18-mrt-2018, 11:29:13
+    Document   : pinboard
+    Created on : 18-mrt-2018, 11:29:31
     Author     : ken
 --%>
 
@@ -24,23 +24,16 @@ and open the template in the editor.
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </head>
     <body style="background-color: #eeeeee">
-        <div class="container">
-        <div align="center" class="panel panel-default" style="margin-top: 10%;">
-            <div class="panel-body" style="background-color: white; padding: 50px 20px 40px 20px; width: 40%; border-radius: 20px; border:solid; border-width: 1px; border-color: #bbbbbb">
-                <form action="login" method="post">
-                    <div class="form-group">
-                        <label>Username:</label>
-                        <input type="text" name="username" />
-                    </div>
-                    <div class="form-group">
-                        <label>Password:</label>
-                        <input type="password" name="password" />
-                    </div>
-                    <input type="submit" value="Submit" class="btn btn-default" style="background-color: #ffffff;border: solid;  border-width: 1px; border-color: #aaaaaa">
-                </form>
-                <p style="padding-top: 20px">No account yet? <a href="signup.jsp">Sign up</a></p>
-            </div>
-        </div>
-        </div>
+    <nav class="navbar bg-dark sticky-top" style="border-bottom:solid; border-width: 1px; border-color: #aaaaaa">
+     <div class="container-fluid">
+       <div class="navbar-header">
+           <a href="pinboard.jsp" style="color:#cccccc">Home</a>
+       </div>
+       <ul class="nav justify-content-end">
+         <li class="nav-item"><a class="nav-link" href="settings" style="color:#cccccc">Settings</a></li>
+         <li class="nav-item"><a class="nav-link" href="statistics" style="color:#cccccc">Statistics</a></li>
+       </ul>
+     </div>
+   </nav> 
     </body>
 </html>

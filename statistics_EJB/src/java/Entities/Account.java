@@ -10,6 +10,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -65,6 +66,10 @@ public class Account implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "GENDER")
     private String gender;
+    @Lob
+    @Size(max = 32700)
+    @Column(name = "PASSWORD")
+    private String password;
 
     public Account() {
     }
@@ -127,6 +132,14 @@ public class Account implements Serializable {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

@@ -27,30 +27,30 @@ and open the template in the editor.
         <div class="container">
         <div align="center" class="panel panel-default" style="margin-top: 10%;">
             <div class="panel-body" style="background-color: white; padding: 50px 20px 40px 20px; width: 40%; border-radius: 20px; border:solid; border-width: 1px; border-color: #bbbbbb">
-                <form action="index.jsp">
+                <form action="Registration" method="post">
                     <div class="form-group">
                         <label>Email:</label>
-                        <input type="text" id="username" />
+                        <input type="text" name="email" />
                     </div>
                     <div class="form-group">
                         <label>Password:</label>
-                        <input type="password" id="password" />
+                        <input type="password" name="password" />
                     </div>
                     <div class="form-group">
                         <label>First name:</label>
-                        <input type="password" id="password" />
+                        <input type="text" name="fname" />
                     </div>
                     <div class="form-group">
                         <label>Last name:</label>
-                        <input type="password" id="password" />
+                        <input type="text" name="lname" />
                     </div>
                     <div class="form-group">
                         <label>Country:</label>
-                        <input type="password" id="password" />
+                        <input type="text" name="country" />
                     </div>
                     <div class="form-group">
                         <label>Gender:</label>
-                        <input type="password" id="password" />
+                        <input type="text" name="gender" />
                     </div>
                     <button type="submit" class="btn btn-default" style="background-color: #ffffff;border: solid;  border-width: 1px; border-color: #aaaaaa">Submit</button>
                 </form>

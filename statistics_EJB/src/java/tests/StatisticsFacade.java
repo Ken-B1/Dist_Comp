@@ -30,11 +30,11 @@ public class StatisticsFacade extends AbstractFacade<Statistics> {
         super(Statistics.class);
     }
     
-    public void test() {
+    public void log(final String username) {
         System.out.println("Called test");
         
         Statistics stats = new Statistics();
-        stats.setName("Ken2");
+        stats.setName(username);
         stats.setTimestamp(new Date(System.currentTimeMillis()));
         getEntityManager().persist(stats);
     }

@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import tests.StatisticsFacade;
 
 /**
@@ -39,6 +40,8 @@ public class StatisticsServlet extends HttpServlet {
         
         //Retrieve all logins for this user and display them on the page
         // TODO: Make this xss resistant??
+        HttpSession session = request.getSession();
+        System.out.println(session.getAttribute("Test"));
         List<Statistics> logins = statisticsBean.findAll();
         request.setAttribute("logins", logins);
         request.getRequestDispatcher("statistics.jsp").forward(request, response);
