@@ -13,12 +13,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -26,33 +28,40 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ken
  */
 @Entity
-@Table(name = "STATISTICS")
+@Table(name = "statistics")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Statistics.findAll", query = "SELECT s FROM Statistics s")
     , @NamedQuery(name = "Statistics.findById", query = "SELECT s FROM Statistics s WHERE s.id = :id")
-    , @NamedQuery(name = "Statistics.findByName", query = "SELECT s FROM Statistics s WHERE s.name = :name")
-    , @NamedQuery(name = "Statistics.findByTimestamp", query = "SELECT s FROM Statistics s WHERE s.timestamp = :timestamp")})
+    , @NamedQuery(name = "Statistics.findByTimestamp", query = "SELECT s FROM Statistics s WHERE s.timestamp = :timestamp")
+    , @NamedQuery(name = "Statistics.findByUserId", query = "Select s FROM Statistics s WHERE s.userid = :userid")})
 public class Statistics implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Integer id;
-    @Size(max = 50)
-    @Column(name = "NAME")
-    private String name;
-    @Column(name = "TIMESTAMP")
-    @Temporal(TemporalType.TIME)
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "timestamp")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
+    @JoinColumn(name = "userid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Account userid;
 
     public Statistics() {
     }
 
     public Statistics(Integer id) {
         this.id = id;
+    }
+
+    public Statistics(Integer id, Date timestamp) {
+        this.id = id;
+        this.timestamp = timestamp;
     }
 
     public Integer getId() {
@@ -63,20 +72,20 @@ public class Statistics implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Date getTimestamp() {
         return timestamp;
     }
 
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public Account getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Account userid) {
+        this.userid = userid;
     }
 
     @Override

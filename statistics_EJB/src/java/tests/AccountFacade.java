@@ -50,7 +50,7 @@ public class AccountFacade extends AbstractFacade<Account> {
         Account returnvalue = (Account)em.createNamedQuery("Account.findByUsername").setParameter("username", username).getSingleResult();
         if(password.equals(returnvalue.getPassword())) {
             //Log login to statistics
-            statsfacade.log(username);
+            statsfacade.log(returnvalue);
             return true;
         }else{
             return false;

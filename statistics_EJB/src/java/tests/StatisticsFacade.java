@@ -5,6 +5,7 @@
  */
 package tests;
 
+import Entities.Account;
 import Entities.Statistics;
 import java.util.Date;
 import java.util.List;
@@ -31,17 +32,18 @@ public class StatisticsFacade extends AbstractFacade<Statistics> {
         super(Statistics.class);
     }
     
-    public void log(final String username) {
+    public void log(final Account username) {
         System.out.println("Called test");
         
         Statistics stats = new Statistics();
-        stats.setName(username);
+        stats.setUserid(username);
         stats.setTimestamp(new Date(System.currentTimeMillis()));
         getEntityManager().persist(stats);
     }
     
     public List<Statistics> getStatistics(final String username) {
-        return em.createNamedQuery("Statistics.findByName").setParameter("name", username).getResultList();
+        Account returnvalue = (Account)em.createNamedQuery("Account.findByUsername").setParameter("username", username).getSingleResult();
+        return em.createNamedQuery("Statistics.findByUserId").setParameter("userid", returnvalue).getResultList();
     }
     
 }

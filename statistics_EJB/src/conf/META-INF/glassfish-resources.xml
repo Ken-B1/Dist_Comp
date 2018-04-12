@@ -22,4 +22,5 @@
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
     </jdbc-connection-pool>
     <jdbc-resource enabled="true" jndi-name="java:module/mysql_p4food" object-type="user" pool-name="mysql_p4food_rootPool"/>
+    <jdbc-resource enabled="true" jndi-name="java:module/p4foodMySql" object-type="user" pool-name="mysql_p4food_rootPool"/>
 </resources>

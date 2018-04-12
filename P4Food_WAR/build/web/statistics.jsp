@@ -40,7 +40,7 @@ and open the template in the editor.
     <c:forEach items="${logins}" var="entry">
         <tr>
             <td>${entry.id}</td>
-            <td>${entry.name}</td>
+            <td>${entry.userid}</td>
             <td>${entry.timestamp}</td>
         </tr>
     </c:forEach>
