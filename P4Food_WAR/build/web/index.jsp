@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -36,6 +37,10 @@ and open the template in the editor.
                         <label>Password:</label>
                         <input type="password" name="password" />
                     </div>
+                    <div>
+                        <p style="color: red">${loginfail}</p>
+                    </div>
+                    
                     <input type="submit" value="Submit" class="btn btn-default" style="background-color: #ffffff;border: solid;  border-width: 1px; border-color: #aaaaaa">
                 </form>
                 <p style="padding-top: 20px">No account yet? <a href="signup.jsp">Sign up</a></p>

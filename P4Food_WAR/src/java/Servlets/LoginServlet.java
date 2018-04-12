@@ -65,7 +65,8 @@ public class LoginServlet extends HttpServlet {
             request.getSession().setAttribute("user", username);
             response.sendRedirect("pinboard.jsp");
         }else{
-            response.sendRedirect("login");
+            request.setAttribute("loginfail", "Incorrect username/password");
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
 
     }
