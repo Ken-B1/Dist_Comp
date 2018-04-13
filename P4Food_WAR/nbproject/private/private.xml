@@ -12,10 +12,9 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ken/Desktop/P4Food/P4Food_WAR/web/statistics.jsp</file>
             <file>file:/C:/Users/ken/Desktop/P4Food/P4Food_WAR/src/java/Servlets/RegistrationServlet.java</file>
-            <file>file:/C:/Users/ken/Desktop/P4Food/P4Food_WAR/src/java/Servlets/StatisticsServlet.java</file>
-            <file>file:/C:/Users/ken/Desktop/P4Food/P4Food_WAR/web/signup.jsp</file>
+            <file>file:/C:/Users/ken/Desktop/P4Food/P4Food_WAR/web/index.jsp</file>
+            <file>file:/C:/Users/ken/Desktop/P4Food/P4Food_WAR/src/java/Servlets/LoginServlet.java</file>
         </group>
     </open-files>
 </project-private>

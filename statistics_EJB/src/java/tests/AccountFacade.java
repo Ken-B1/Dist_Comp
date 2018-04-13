@@ -42,8 +42,30 @@ public class AccountFacade extends AbstractFacade<Account> {
         toChange.setCountry(account.getCountry());
     }
     
-    public void createAccount(Account account){
+    public int createAccount(String email, String userName, String password, String fname, String lname, String country, String gender){
+        Account account = new Account();
+        if(email.equals("")){
+            return 1;
+        }else if(userName.equals("")){
+            return 2;
+        }else if(password.equals("")){
+            return 3;
+        }else if(fname.equals("")){
+            return 4;
+        }else if(lname.equals("")){
+            return 5;
+        }else if(gender.equals("")){
+            return 6;
+        }
+        account.setEmail("temp");
+        account.setUsername(userName);
+        account.setPassword(password);
+        account.setFname(fname);
+        account.setLname(lname);
+        account.setCountry(country);
+        account.setGender(gender);
         em.persist(account);
+        return 0;
     }
     
     public Boolean login(String username, String password) {

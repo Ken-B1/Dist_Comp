@@ -45,23 +45,27 @@ public class RegistrationServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * Attempt to create an account
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        Account account = new Account();
-        
         String email = request.getParameter("email");
-        account.setEmail(request.getParameter("email"));
-        account.setUsername(request.getParameter("username"));
-        account.setPassword(request.getParameter("password"));
-        account.setFname(request.getParameter("fname"));
-        account.setLname(request.getParameter("lname"));
-        account.setCountry(request.getParameter("country"));
-        account.setGender(request.getParameter("gender"));
+        String userName = request.getParameter("username");
+        String password = request.getParameter("password");
+        String fname = request.getParameter("fname");
+        String lname = request.getParameter("lname");
+        String country = request.getParameter("country");
+        String gender = request.getParameter("gender");
+        
+        int result = accfac.createAccount(email, userName, password, fname, lname, country, gender);    
 
-        accfac.createAccount(account);
+        if(result == 0){
+            response.sendRedirect("index.jsp");
+        }else{
+            request.getRequestDispatcher("signup.jsp").forward(request, response);
+        }
     }
 
     /**
