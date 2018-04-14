@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author ken
  */
 @Entity
-@Table(name = "account", catalog = "p4food", schema = "")
+@Table(name = "account")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a")
@@ -39,11 +39,11 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Account.findByLname", query = "SELECT a FROM Account a WHERE a.lname = :lname")
     , @NamedQuery(name = "Account.findByEmail", query = "SELECT a FROM Account a WHERE a.email = :email")
     , @NamedQuery(name = "Account.findByGender", query = "SELECT a FROM Account a WHERE a.gender = :gender")
-    , @NamedQuery(name = "Account.findByCountry", query = "SELECT a FROM Account a WHERE a.country = :country")})
+    , @NamedQuery(name = "Account.findByCountry", query = "SELECT a FROM Account a WHERE a.country = :country")
+    , @NamedQuery(name = "Account.findByAdmin", query = "SELECT a FROM Account a WHERE a.admin = :admin")
+    , @NamedQuery(name = "Account.existsName", query = "SELECT COUNT(a) FROM Account a WHERE a.username = :username")
+    , @NamedQuery(name = "Account.existsEmail", query = "SELECT COUNT(a) FROM Account a WHERE a.email = :email")})
 public class Account implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
-    private Collection<Statistics> statisticsCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -85,6 +85,12 @@ public class Account implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "Country")
     private String country;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "admin")
+    private boolean admin;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
+    private Collection<Statistics> statisticsCollection;
 
     public Account() {
     }
@@ -93,7 +99,7 @@ public class Account implements Serializable {
         this.id = id;
     }
 
-    public Account(Integer id, String username, String password, String fname, String lname, String email, String country) {
+    public Account(Integer id, String username, String password, String fname, String lname, String email, String country, boolean admin) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -101,6 +107,7 @@ public class Account implements Serializable {
         this.lname = lname;
         this.email = email;
         this.country = country;
+        this.admin = admin;
     }
 
     public Integer getId() {
@@ -167,6 +174,23 @@ public class Account implements Serializable {
         this.country = country;
     }
 
+    public boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
+    @XmlTransient
+    public Collection<Statistics> getStatisticsCollection() {
+        return statisticsCollection;
+    }
+
+    public void setStatisticsCollection(Collection<Statistics> statisticsCollection) {
+        this.statisticsCollection = statisticsCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -190,15 +214,6 @@ public class Account implements Serializable {
     @Override
     public String toString() {
         return "Entities.Account[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Statistics> getStatisticsCollection() {
-        return statisticsCollection;
-    }
-
-    public void setStatisticsCollection(Collection<Statistics> statisticsCollection) {
-        this.statisticsCollection = statisticsCollection;
     }
     
 }

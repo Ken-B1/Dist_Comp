@@ -6,7 +6,7 @@ import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2018-04-13T19:51:01")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2018-04-14T12:59:13")
 @StaticMetamodel(Account.class)
 public class Account_ { 
 
@@ -15,9 +15,10 @@ public class Account_ {
     public static volatile SingularAttribute<Account, String> password;
     public static volatile SingularAttribute<Account, String> lname;
     public static volatile SingularAttribute<Account, String> gender;
+    public static volatile SingularAttribute<Account, Boolean> admin;
     public static volatile SingularAttribute<Account, Integer> id;
-    public static volatile CollectionAttribute<Account, Statistics> statisticsCollection;
     public static volatile SingularAttribute<Account, String> email;
+    public static volatile CollectionAttribute<Account, Statistics> statisticsCollection;
     public static volatile SingularAttribute<Account, String> username;
 
 }

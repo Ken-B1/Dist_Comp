@@ -33,8 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Statistics.findAll", query = "SELECT s FROM Statistics s")
     , @NamedQuery(name = "Statistics.findById", query = "SELECT s FROM Statistics s WHERE s.id = :id")
-    , @NamedQuery(name = "Statistics.findByTimestamp", query = "SELECT s FROM Statistics s WHERE s.timestamp = :timestamp")
-    , @NamedQuery(name = "Statistics.findByUserId", query = "Select s FROM Statistics s WHERE s.userid = :userid")})
+    , @NamedQuery(name = "Statistics.findByTimestamp", query = "SELECT s FROM Statistics s WHERE s.timestamp = :timestamp")})
 public class Statistics implements Serializable {
 
     private static final long serialVersionUID = 1L;
