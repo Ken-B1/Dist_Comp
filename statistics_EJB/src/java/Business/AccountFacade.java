@@ -79,6 +79,9 @@ public class AccountFacade extends AbstractFacade<Account> {
     }
     
     public Boolean login(String username, String password) {
+        if((long)em.createNamedQuery("Account.existsName").setParameter("username", username).getSingleResult() == 0){
+            return false;
+        }
         Account returnvalue = (Account)em.createNamedQuery("Account.findByUsername").setParameter("username", username).getSingleResult();
         if(password.equals(returnvalue.getPassword())) {
             //Log login to statistics
