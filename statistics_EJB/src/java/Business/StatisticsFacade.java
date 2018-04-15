@@ -43,7 +43,7 @@ public class StatisticsFacade extends AbstractFacade<Statistics> {
     
     public List<Statistics> getStatistics(final String username) {
         Account returnvalue = (Account)em.createNamedQuery("Account.findByUsername").setParameter("username", username).getSingleResult();
-        return em.createNamedQuery("Statistics.findByUserId").setParameter("userid", returnvalue).getResultList();
+        return em.createNamedQuery("Statistics.findByUserid").setParameter("userid", returnvalue).getResultList();
     }
     
 }
