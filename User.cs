@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Webp4foodApp1.Models
+namespace p4foodapp1.Models
 {
     public class User
     {
