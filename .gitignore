@@ -26,7 +26,7 @@ hs_err_pid*
 */nbproject/ant-deploy.xml
 */nbproject/build-impl.xml
 build/
-dist/
+*/dist/
 build.xml
 
 TODO.txt
