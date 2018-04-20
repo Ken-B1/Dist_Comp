@@ -42,7 +42,7 @@ public class StatisticsServlet extends HttpServlet {
         // TODO: Make this xss resistant??
         HttpSession session = request.getSession();
 
-        List<Statistics> logins = statisticsBean.getStatistics((String)session.getAttribute("user"));
+        List<Statistics> logins = statisticsBean.getStatistics((int)session.getAttribute("id"));
         request.setAttribute("logins", logins);
         request.getRequestDispatcher("statistics.jsp").forward(request, response);
     }

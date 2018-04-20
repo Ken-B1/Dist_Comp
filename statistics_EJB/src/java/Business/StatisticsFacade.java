@@ -41,8 +41,8 @@ public class StatisticsFacade extends AbstractFacade<Statistics> {
         getEntityManager().persist(stats);
     }
     
-    public List<Statistics> getStatistics(final String username) {
-        Account returnvalue = (Account)em.createNamedQuery("Account.findByUsername").setParameter("username", username).getSingleResult();
+    public List<Statistics> getStatistics(final int id) {
+        Account returnvalue = (Account)em.createNamedQuery("Account.findById").setParameter("id", id).getSingleResult();
         return em.createNamedQuery("Statistics.findByUserid").setParameter("userid", returnvalue).getResultList();
     }
     

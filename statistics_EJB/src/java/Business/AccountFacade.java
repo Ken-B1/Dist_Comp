@@ -27,25 +27,25 @@ public class AccountFacade extends AbstractFacade<Account> {
     private StatisticsFacade statsfacade;
     private Statistics statistic;
 
-    public Account getAccount(String username) {
+    public Account getAccountByUsername(String username) {
         Account returnvalue = (Account)em.createNamedQuery("Account.findByUsername").setParameter("username", username).getSingleResult();
         return returnvalue;
     }
     
+    public Account getAccountById(int id) {
+        Account returnvalue = (Account)em.createNamedQuery("Account.findById").setParameter("id", id).getSingleResult();
+        return returnvalue;
+    }
     
-    public void updateAccount(Account account, String currentUser) {
-        // TODO: Improve this stuff
-        //Query query = em.createNativeQuery(  "UPDATE Account a SET a.email = ? WHERE a.username = ?");  
-        //System.out.println(account.getEmail());
-        //query.setParameter(1, account.getEmail());  
-        //query.setParameter("fname", account.getFname());
-        //query.setParameter("lname", account.getLname());
-       // query.setParameter("gender", account.getGender());
-        //query.setParameter("country", account.getCountry());
-        //query.setParameter(2, currentUser);
-        //query.executeUpdate();
-        Account returnvalue = (Account)em.createNamedQuery("Account.findByUsername").setParameter("username", currentUser).getSingleResult();
-        returnvalue.setUsername(account.getUsername());
+    
+    public void updateAccount(Account account, int currentUserId) {
+        Account acc = (Account)em.createNamedQuery("Account.findById").setParameter("id", currentUserId).getSingleResult();
+        acc.setEmail(account.getEmail());
+        acc.setFname(account.getFname());
+        acc.setLname(account.getLname());
+        acc.setCountry(account.getCountry());
+        acc.setGender(account.getGender());
+        acc.setUsername(account.getUsername());
         em.flush();
     }
     
@@ -96,6 +96,15 @@ public class AccountFacade extends AbstractFacade<Account> {
         }else{
             return false;
         }
+    }
+    
+    public int getId(String username){
+        try{
+            return this.getAccountByUsername(username).getId();
+        } catch(Exception E){
+            System.out.println("Something went wrong when getting ID");
+        }
+        return -1;
     }
     
     @Override

@@ -24,8 +24,6 @@ import Business.AccountFacade;
 public class LoginServlet extends HttpServlet {
     //Class that handles login requests
     
-    //Statistics entity and bean to execute store for statistics
-    private Account account;
     @EJB
     private AccountFacade loginBean;
     
@@ -62,7 +60,7 @@ public class LoginServlet extends HttpServlet {
         
         Boolean success = loginBean.login(username, password);
         if(success) {
-            request.getSession().setAttribute("user", username);
+            request.getSession().setAttribute("id", loginBean.getId(username));
             response.sendRedirect("pinboard.jsp");
         }else{
             request.setAttribute("loginfail", "Incorrect username/password");
