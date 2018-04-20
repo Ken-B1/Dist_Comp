@@ -23,6 +23,8 @@ hs_err_pid*
 
 # Project Files
 nbproject/
+build/
+build.xml
 
 TODO.txt
 *.aux
