@@ -38,7 +38,8 @@ public class SettingsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Account account = accountbean.getAccount();
+        String username = (String)request.getSession().getAttribute("user");
+        Account account = accountbean.getAccount(username);
         request.setAttribute("accountinfo", account);
         request.getRequestDispatcher("settings.jsp").forward(request, response);
     }
@@ -61,7 +62,13 @@ public class SettingsServlet extends HttpServlet {
         account.setLname(request.getParameter("lname"));
         account.setCountry(request.getParameter("country"));
         account.setGender(request.getParameter("gender"));
-        accountbean.updateAccount(account);
+        
+        try {
+            accountbean.updateAccount(account, (String)request.getSession().getAttribute("user"));
+        } catch(javax.persistence.NoResultException e) {
+            // TODO: Show a corresponding error
+            System.out.println(e.getMessage());
+        }
         request.getRequestDispatcher("settings.jsp").forward(request, response);
     }
 

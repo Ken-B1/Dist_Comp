@@ -11,6 +11,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,21 +27,26 @@ public class AccountFacade extends AbstractFacade<Account> {
     private StatisticsFacade statsfacade;
     private Statistics statistic;
 
-    public Account getAccount() {
-        Account returnvalue = (Account)em.createNamedQuery("Account.findByUsername").setParameter("username", "ken123").getSingleResult();
+    public Account getAccount(String username) {
+        Account returnvalue = (Account)em.createNamedQuery("Account.findByUsername").setParameter("username", username).getSingleResult();
         return returnvalue;
     }
     
     
-    public void updateAccount(Account account) {
-        // TODO: Update these to correct stuff
-        Account toChange = getAccount();
-        
-        toChange.setUsername(account.getUsername());
-        toChange.setFname(account.getFname());
-        toChange.setLname(account.getLname());
-        toChange.setGender(account.getGender());
-        toChange.setCountry(account.getCountry());
+    public void updateAccount(Account account, String currentUser) {
+        // TODO: Improve this stuff
+        //Query query = em.createNativeQuery(  "UPDATE Account a SET a.email = ? WHERE a.username = ?");  
+        //System.out.println(account.getEmail());
+        //query.setParameter(1, account.getEmail());  
+        //query.setParameter("fname", account.getFname());
+        //query.setParameter("lname", account.getLname());
+       // query.setParameter("gender", account.getGender());
+        //query.setParameter("country", account.getCountry());
+        //query.setParameter(2, currentUser);
+        //query.executeUpdate();
+        Account returnvalue = (Account)em.createNamedQuery("Account.findByUsername").setParameter("username", currentUser).getSingleResult();
+        returnvalue.setUsername(account.getUsername());
+        em.flush();
     }
     
     public int createAccount(String email, String userName, String password, String fname, String lname, String country, String gender){
