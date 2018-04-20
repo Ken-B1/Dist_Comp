@@ -84,6 +84,11 @@ public class AccountFacade extends AbstractFacade<Account> {
         return 0;
     }
     
+    public void makeAdmin(Account account){
+        account.setAdmin(true);
+        em.flush();
+    }
+    
     public Boolean login(String username, String password) {
         if((long)em.createNamedQuery("Account.existsName").setParameter("username", username).getSingleResult() == 0){
             return false;

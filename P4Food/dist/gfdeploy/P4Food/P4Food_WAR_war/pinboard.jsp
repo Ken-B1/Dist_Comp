@@ -32,7 +32,7 @@ and open the template in the editor.
            <a href="pinboard.jsp" style="color:#cccccc">Home</a>
        </div>
        <ul class="nav justify-content-end">
-           <c:if test="${isAdmin}"><li class="nav-item"><a class="nav-link" href="settings" style="color:#cccccc">Admin</a></li></c:if>
+           <c:if test="${isAdmin}"><li class="nav-item"><a class="nav-link" href="admin" style="color:#cccccc">Admin</a></li></c:if>
          <li class="nav-item"><a class="nav-link" href="settings" style="color:#cccccc">Settings</a></li>
          <li class="nav-item"><a class="nav-link" href="statistics" style="color:#cccccc">Statistics</a></li>
        </ul>

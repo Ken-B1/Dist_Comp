@@ -5,42 +5,24 @@
  */
 package Servlets;
 
-import Business.AccountFacade;
+import Entities.Account;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import Business.AccountFacade;
 
 /**
  *
  * @author ken
  */
-@WebServlet(name = "PinboardServlet", urlPatterns = {"/pinboard"})
-public class PinboardServlet extends HttpServlet {
+@WebServlet(name = "AdminRegistrationServlet", urlPatterns = {"/Adminregistration"})
+public class AdminRegistrationServlet extends HttpServlet {
     @EJB
-    private AccountFacade account;
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        int id = (int)request.getSession().getAttribute("id");
-        System.out.println(account.getAccountById(id).getAdmin());
-        request.setAttribute("isAdmin", account.getAccountById(id).getAdmin());
-        request.getRequestDispatcher("pinboard.jsp").forward(request, response);
-    }
-
+    private AccountFacade accfac;
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -53,7 +35,7 @@ public class PinboardServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.sendRedirect("adminsignup.jsp");
     }
 
     /**
@@ -63,11 +45,28 @@ public class PinboardServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * Attempt to create an account
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        String email = request.getParameter("email");
+        String userName = request.getParameter("username");
+        String password = request.getParameter("password");
+        String fname = request.getParameter("fname");
+        String lname = request.getParameter("lname");
+        String country = request.getParameter("country");
+        String gender = request.getParameter("gender");
+        
+        int result = accfac.createAccount(email, userName, password, fname, lname, country, gender);    
+
+        if(result == 0){
+            accfac.makeAdmin(accfac.getAccountByUsername(userName));
+            response.sendRedirect("admin");
+        }else{
+            request.getRequestDispatcher("Adminregistration").forward(request, response);
+        }
     }
 
     /**
