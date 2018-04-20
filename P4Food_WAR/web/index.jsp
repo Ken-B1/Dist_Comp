@@ -43,7 +43,7 @@ and open the template in the editor.
                     
                     <input type="submit" value="Submit" class="btn btn-default" style="background-color: #ffffff;border: solid;  border-width: 1px; border-color: #aaaaaa">
                 </form>
-                <p style="padding-top: 20px">No account yet? <a href="signup.jsp">Sign up</a></p>
+                <p style="padding-top: 20px">No account yet? <a href="Registration">Sign up</a></p>
             </div>
         </div>
         </div>

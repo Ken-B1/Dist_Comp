@@ -5,28 +5,40 @@
  */
 package Servlets;
 
-import Entities.Account;
+import Business.AccountFacade;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import Business.AccountFacade;
 
 /**
  *
  * @author ken
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
-public class LoginServlet extends HttpServlet {
-    //Class that handles login requests
-    
+@WebServlet(name = "PinboardServlet", urlPatterns = {"/pinboard"})
+public class PinboardServlet extends HttpServlet {
     @EJB
-    private AccountFacade loginBean;
-    
+    private AccountFacade account;
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int id = (int)request.getSession().getAttribute("id");
+        System.out.println(account.getAccountById(id).getAdmin());
+        request.setAttribute("isAdmin", account.getAccountById(id).getAdmin());
+        request.getRequestDispatcher("pinboard.jsp").forward(request, response);
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -40,7 +52,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("index.jsp");
+        processRequest(request, response);
     }
 
     /**
@@ -54,19 +66,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                // Log the user into his/her account and redirect depending on outcome
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        
-        Boolean success = loginBean.login(username, password);
-        if(success) {
-            request.getSession().setAttribute("id", loginBean.getId(username));
-            response.sendRedirect("pinboard");
-        }else{
-            request.setAttribute("loginfail", "Incorrect username/password");
-            request.getRequestDispatcher("index.jsp").forward(request, response);
-        }
-
+        processRequest(request, response);
     }
 
     /**

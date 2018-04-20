@@ -4,7 +4,9 @@
     Author     : ken
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -30,6 +32,7 @@ and open the template in the editor.
            <a href="pinboard.jsp" style="color:#cccccc">Home</a>
        </div>
        <ul class="nav justify-content-end">
+           <c:if test="${isAdmin}"><li class="nav-item"><a class="nav-link" href="settings" style="color:#cccccc">Admin</a></li></c:if>
          <li class="nav-item"><a class="nav-link" href="settings" style="color:#cccccc">Settings</a></li>
          <li class="nav-item"><a class="nav-link" href="statistics" style="color:#cccccc">Statistics</a></li>
        </ul>
