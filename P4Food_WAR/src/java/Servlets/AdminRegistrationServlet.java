@@ -5,7 +5,6 @@
  */
 package Servlets;
 
-import Entities.Account;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -14,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Business.AccountFacade;
+import Business.Admin;
 
 /**
  *
@@ -23,6 +23,8 @@ import Business.AccountFacade;
 public class AdminRegistrationServlet extends HttpServlet {
     @EJB
     private AccountFacade accfac;
+    @EJB
+    private Admin admin;
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -45,7 +47,8 @@ public class AdminRegistrationServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     * Attempt to create an account
+     * 
+     * Attempt to create an account and changes this account to an admin account
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -59,13 +62,12 @@ public class AdminRegistrationServlet extends HttpServlet {
         String country = request.getParameter("country");
         String gender = request.getParameter("gender");
         
-        int result = accfac.createAccount(email, userName, password, fname, lname, country, gender);    
+        int result = admin.createAdminAccount(email, userName, password, fname, lname, country, gender);    
 
-        if(result == 0){
-            accfac.makeAdmin(accfac.getAccountByUsername(userName));
-            response.sendRedirect("admin");
-        }else{
+        if(result == -1){
             request.getRequestDispatcher("Adminregistration").forward(request, response);
+        }else{
+            response.sendRedirect("admin");
         }
     }
 

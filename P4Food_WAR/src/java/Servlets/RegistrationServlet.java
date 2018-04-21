@@ -5,7 +5,7 @@
  */
 package Servlets;
 
-import Entities.Account;
+import Business.Registration;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -13,7 +13,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Business.AccountFacade;
 
 /**
  *
@@ -22,7 +21,7 @@ import Business.AccountFacade;
 @WebServlet(name = "RegistrationServlet", urlPatterns = {"/Registration"})
 public class RegistrationServlet extends HttpServlet {
     @EJB
-    private AccountFacade accfac;
+    private Registration createAccount;
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -59,13 +58,14 @@ public class RegistrationServlet extends HttpServlet {
         String country = request.getParameter("country");
         String gender = request.getParameter("gender");
         
-        int result = accfac.createAccount(email, userName, password, fname, lname, country, gender);    
-
-        if(result == 0){
-            response.sendRedirect("index.jsp");
-        }else{
+        if(createAccount.checkValues(email, userName) != 0){
+            //Account with email or username already exists
             request.getRequestDispatcher("signup.jsp").forward(request, response);
-        }
+        };
+        
+        int result = createAccount.createAccount(email, userName, password, fname, lname, country, gender);    
+        
+        response.sendRedirect("index.jsp");
     }
 
     /**
