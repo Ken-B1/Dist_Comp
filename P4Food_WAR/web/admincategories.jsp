@@ -38,10 +38,16 @@ and open the template in the editor.
        </ul>
      </div>
    </nav> 
-        
-        <div class="container">
-            <a class="link" href="Adminregistration" style="color:#cccccc">New Admin</a><br/>
-            <a class="link" href="Admincategories" style="color:#cccccc">New Category</a>
-        </div>
     </body>
+    <form action="Admincategories" method="POST">
+        <div class="form-group">
+            <label>Category name:</label>
+            <input type="text" name="category" />
+        </div>
+        <input type="submit" value="Create new category" class="btn btn-default" style="background-color: #ffffff;border: solid;  border-width: 1px; border-color: #aaaaaa">
+        
+    </form>
+    <c:forEach items="${categorylist}" var="category" varStatus="loop">
+        <p><c:out value="${category}"></c:out></p>
+    </c:forEach>
 </html>
