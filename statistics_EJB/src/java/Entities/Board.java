@@ -6,38 +6,31 @@
 package Entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Ken
  */
 @Entity
-@Table(name = "categories")
+@Table(name = "board")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Categories.findAll", query = "SELECT c FROM Categories c")
-    , @NamedQuery(name = "Categories.findById", query = "SELECT c FROM Categories c WHERE c.id = :id")
-    , @NamedQuery(name = "Categories.findByName", query = "SELECT c FROM Categories c WHERE c.name = :name")
-    , @NamedQuery(name = "Categories.findByImagelocation", query = "SELECT c FROM Categories c WHERE c.imagelocation = :imagelocation")})
-public class Categories implements Serializable {
-
-    @ManyToMany(mappedBy = "categoriesCollection")
-    private Collection<Account> accountCollection;
+    @NamedQuery(name = "Board.findAll", query = "SELECT b FROM Board b")
+    , @NamedQuery(name = "Board.findById", query = "SELECT b FROM Board b WHERE b.id = :id")
+    , @NamedQuery(name = "Board.findByBoardname", query = "SELECT b FROM Board b WHERE b.boardname = :boardname")})
+public class Board implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,22 +41,19 @@ public class Categories implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "name")
-    private String name;
-    @Size(max = 45)
-    @Column(name = "imagelocation")
-    private String imagelocation;
+    @Column(name = "boardname")
+    private String boardname;
 
-    public Categories() {
+    public Board() {
     }
 
-    public Categories(Integer id) {
+    public Board(Integer id) {
         this.id = id;
     }
 
-    public Categories(Integer id, String name) {
+    public Board(Integer id, String boardname) {
         this.id = id;
-        this.name = name;
+        this.boardname = boardname;
     }
 
     public Integer getId() {
@@ -74,20 +64,12 @@ public class Categories implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getBoardname() {
+        return boardname;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getImagelocation() {
-        return imagelocation;
-    }
-
-    public void setImagelocation(String imagelocation) {
-        this.imagelocation = imagelocation;
+    public void setBoardname(String boardname) {
+        this.boardname = boardname;
     }
 
     @Override
@@ -100,10 +82,10 @@ public class Categories implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Categories)) {
+        if (!(object instanceof Board)) {
             return false;
         }
-        Categories other = (Categories) object;
+        Board other = (Board) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -112,16 +94,7 @@ public class Categories implements Serializable {
 
     @Override
     public String toString() {
-        return "Entities.Categories[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Account> getAccountCollection() {
-        return accountCollection;
-    }
-
-    public void setAccountCollection(Collection<Account> accountCollection) {
-        this.accountCollection = accountCollection;
+        return "Entities.Board[ id=" + id + " ]";
     }
     
 }

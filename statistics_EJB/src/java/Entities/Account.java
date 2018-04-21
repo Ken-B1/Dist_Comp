@@ -14,6 +14,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -44,6 +47,14 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Account.existsName", query = "SELECT COUNT(a) FROM Account a WHERE a.username = :username")
     , @NamedQuery(name = "Account.existsEmail", query = "SELECT COUNT(a) FROM Account a WHERE a.email = :email")})
 public class Account implements Serializable {
+
+    @Column(name = "admin")
+    private Boolean admin;
+    @JoinTable(name = "accountcategoryjunction", joinColumns = {
+        @JoinColumn(name = "accountid", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "categoryid", referencedColumnName = "id")})
+    @ManyToMany
+    private Collection<Categories> categoriesCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -85,10 +96,6 @@ public class Account implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "Country")
     private String country;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "admin")
-    private boolean admin;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
     private Collection<Statistics> statisticsCollection;
 
@@ -174,13 +181,6 @@ public class Account implements Serializable {
         this.country = country;
     }
 
-    public boolean getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
 
     @XmlTransient
     public Collection<Statistics> getStatisticsCollection() {
@@ -214,6 +214,23 @@ public class Account implements Serializable {
     @Override
     public String toString() {
         return "Entities.Account[ id=" + id + " ]";
+    }
+
+    public Boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
+    }
+
+    @XmlTransient
+    public Collection<Categories> getCategoriesCollection() {
+        return categoriesCollection;
+    }
+
+    public void setCategoriesCollection(Collection<Categories> categoriesCollection) {
+        this.categoriesCollection = categoriesCollection;
     }
     
 }
