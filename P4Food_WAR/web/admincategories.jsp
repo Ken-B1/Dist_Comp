@@ -7,37 +7,37 @@
 <%@page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
-        <title>Login</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/fa-svg-with-js.css">
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script defer src="js/fontawesome-all.js"></script>
+
+        <link rel="icon" href="images\icons\logo.png">
     </head>
-    <body style="background-color: #eeeeee">
-    <nav class="navbar bg-dark sticky-top" style="border-bottom:solid; border-width: 1px; border-color: #aaaaaa">
-     <div class="container-fluid">
-       <div class="navbar-header">
-           <a href="pinboard.jsp" style="color:#cccccc">Home</a>
-       </div>
-       <ul class="nav justify-content-end">
-         <li class="nav-item"><a class="nav-link" href="admin" style="color:#cccccc">Admin</a></li>
-         <li class="nav-item"><a class="nav-link" href="settings" style="color:#cccccc">Settings</a></li>
-         <li class="nav-item"><a class="nav-link" href="statistics" style="color:#cccccc">Statistics</a></li>
-       </ul>
-     </div>
-   </nav> 
+
+    <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">
+                <img src="images\icons\logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                Pin4FooD
+            </a>   
+            <div class="collapse navbar-collapse" id="navbarSupportedContent"> 
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="pinboard"><i class="fas fa-home fa-sm"></i> Home</a>
+                    </li>
+                    <li class="nav-item active">
+                            <a class="nav-link" href="boards.jsp"><i class="fab fa-flipboard fa-sm"></i> Boards</a>
+                        </li>
+                </ul>
+                <c:if test="${isAdmin}"><a class="nav-item active" href="admin">Admin</a></c:if>
+                <a class="nav-item active" href="settings"><i class="fas fa-user-circle fa-2x"></i></a>
+                <a class="nav-item active" href="statistics">Statistics</a>
+                <button class="btn btn-outline-success my-2 my-sm-0" >Login</button>
+            </div> 
+        </nav>
     </body>
     <form action="Admincategories" method="POST">
         <div class="form-group">

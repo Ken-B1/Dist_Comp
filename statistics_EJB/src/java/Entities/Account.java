@@ -48,8 +48,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Account.existsEmail", query = "SELECT COUNT(a) FROM Account a WHERE a.email = :email")})
 public class Account implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "admin")
-    private Boolean admin;
+    private boolean admin;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    private Collection<Board> boardCollection;
     @JoinTable(name = "accountcategoryjunction", joinColumns = {
         @JoinColumn(name = "accountid", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "categoryid", referencedColumnName = "id")})
@@ -216,13 +220,6 @@ public class Account implements Serializable {
         return "Entities.Account[ id=" + id + " ]";
     }
 
-    public Boolean getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(Boolean admin) {
-        this.admin = admin;
-    }
 
     @XmlTransient
     public Collection<Categories> getCategoriesCollection() {
@@ -231,6 +228,23 @@ public class Account implements Serializable {
 
     public void setCategoriesCollection(Collection<Categories> categoriesCollection) {
         this.categoriesCollection = categoriesCollection;
+    }
+
+    public boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
+    @XmlTransient
+    public Collection<Board> getBoardCollection() {
+        return boardCollection;
+    }
+
+    public void setBoardCollection(Collection<Board> boardCollection) {
+        this.boardCollection = boardCollection;
     }
     
 }

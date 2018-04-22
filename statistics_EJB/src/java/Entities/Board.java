@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -31,6 +33,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Board.findById", query = "SELECT b FROM Board b WHERE b.id = :id")
     , @NamedQuery(name = "Board.findByBoardname", query = "SELECT b FROM Board b WHERE b.boardname = :boardname")})
 public class Board implements Serializable {
+
+    @JoinColumn(name = "owner", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Account owner;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -95,6 +101,14 @@ public class Board implements Serializable {
     @Override
     public String toString() {
         return "Entities.Board[ id=" + id + " ]";
+    }
+
+    public Account getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Account owner) {
+        this.owner = owner;
     }
     
 }

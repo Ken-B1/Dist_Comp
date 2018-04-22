@@ -38,7 +38,7 @@ public class PinboardServlet extends HttpServlet {
         int id = (int)request.getSession().getAttribute("id");
         System.out.println(account.getAccountById(id).getAdmin());
         request.setAttribute("isAdmin", account.getAccountById(id).getAdmin());
-        request.getRequestDispatcher("pinboard.jsp").forward(request, response);
+        request.getRequestDispatcher("home.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
