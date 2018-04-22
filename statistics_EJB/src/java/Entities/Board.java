@@ -17,13 +17,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Ken
+ * @author ken
  */
 @Entity
 @Table(name = "board")
@@ -35,9 +34,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Board.findByOwner", query = "SELECT b FROM Board b WHERE b.owner = :userid")})
 public class Board implements Serializable {
 
-    @JoinColumn(name = "owner", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Account owner;
+    @Column(name = "boardcol")
+    private Integer boardcol;
+    @JoinColumn(name = "category", referencedColumnName = "id")
+    @ManyToOne
+    private Categories category;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,22 +46,18 @@ public class Board implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 255)
     @Column(name = "boardname")
     private String boardname;
+    @JoinColumn(name = "owner", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Account owner;
 
     public Board() {
     }
 
     public Board(Integer id) {
         this.id = id;
-    }
-
-    public Board(Integer id, String boardname) {
-        this.id = id;
-        this.boardname = boardname;
     }
 
     public Integer getId() {
@@ -77,6 +74,14 @@ public class Board implements Serializable {
 
     public void setBoardname(String boardname) {
         this.boardname = boardname;
+    }
+
+    public Account getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Account owner) {
+        this.owner = owner;
     }
 
     @Override
@@ -104,12 +109,20 @@ public class Board implements Serializable {
         return "Entities.Board[ id=" + id + " ]";
     }
 
-    public Account getOwner() {
-        return owner;
+    public Integer getBoardcol() {
+        return boardcol;
     }
 
-    public void setOwner(Account owner) {
-        this.owner = owner;
+    public void setBoardcol(Integer boardcol) {
+        this.boardcol = boardcol;
+    }
+
+    public Categories getCategory() {
+        return category;
+    }
+
+    public void setCategory(Categories category) {
+        this.category = category;
     }
     
 }

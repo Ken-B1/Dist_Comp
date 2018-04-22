@@ -22,8 +22,11 @@
                         <a class="nav-link" href="pinboard"><i class="fas fa-home fa-sm"></i> Home</a>
                     </li>
                     <li class="nav-item active">
-                            <a class="nav-link" href="boards.jsp"><i class="fab fa-flipboard fa-sm"></i> Boards</a>
-                        </li>
+                            <a class="nav-link" href="createBoard"><i class="fab fa-flipboard fa-sm"></i> Boards</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="pins.jsp"><i class="fas fa-thumbtack fa-sm"></i> Pins</a>
+                    </li>
                 </ul>
                 <c:if test="${isAdmin}"><a class="nav-item active" href="admin">Admin</a></c:if>
                 <a class="nav-item active" href="settings"><i class="fas fa-user-circle fa-2x"></i></a>
@@ -98,7 +101,26 @@
         </div>
 
     </div>
-
+    <div>
+        <p>Board CRUD:</p>
+            <form action="pinboard" method="post">
+                <div class="form-group">
+                    <label>Board name</label>
+                    <input type="text" name="boardname"/>
+                </div>   
+                <div class="form-group">
+                    <label>Category: </label>
+                    <select name="category"/>
+                        <c:forEach items = "${categoryList}" var="category" >
+                            <option value="${emp}">${emp}</option>    
+                        </c:forEach>
+                    </select>
+                </div>   
+                <input type="submit" value="Create">
+            </form>      
+        <hr/>
+        <p>Pin CRUD:</p>
+    </div>
 
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

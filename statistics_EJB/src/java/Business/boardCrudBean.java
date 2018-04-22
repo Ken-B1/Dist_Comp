@@ -7,7 +7,7 @@ package Business;
 
 import Entities.Account;
 import Entities.Board;
-import java.util.ArrayList;
+import Entities.Categories;
 import java.util.List;
 import javax.ejb.Stateful;
 import javax.ejb.LocalBean;
@@ -28,12 +28,24 @@ public class boardCrudBean {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-    
     public void createBoard(String name, Account owner){
         Board newboard = new Board();
         newboard.setBoardname(name);
         newboard.setOwner(owner);
         em.persist(newboard);
+    }
+    
+    public void createBoard(String name, Categories category, Account owner){
+        Board newboard = new Board();
+        newboard.setBoardname(name);
+        newboard.setOwner(owner);
+        newboard.setCategory(category);
+        em.persist(newboard);
+    }
+    
+    public void createBoard(String name, int categoryId, Account owner){
+        System.out.println(em.find(Categories.class, categoryId));
+        createBoard(name, em.find(Categories.class, categoryId), owner);
     }
     
     public List<Board> getBoardsForUser(Account owner){

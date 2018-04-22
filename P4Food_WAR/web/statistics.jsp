@@ -29,7 +29,10 @@
                     </li>
                     <li class="nav-item active">
                             <a class="nav-link" href="boards.jsp"><i class="fab fa-flipboard fa-sm"></i> Boards</a>
-                        </li>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="pins.jsp"><i class="fas fa-thumbtack fa-sm"></i> Pins</a>
+                    </li>
                 </ul>
                 <c:if test="${isAdmin}"><a class="nav-item active" href="admin">Admin</a></c:if>
                 <a class="nav-item active" href="settings"><i class="fas fa-user-circle fa-2x"></i></a>
