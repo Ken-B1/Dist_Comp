@@ -31,7 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Board.findAll", query = "SELECT b FROM Board b")
     , @NamedQuery(name = "Board.findById", query = "SELECT b FROM Board b WHERE b.id = :id")
-    , @NamedQuery(name = "Board.findByBoardname", query = "SELECT b FROM Board b WHERE b.boardname = :boardname")})
+    , @NamedQuery(name = "Board.findByBoardname", query = "SELECT b FROM Board b WHERE b.boardname = :boardname")
+    , @NamedQuery(name = "Board.findByOwner", query = "SELECT b FROM Board b WHERE b.owner = :userid")})
 public class Board implements Serializable {
 
     @JoinColumn(name = "owner", referencedColumnName = "id")

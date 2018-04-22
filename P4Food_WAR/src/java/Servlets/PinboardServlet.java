@@ -6,8 +6,11 @@
 package Servlets;
 
 import Business.AccountFacade;
+import Business.boardCrudBean;
+import Entities.Account;
+import Entities.Board;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,6 +26,9 @@ import javax.servlet.http.HttpServletResponse;
 public class PinboardServlet extends HttpServlet {
     @EJB
     private AccountFacade account;
+    
+    @EJB 
+    private boardCrudBean boardBean;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,11 +40,24 @@ public class PinboardServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         int id = (int)request.getSession().getAttribute("id");
-        System.out.println(account.getAccountById(id).getAdmin());
+        
+        //Logic for CRUD boards, move to appropriate servlet when created
+        Account currentUser = account.getAccountById(id);
+        List<Board> userBoards = boardBean.getBoardsForUser(currentUser);
+        if(!userBoards.isEmpty()){
+            boardBean.deleteBoard(userBoards.get(0).getId());
+        }
+        userBoards = boardBean.getBoardsForUser(currentUser);
+        
+        request.setAttribute("boardList", userBoards);
+        
+        
+        //Correct execution proceeds
         request.setAttribute("isAdmin", account.getAccountById(id).getAdmin());
         request.getRequestDispatcher("home.jsp").forward(request, response);
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -67,7 +86,13 @@ public class PinboardServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+                //Logic for CRUD boards, move to appropriate servlet when created
+        String boardName = request.getParameter("boardname");
+        
+        int id = (int)request.getSession().getAttribute("id");
+        Account currentUser = account.getAccountById(id);
+        boardBean.createBoard(boardName,currentUser);
+        response.sendRedirect("pinboard");
     }
 
     /**
