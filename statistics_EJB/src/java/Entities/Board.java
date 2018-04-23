@@ -6,7 +6,9 @@
 package Entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,9 +18,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,6 +37,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Board.findByBoardname", query = "SELECT b FROM Board b WHERE b.boardname = :boardname")
     , @NamedQuery(name = "Board.findByOwner", query = "SELECT b FROM Board b WHERE b.owner = :userid")})
 public class Board implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "board")
+    private Collection<Pin> pinCollection;
 
     @Column(name = "boardcol")
     private Integer boardcol;
@@ -123,6 +130,15 @@ public class Board implements Serializable {
 
     public void setCategory(Categories category) {
         this.category = category;
+    }
+
+    @XmlTransient
+    public Collection<Pin> getPinCollection() {
+        return pinCollection;
+    }
+
+    public void setPinCollection(Collection<Pin> pinCollection) {
+        this.pinCollection = pinCollection;
     }
     
 }
