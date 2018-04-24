@@ -70,7 +70,7 @@ public class SettingsServlet extends HttpServlet {
             // Error happens when nonexistent user is somehow requested
             System.out.println(e.getMessage());
         }
-        request.getRequestDispatcher("settings.jsp").forward(request, response);
+        response.sendRedirect("settings");
     }
 
     /**
