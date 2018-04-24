@@ -40,7 +40,7 @@
                             <a class="nav-link" href="createBoard"><i class="fab fa-flipboard fa-sm"></i> Boards</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="pins.jsp"><i class="fas fa-thumbtack fa-sm"></i> Pins</a>
+                        <a class="nav-link" href="createPin"><i class="fas fa-thumbtack fa-sm"></i> Pins</a>
                     </li>
                     <li>
                         <form class="form-inline my-2 my-lg-0">

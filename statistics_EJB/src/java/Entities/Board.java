@@ -41,8 +41,6 @@ public class Board implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "board")
     private Collection<Pin> pinCollection;
 
-    @Column(name = "boardcol")
-    private Integer boardcol;
     @JoinColumn(name = "category", referencedColumnName = "id")
     @ManyToOne
     private Categories category;
@@ -115,15 +113,7 @@ public class Board implements Serializable {
     public String toString() {
         return "Entities.Board[ id=" + id + " ]";
     }
-
-    public Integer getBoardcol() {
-        return boardcol;
-    }
-
-    public void setBoardcol(Integer boardcol) {
-        this.boardcol = boardcol;
-    }
-
+    
     public Categories getCategory() {
         return category;
     }

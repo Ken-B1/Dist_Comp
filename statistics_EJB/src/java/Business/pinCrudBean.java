@@ -45,8 +45,8 @@ public class pinCrudBean {
         return em.find(Pin.class, id);
     }
     
-    public List<Board> getPinsForBoard(Board board){
-        List<Board> resultlist = em.createNamedQuery("Board.findByOwner").setParameter("board", board).getResultList();
+    public List<Pin> getPinsForBoard(Board board){
+        List<Pin> resultlist = em.createNamedQuery("Pin.findByBoard").setParameter("board", board).getResultList();
         return resultlist;
     }
     

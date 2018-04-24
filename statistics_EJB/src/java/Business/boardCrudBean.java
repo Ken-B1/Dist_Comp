@@ -44,7 +44,6 @@ public class boardCrudBean {
     }
     
     public void createBoard(String name, int categoryId, Account owner){
-        System.out.println(em.find(Categories.class, categoryId));
         createBoard(name, em.find(Categories.class, categoryId), owner);
     }
     

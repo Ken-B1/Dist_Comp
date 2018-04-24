@@ -1,3 +1,5 @@
+<%@page language="java" contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
     <head>
         <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -104,11 +106,11 @@
                             <button type="button" class="close" data-dismiss="modal"><i class="fas fa-times-circle fa-lg"></i></button>
                             </div>
                             <div class="modal-body">
-                                <form action="# createboard.jsp">
+                                <form action="createPin" method="post" >
                                     <div class="row">
-                                        <form action="" method="post" enctype="multipart/form-data" id="js-upload-form">
+                                        <form action="createPin" method="post" enctype="multipart/form-data" id="js-upload-form">
                                             <div class="col">
-                                                <!-- Standar Form -->
+                                                <!-- Standard Form -->
                                                 <h5>Select images from your computer</h5>                                                
                                                     <div class="form-inline">
                                                         <div class="form-group">
@@ -117,10 +119,10 @@
                                                     </div> 
                                                     <div class="dropdown-divider"></div>
                                                     <label for="exampleTextarea"><i class="fas fa-pen-square fa-sm"></i> Description</label>
-                                                    <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                                                    <textarea class="form-control" id="exampleTextarea" rows="3" name="recipe"></textarea>
                                                     <div class="dropdown-divider"></div> 
                                                     <label for="exampleTextarea"><i class="fas fa-tag fa-sm"></i> Add Tag</label>
-                                                    <input type="text" class="form-control" placeholder="Tag Someone">
+                                                    <input type="text" class="form-control" placeholder="Tag Someone" name="recipeTitle">
                                                     <div class="dropdown-divider"></div> 
                                                     <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload Pins</button>                                                                                                                                                               
                                             </div>                                           
@@ -134,9 +136,14 @@
                     </div>
                 </div>
 
+            <c:forEach items = "${pinList}" var="pin" >
+                <p>${pin.getRecipeName()}<br>
+                   ${pin.getRecipe()}
                 
-            </div><!-- Container ends here-->
-
+                </p> 
+                <hr>
+            </c:forEach>                 
+            </div><!-- Container ends here-->  
 
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
