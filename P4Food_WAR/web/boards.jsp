@@ -6,6 +6,27 @@
         <link rel="stylesheet" href="css/fa-svg-with-js.css">
         <script src="js/bootstrap.bundle.min.js"></script>
         <script defer src="js/fontawesome-all.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <title>Boards - Pin4FooD</title>
+        <link rel="icon" href="images\icons\logo.png">
+
+        <style>
+                .badge-notify{
+                background:red;
+                position:relative;
+                top: -15px;
+                left: -25px;
+                }
+                .btn-links{
+                font-weight: 400;
+                color: #007ff;
+                background-color:transparent;
+            }
+        </style>
+    <script src="js/boards.js"></script>
     </head>
 
     <body>
@@ -25,21 +46,61 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="pins.jsp"><i class="fas fa-thumbtack fa-sm"></i> Pins</a>
                     </li>
+                    <li>
+                        <!-- TO DO Search functionality-->     
+                        <form class="form-inline my-2 my-lg-0">
+                                <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>                      
+                    </li>
                 </ul>
                 <c:if test="${isAdmin}"><a class="nav-item active" href="admin">Admin</a></c:if>
                 <a class="nav-item" href="settings"><i class="fas fa-user-circle fa-2x"></i></a>
                 <a class="nav-item" href="statistics">Statistics</a>
+                
+                <!-- TO DO Notification pop up icon-->
+                <button class="btn btn-links" style="font-size:36px;" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false" >
+                        <i class="far fa-bell"></i>
+                </button>
+                <span class="badge badge-notify">0</span>
+                
+                <!-- TO DO Notification toggle-->
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Another action</button>
+                    <button class="dropdown-item" type="button">Something else here</button>
+                </div>
+                               
                 <button class="btn btn-outline-success my-2 my-sm-0" >Login</button>
             </div> 
         </nav>
- <div class="container">
+        <div class="dropdown-divider"></div>
+        <div class="container">
            <!-- Image and text -->
             
 
             <div class="jumbotron">
                 <div class="container">
-                    <h1 class="display-4">Pin 4 Food</h1>
-                    <p class="lead">Add Your board and Share your pins</p>
+<div class="row">
+                            <div class="col">
+                                <h1 class="display-4">Pin4FooD</h1>
+                                <p class="lead">Add Your board and Share your pins</p>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <!-- TO DO Add User Image here -->
+                                <i class="fas fa-user-circle fa-6x"></i>
+
+                            </div>                            
+                        </div>
+                        <!-- TO DO Following and Followers to updated -->
+                        <div class="row">
+                            <div class="col"></div>
+                            <div class="col-6 col-md-4"><span class="badge badge-primary">0</span> Following</div>
+                        </div>
+                        <div class="row">
+                                <div class="col"></div>
+                                <div class="col-6 col-md-4"><span class="badge badge-primary">0</span> Followers</div>
+                            </div>
                 </div>
 
                 <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus-circle fa-lg"></i> Create Board</button>
