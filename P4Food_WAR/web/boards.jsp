@@ -75,13 +75,13 @@
             </div> 
         </nav>
         <div class="dropdown-divider"></div>
-        <div class="container">
+        <div class="container" id="wrapper" >
            <!-- Image and text -->
             
 
             <div class="jumbotron">
                 <div class="container">
-<div class="row">
+                    <div class="row">
                             <div class="col">
                                 <h1 class="display-4">Pin4FooD</h1>
                                 <p class="lead">Add Your board and Share your pins</p>
@@ -140,17 +140,20 @@
                         
                         </div>
 
-                        <!-- Display all the boards that are created under different category-->
                     </div>                  
             </div>
            <p><b>We need a nice way of displaying boards(with remove and edit buttons): </b></p>
             <c:forEach items = "${boardList}" var="board" >
-                <p>${board.getBoardname()}<br>
-                   ${board.getCategory().getName()}
-                
-                </p> 
-                <hr>
+               <div class="row">
+                 <div class="col">
+                     <svg width="260" height="260">
+                         <rect width="250" height="250" style="fill:grey;stroke:black;stroke-width:2;fill-opacity:0.1;stroke-opacity:0.1" /> >
+                         <text fill="#000000" stroke="black" font-size="30" font-family="Verdana" x="65" y="120">${board.getBoardname()}</text>
+                     </svg>
+                 </div>
+               </div>
             </c:forEach>   
+        </div>
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>

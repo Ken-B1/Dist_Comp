@@ -10,7 +10,7 @@ import Entities.Board;
 import Entities.Pin;
 import Entities.Categories;
 import java.util.List;
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,7 +19,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author ken
  */
-@Stateful
+@Stateless
 @LocalBean
 public class pinCrudBean {
     @PersistenceContext(unitName = "statistics_EJBPU")

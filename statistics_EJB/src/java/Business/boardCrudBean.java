@@ -9,7 +9,7 @@ import Entities.Account;
 import Entities.Board;
 import Entities.Categories;
 import java.util.List;
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,7 +18,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author ken
  */
-@Stateful
+@Stateless
 @LocalBean
 public class boardCrudBean {
     @PersistenceContext(unitName = "statistics_EJBPU")

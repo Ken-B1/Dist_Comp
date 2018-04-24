@@ -135,7 +135,63 @@
                         </script>
                 
             </div>
+           <!-- Add a 'if' condition such that it should display the below script tag only new users  -->
 
+            <script type="text/javascript">
+                $(window).on('load',function(){
+                    $('#myModal').modal('show');
+                });
+            </script>
+
+            
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><i class="fas fa-times-circle fa-lg"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="# createboard.jsp">
+                            <div class="row">
+                                <div class="col">
+                                <h5>Select atleast three categories</h5>  
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="African">
+                                        <label class="custom-control-label" for="African">African</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="Belgian">
+                                        <label class="custom-control-label" for="Belgian">Belgian</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="French">
+                                        <label class="custom-control-label" for="French">French</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="Indian">
+                                        <label class="custom-control-label" for="Indian">Indian</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="Spanish">
+                                        <label class="custom-control-label" for="Spanish">Spanish</label>
+                                    </div>
+                                    <div class="dropdown-divider"></div>                                    
+                                </div>                                       
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="submit" class="btn btn-default">Add</button>
+                    </div>
+                </div>
+                
+                </div>
+
+                <!-- Display all the boards that are created under different category-->
+
+            </div>
             
             
         </div>

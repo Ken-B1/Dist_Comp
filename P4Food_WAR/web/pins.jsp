@@ -37,12 +37,12 @@
                 Pin4FooD
             </a>   
             <div class="collapse navbar-collapse" id="navbarSupportedContent"> 
-                <ul class="navbar-nav mr-auto">
+               <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="pinboard"><i class="fas fa-home fa-sm"></i> Home</a>
+                        <a class="nav-link" href="home.jsp"><i class="fas fa-home fa-sm"></i> Home</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="createBoard"><i class="fab fa-flipboard fa-sm"></i> Boards</a>
+                        <a class="nav-link" href="boards.jsp"><i class="fab fa-flipboard fa-sm"></i> Boards</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="pins.jsp"><i class="fas fa-thumbtack fa-sm"></i> Pins</a>
@@ -118,11 +118,11 @@
                                                         </div>
                                                     </div> 
                                                     <div class="dropdown-divider"></div>
+                                                    <label for="exampleTextarea"><i class="fas fa-tag fa-sm"></i> Add Name</label>
+                                                    <input type="text" class="form-control" placeholder="Add Your Recipe Name" name="recipeTitle">
+                                                    <div class="dropdown-divider"></div>
                                                     <label for="exampleTextarea"><i class="fas fa-pen-square fa-sm"></i> Description</label>
                                                     <textarea class="form-control" id="exampleTextarea" rows="3" name="recipe"></textarea>
-                                                    <div class="dropdown-divider"></div> 
-                                                    <label for="exampleTextarea"><i class="fas fa-tag fa-sm"></i> Add Tag</label>
-                                                    <input type="text" class="form-control" placeholder="Tag Someone" name="recipeTitle">
                                                     <div class="dropdown-divider"></div> 
                                                     <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload Pins</button>                                                                                                                                                               
                                             </div>                                           

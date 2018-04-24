@@ -10,7 +10,7 @@ import Entities.Categories;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,7 +20,7 @@ import javax.persistence.PersistenceContext;
  * @author Ken
  * Class that facilitates some admin actions
  */
-@Stateful
+@Stateless
 @LocalBean
 public class Admin {
     @PersistenceContext(unitName = "statistics_EJBPU")
