@@ -158,8 +158,8 @@
                                 <h5>Select atleast three categories</h5>  
                                     <c:forEach items = "${Categories}" var="category" >  
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="${category.getId()}" value="${category.getId()}">
-                                            <label class="custom-control-label" for="African">${category.getName()}</label>
+                                            <input type="checkbox" class="custom-control-input" id="${category.getName()}" value="${category.getId()}">
+                                            <label class="custom-control-label" for="${category.getName()}">${category.getName()}</label>
                                         </div>
                                     </c:forEach>
                                     <div class="dropdown-divider"></div>                                    
