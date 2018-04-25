@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobApp1.Views.LoginPage" Title="{Binding Login}"
+             xmlns:ViewMdels="clr-namespace:MobApp1.ViewModels;" 
+             x:class="MobApp1.MobApp1.ViewModels">
+    
+    
+    <ContentPage.BindingContent>
+        <ViewModels:LoginModel/>
+    </ContentPage.BindingContent>
+    
+        <StackLayout orientaton="vertical">
+            
+        <Entry Text="{Binding email}"/>
+            
+        <Entry Text="{Binding password}"
+               IsPassword="True"/>
+        <Button Command="{Binding LoginCommand}"
+                    Text="Login"/>
+            
+
+    </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobApp1.Views.RegisterPage" Title="{User Register}"
+             xmlns:viewModels="clr-namespace:MobApp1.ViewModels, assembly=MobApp1">
+
+    <ContentPage.BindingContent>
+         <viewModels:RegisterViewModel/>
+    </ContentPage.BindingContent>
+
+     <StackLayout Orientation="Vertical"
+                  VerticalOptions="center"
+                      Spacing="20"
+                      Padding="20"/>
+                      
+        <Entry Text="{Binding fname}"
+               placeholder="fname"/>
+        
+        <Entry Text="{Binding lname}"
+               placeholder="lname"
+               FontSize="20"/>
+                      
+        <Entry Text="{Binding username}"
+               placeholder="username"
+               FontSize="20"/>
+
+        <Entry Text="{Binding gender}"
+               placeholder="gender"
+               FontSize="20"/>
+        
+        <Entry Text="{Binding country}"
+               placeholder="country"
+               FontSize="20"/>
+        
+        <Entry Text="{Binding email}"
+               placeholder="email"
+               FontSize="20"/>
+
+        <Entry Text="{Binding password}"
+               placeholder="pasword"
+               IsPassword="True"
+               FontSize="20"/>
+
+        <Entry Text="{Binding confirmpassword}"
+               placeholder="confirmpassword"
+               IsPassword="True"
+               FontSize="20"/>
+
+        <Button Command ="{binding RigesterCommand}"
+                Text="signup"
+                FontSize="20"/>
+
+        <Label Text="{Binding Message}"
+               FontSize="20"/>
+
+        <Button Text="Go to Login Page"
+                 FontSize="20"/>
+
+
+    </StackLayout>
+    
+</ContentPage>
