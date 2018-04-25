@@ -121,4 +121,7 @@ public class AccountFacade extends AbstractFacade<Account> {
         super(Account.class);
     }
     
+    public boolean hasCategories(int accountId){
+        return em.find(Account.class, accountId).getCategoriesCollection().size() == 0;
+    }
 }

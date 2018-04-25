@@ -7,8 +7,9 @@ package Servlets;
 
 import Business.AccountFacade;
 import Business.boardCrudBean;
+import Business.databaseConnector;
 import Entities.Account;
-import Entities.Board;
+import Entities.Categories;
 import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
@@ -29,6 +30,9 @@ public class PinboardServlet extends HttpServlet {
     
     @EJB 
     private boardCrudBean boardBean;
+    
+    @EJB
+    private databaseConnector connector;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,8 +46,12 @@ public class PinboardServlet extends HttpServlet {
             throws ServletException, IOException {
         int id = (int)request.getSession().getAttribute("id");
         Account currentUser = account.getAccountById(id);
-
+        List<Categories> allCategories = connector.getAllCategories();
+        
+        
         request.setAttribute("isAdmin", account.getAccountById(id).getAdmin());
+        request.setAttribute("hasCategories", currentUser.getCategoriesCollection().size() != 0);
+        request.setAttribute("Categories", allCategories);
         request.getRequestDispatcher("home.jsp").forward(request, response);
         
         

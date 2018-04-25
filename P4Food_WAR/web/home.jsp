@@ -137,12 +137,13 @@
             </div>
            <!-- Add a 'if' condition such that it should display the below script tag only new users  -->
 
+        <c:if test="${hasCategories}">
             <script type="text/javascript">
                 $(window).on('load',function(){
                     $('#myModal').modal('show');
                 });
             </script>
-
+        </c:if>
             
             <div class="modal fade" id="myModal" role="dialog">
                 <div class="modal-dialog">
@@ -157,26 +158,12 @@
                             <div class="row">
                                 <div class="col">
                                 <h5>Select atleast three categories</h5>  
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="African">
-                                        <label class="custom-control-label" for="African">African</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="Belgian">
-                                        <label class="custom-control-label" for="Belgian">Belgian</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="French">
-                                        <label class="custom-control-label" for="French">French</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="Indian">
-                                        <label class="custom-control-label" for="Indian">Indian</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="Spanish">
-                                        <label class="custom-control-label" for="Spanish">Spanish</label>
-                                    </div>
+                                    <c:forEach items = "${Categories}" var="category" >  
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="${category.getId()}" value="${category.getId()}">
+                                            <label class="custom-control-label" for="African">${category.getName()}</label>
+                                        </div>
+                                    </c:forEach>
                                     <div class="dropdown-divider"></div>                                    
                                 </div>                                       
                             </div>
