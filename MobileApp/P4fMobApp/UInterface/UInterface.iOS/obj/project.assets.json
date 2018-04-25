@@ -1330,11 +1330,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PC\\source\\repos\\P4fMobApp\\UInterface\\UInterface.iOS\\UInterface.iOS.csproj",
+      "projectUniqueName": "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\UInterface\\UInterface.iOS\\UInterface.iOS.csproj",
       "projectName": "UInterface.iOS",
-      "projectPath": "C:\\Users\\PC\\source\\repos\\P4fMobApp\\UInterface\\UInterface.iOS\\UInterface.iOS.csproj",
+      "projectPath": "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\UInterface\\UInterface.iOS\\UInterface.iOS.csproj",
       "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PC\\source\\repos\\P4fMobApp\\UInterface\\UInterface.iOS\\obj\\",
+      "outputPath": "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\UInterface\\UInterface.iOS\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
@@ -1355,8 +1355,8 @@
       "frameworks": {
         "xamarinios10": {
           "projectReferences": {
-            "C:\\Users\\PC\\source\\repos\\P4fMobApp\\UInterface\\UInterface\\UInterface.csproj": {
-              "projectPath": "C:\\Users\\PC\\source\\repos\\P4fMobApp\\UInterface\\UInterface\\UInterface.csproj"
+            "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\UInterface\\UInterface\\UInterface.csproj": {
+              "projectPath": "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\UInterface\\UInterface\\UInterface.csproj"
             }
           }
         }

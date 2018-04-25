@@ -1058,11 +1058,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PC\\source\\repos\\P4fMobApp\\UInterface\\UInterface.Android\\UInterface.Android.csproj",
+      "projectUniqueName": "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\UInterface\\UInterface.Android\\UInterface.Android.csproj",
       "projectName": "UInterface.Android",
-      "projectPath": "C:\\Users\\PC\\source\\repos\\P4fMobApp\\UInterface\\UInterface.Android\\UInterface.Android.csproj",
+      "projectPath": "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\UInterface\\UInterface.Android\\UInterface.Android.csproj",
       "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PC\\source\\repos\\P4fMobApp\\UInterface\\UInterface.Android\\obj\\",
+      "outputPath": "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\UInterface\\UInterface.Android\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
@@ -1083,8 +1083,8 @@
       "frameworks": {
         "monoandroid81": {
           "projectReferences": {
-            "C:\\Users\\PC\\source\\repos\\P4fMobApp\\UInterface\\UInterface\\UInterface.csproj": {
-              "projectPath": "C:\\Users\\PC\\source\\repos\\P4fMobApp\\UInterface\\UInterface\\UInterface.csproj"
+            "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\UInterface\\UInterface\\UInterface.csproj": {
+              "projectPath": "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\UInterface\\UInterface\\UInterface.csproj"
             }
           }
         }
