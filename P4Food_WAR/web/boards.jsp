@@ -143,16 +143,16 @@
                     </div>                  
             </div>
            <p><b>We need a nice way of displaying boards(with remove and edit buttons): </b></p>
-            <c:forEach items = "${boardList}" var="board" >
                <div class="row">
+                               <c:forEach items = "${boardList}" var="board" >
                  <div class="col">
                      <svg width="260" height="260">
                          <rect width="250" height="250" style="fill:grey;stroke:black;stroke-width:2;fill-opacity:0.1;stroke-opacity:0.1" /> >
                          <text fill="#000000" stroke="black" font-size="30" font-family="Verdana" x="65" y="120">${board.getBoardname()}</text>
                      </svg>
                  </div>
-               </div>
-            </c:forEach>   
+                </c:forEach> 
+               </div>  
         </div>
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
