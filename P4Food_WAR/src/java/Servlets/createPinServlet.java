@@ -12,6 +12,7 @@ import Entities.Account;
 import Entities.Board;
 import Entities.Pin;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -53,8 +54,12 @@ public class createPinServlet extends HttpServlet {
         Account currentUser = account.getAccountById(id);
 
         List<Board> userBoards = boardBean.getBoardsForUser(currentUser);
-
-        List<Pin> boardPins = pinBean.getPinsForBoard(userBoards.get(0));
+        List<Pin> boardPins;
+        if(userBoards.size() == 0){
+            boardPins = new ArrayList();   
+        }else{
+            boardPins = pinBean.getPinsForBoard(userBoards.get(0));
+        }
 
         request.setAttribute("pinList", boardPins);           
         

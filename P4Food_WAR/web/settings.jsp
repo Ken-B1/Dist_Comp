@@ -28,10 +28,10 @@
                         <a class="nav-link" href="pinboard"><i class="fas fa-home fa-sm"></i> Home</a>
                     </li>
                     <li class="nav-item active">
-                            <a class="nav-link" href="boards.jsp"><i class="fab fa-flipboard fa-sm"></i> Boards</a>
+                            <a class="nav-link" href="createBoard"><i class="fab fa-flipboard fa-sm"></i> Boards</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="pins.jsp"><i class="fas fa-thumbtack fa-sm"></i> Pins</a>
+                        <a class="nav-link" href="createPin"><i class="fas fa-thumbtack fa-sm"></i> Pins</a>
                     </li>
                 </ul>
                 <c:if test="${isAdmin}"><a class="nav-item active" href="admin">Admin</a></c:if>
