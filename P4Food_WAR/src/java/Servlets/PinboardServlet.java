@@ -50,7 +50,7 @@ public class PinboardServlet extends HttpServlet {
         
         
         request.setAttribute("isAdmin", account.getAccountById(id).getAdmin());
-        request.setAttribute("hasCategories", currentUser.getCategoriesCollection().size() != 0);
+        request.setAttribute("hasCategories", currentUser.getCategoriesCollection().size() == 0);
         request.setAttribute("Categories", allCategories);
         request.getRequestDispatcher("home.jsp").forward(request, response);
         
