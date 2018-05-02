@@ -144,7 +144,7 @@
             </div>
            <p><b>We need a nice way of displaying boards(with remove and edit buttons): </b></p>
                <div class="row">
-                               <c:forEach items = "${boardList}" var="board" >
+                   <c:forEach items = "${boardList}" var="board" >
                  <div class="col">
                      <svg width="260" height="260">
                          <rect width="250" height="250" style="fill:grey;stroke:black;stroke-width:2;fill-opacity:0.1;stroke-opacity:0.1" /> >
