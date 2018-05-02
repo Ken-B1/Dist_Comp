@@ -1069,11 +1069,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PC\\source\\repos\\P4fMobApp\\MobApp\\MobApp.Android\\MobApp.Android.csproj",
+      "projectUniqueName": "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\MobApp\\MobApp.Android\\MobApp.Android.csproj",
       "projectName": "MobApp.Android",
-      "projectPath": "C:\\Users\\PC\\source\\repos\\P4fMobApp\\MobApp\\MobApp.Android\\MobApp.Android.csproj",
+      "projectPath": "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\MobApp\\MobApp.Android\\MobApp.Android.csproj",
       "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PC\\source\\repos\\P4fMobApp\\MobApp\\MobApp.Android\\obj\\",
+      "outputPath": "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\MobApp\\MobApp.Android\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
@@ -1094,8 +1094,8 @@
       "frameworks": {
         "monoandroid81": {
           "projectReferences": {
-            "C:\\Users\\PC\\source\\repos\\P4fMobApp\\MobApp1\\MobApp1.csproj": {
-              "projectPath": "C:\\Users\\PC\\source\\repos\\P4fMobApp\\MobApp1\\MobApp1.csproj"
+            "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\MobApp1\\MobApp1.csproj": {
+              "projectPath": "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\MobApp1\\MobApp1.csproj"
             }
           }
         }

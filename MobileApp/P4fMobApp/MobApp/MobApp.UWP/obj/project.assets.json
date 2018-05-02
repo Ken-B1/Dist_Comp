@@ -17024,11 +17024,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PC\\source\\repos\\P4fMobApp\\MobApp\\MobApp.UWP\\MobApp.UWP.csproj",
+      "projectUniqueName": "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\MobApp\\MobApp.UWP\\MobApp.UWP.csproj",
       "projectName": "MobApp.UWP",
-      "projectPath": "C:\\Users\\PC\\source\\repos\\P4fMobApp\\MobApp\\MobApp.UWP\\MobApp.UWP.csproj",
+      "projectPath": "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\MobApp\\MobApp.UWP\\MobApp.UWP.csproj",
       "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PC\\source\\repos\\P4fMobApp\\MobApp\\MobApp.UWP\\obj\\",
+      "outputPath": "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\MobApp\\MobApp.UWP\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
@@ -17049,8 +17049,8 @@
       "frameworks": {
         "uap10.0.16299": {
           "projectReferences": {
-            "C:\\Users\\PC\\source\\repos\\P4fMobApp\\MobApp1\\MobApp1.csproj": {
-              "projectPath": "C:\\Users\\PC\\source\\repos\\P4fMobApp\\MobApp1\\MobApp1.csproj"
+            "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\MobApp1\\MobApp1.csproj": {
+              "projectPath": "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\MobApp1\\MobApp1.csproj"
             }
           }
         }

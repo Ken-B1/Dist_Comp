@@ -65,3 +65,4 @@ C:\Users\PC\source\repos\P4fMobApp\UInterface\UInterface.Android\obj\Debug\links
 C:\Users\PC\source\repos\P4fMobApp\UInterface\UInterface.Android\obj\Debug\linksrc\Xamarin.Forms.Core.dll.mdb
 C:\Users\PC\source\repos\P4fMobApp\UInterface\UInterface.Android\obj\Debug\linksrc\Xamarin.Forms.Platform.Android.dll.mdb
 C:\Users\PC\source\repos\P4fMobApp\UInterface\UInterface.Android\obj\Debug\linksrc\Xamarin.Forms.Xaml.dll.mdb
+C:\Users\PC\Desktop\Dist_Comp\MobileApp\P4fMobApp\UInterface\UInterface.Android\obj\Debug\UInterface.Android.csprojResolveAssemblyReference.cache

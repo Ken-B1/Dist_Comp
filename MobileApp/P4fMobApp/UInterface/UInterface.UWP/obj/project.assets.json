@@ -16932,11 +16932,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PC\\source\\repos\\P4fMobApp\\UInterface\\UInterface.UWP\\UInterface.UWP.csproj",
+      "projectUniqueName": "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\UInterface\\UInterface.UWP\\UInterface.UWP.csproj",
       "projectName": "UInterface.UWP",
-      "projectPath": "C:\\Users\\PC\\source\\repos\\P4fMobApp\\UInterface\\UInterface.UWP\\UInterface.UWP.csproj",
+      "projectPath": "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\UInterface\\UInterface.UWP\\UInterface.UWP.csproj",
       "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PC\\source\\repos\\P4fMobApp\\UInterface\\UInterface.UWP\\obj\\",
+      "outputPath": "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\UInterface\\UInterface.UWP\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
@@ -16957,8 +16957,8 @@
       "frameworks": {
         "uap10.0.16299": {
           "projectReferences": {
-            "C:\\Users\\PC\\source\\repos\\P4fMobApp\\UInterface\\UInterface\\UInterface.csproj": {
-              "projectPath": "C:\\Users\\PC\\source\\repos\\P4fMobApp\\UInterface\\UInterface\\UInterface.csproj"
+            "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\UInterface\\UInterface\\UInterface.csproj": {
+              "projectPath": "C:\\Users\\PC\\Desktop\\Dist_Comp\\MobileApp\\P4fMobApp\\UInterface\\UInterface\\UInterface.csproj"
             }
           }
         }

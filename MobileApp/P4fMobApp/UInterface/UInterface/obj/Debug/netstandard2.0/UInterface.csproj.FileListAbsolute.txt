@@ -11,3 +11,9 @@ C:\Users\PC\source\repos\P4fMobApp\UInterface\UInterface\obj\Debug\netstandard2.
 C:\Users\PC\source\repos\P4fMobApp\UInterface\UInterface\obj\Debug\netstandard2.0\UInterface.pdb
 C:\Users\PC\source\repos\P4fMobApp\UInterface\UInterface\obj\Debug\netstandard2.0\UInterface.Views.LoginPage.xaml.g.cs
 C:\Users\PC\source\repos\P4fMobApp\UInterface\UInterface\obj\Debug\netstandard2.0\UInterface.Views.RegisterPage.xaml.g.cs
+C:\Users\PC\Desktop\Dist_Comp\MobileApp\P4fMobApp\UInterface\UInterface\obj\Debug\netstandard2.0\UInterface.csprojResolveAssemblyReference.cache
+C:\Users\PC\Desktop\Dist_Comp\MobileApp\P4fMobApp\UInterface\UInterface\obj\Debug\netstandard2.0\UInterface.csproj.CoreCompileInputs.cache
+C:\Users\PC\Desktop\Dist_Comp\MobileApp\P4fMobApp\UInterface\UInterface\obj\Debug\netstandard2.0\UInterface.App.xaml.g.cs
+C:\Users\PC\Desktop\Dist_Comp\MobileApp\P4fMobApp\UInterface\UInterface\obj\Debug\netstandard2.0\UInterface.MainPage.xaml.g.cs
+C:\Users\PC\Desktop\Dist_Comp\MobileApp\P4fMobApp\UInterface\UInterface\obj\Debug\netstandard2.0\UInterface.Views.LoginPage.xaml.g.cs
+C:\Users\PC\Desktop\Dist_Comp\MobileApp\P4fMobApp\UInterface\UInterface\obj\Debug\netstandard2.0\UInterface.Views.RegisterPage.xaml.g.cs
