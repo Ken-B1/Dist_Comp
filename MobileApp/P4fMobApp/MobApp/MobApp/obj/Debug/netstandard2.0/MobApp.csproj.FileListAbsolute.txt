@@ -20,3 +20,7 @@ C:\Users\PC\source\repos\P4fMobApp\MobApp\MobApp\obj\Debug\netstandard2.0\MobApp
 C:\Users\PC\source\repos\P4fMobApp\MobApp\MobApp\obj\Debug\netstandard2.0\MobApp.dll
 C:\Users\PC\source\repos\P4fMobApp\MobApp\MobApp\obj\Debug\netstandard2.0\MobApp.pdb
 C:\Users\PC\source\repos\P4fMobApp\MobApp\MobApp\obj\Debug\netstandard2.0\MobApp.csprojResolveAssemblyReference.cache
+C:\Users\PC\Desktop\Dist_Comp\MobileApp\P4fMobApp\MobApp\MobApp\obj\Debug\netstandard2.0\MobApp.csprojResolveAssemblyReference.cache
+C:\Users\PC\Desktop\Dist_Comp\MobileApp\P4fMobApp\MobApp\MobApp\obj\Debug\netstandard2.0\MobApp.csproj.CoreCompileInputs.cache
+C:\Users\PC\Desktop\Dist_Comp\MobileApp\P4fMobApp\MobApp\MobApp\obj\Debug\netstandard2.0\MobApp.AssemblyInfoInputs.cache
+C:\Users\PC\Desktop\Dist_Comp\MobileApp\P4fMobApp\MobApp\MobApp\obj\Debug\netstandard2.0\MobApp.AssemblyInfo.cs

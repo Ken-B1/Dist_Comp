@@ -182,3 +182,4 @@ C:\Users\PC\source\repos\P4fMobApp\MobApp\MobApp.Android\obj\Debug\android\asset
 C:\Users\PC\source\repos\P4fMobApp\MobApp\MobApp.Android\obj\Debug\android\assets\System.Web.Services.pdb
 C:\Users\PC\source\repos\P4fMobApp\MobApp\MobApp.Android\obj\Debug\android\assets\System.Xml.Linq.pdb
 C:\Users\PC\source\repos\P4fMobApp\MobApp\MobApp.Android\obj\Debug\android\assets\System.Xml.pdb
+C:\Users\PC\Desktop\Dist_Comp\MobileApp\P4fMobApp\MobApp\MobApp.Android\obj\Debug\MobApp.Android.csprojResolveAssemblyReference.cache

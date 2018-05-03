@@ -104,3 +104,5 @@ C:\Users\PC\source\repos\P4fMobApp\WebMobApp1\bin\System.Net.Http.Extensions.xml
 C:\Users\PC\source\repos\P4fMobApp\WebMobApp1\bin\System.Net.Http.Primitives.xml
 C:\Users\PC\source\repos\P4fMobApp\WebMobApp1\obj\Debug\WebMobApp1.csproj.App.config
 C:\Users\PC\source\repos\P4fMobApp\WebMobApp1\obj\Debug\WebMobApp1.csprojResolveAssemblyReference.cache
+C:\Users\PC\Desktop\Dist_Comp\MobileApp\P4fMobApp\WebMobApp1\obj\Debug\WebMobApp1.dll
+C:\Users\PC\Desktop\Dist_Comp\MobileApp\P4fMobApp\WebMobApp1\obj\Debug\WebMobApp1.pdb
