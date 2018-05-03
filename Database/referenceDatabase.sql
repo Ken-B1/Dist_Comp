@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `p4food` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `p4food`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: p4food
@@ -26,15 +24,17 @@ DROP TABLE IF EXISTS `account`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `account` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `admin` tinyint(1) DEFAULT '0',
+  `admin` tinyint(1) NOT NULL DEFAULT '0',
   `Country` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `fname` varchar(255) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `fname` varchar(255) NOT NULL,
   `gender` varchar(255) DEFAULT NULL,
-  `lname` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `username` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `lname` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  UNIQUE KEY `username_UNIQUE` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -84,9 +84,9 @@ DROP TABLE IF EXISTS `board`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `board` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `boardname` varchar(255) DEFAULT NULL,
+  `boardname` varchar(255) NOT NULL,
   `category` int(11) DEFAULT NULL,
-  `owner` int(11) DEFAULT NULL,
+  `owner` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_board_category` (`category`),
   KEY `FK_board_owner` (`owner`),
@@ -115,8 +115,9 @@ DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `imagelocation` varchar(255) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_UNIQUE` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -139,9 +140,9 @@ DROP TABLE IF EXISTS `pin`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `recipe` varchar(255) DEFAULT NULL,
-  `recipeName` varchar(255) DEFAULT NULL,
-  `board` int(11) DEFAULT NULL,
+  `recipe` varchar(255) NOT NULL,
+  `recipeName` varchar(255) NOT NULL,
+  `board` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_pin_board` (`board`),
   CONSTRAINT `FK_pin_board` FOREIGN KEY (`board`) REFERENCES `board` (`id`) ON DELETE CASCADE
@@ -167,12 +168,12 @@ DROP TABLE IF EXISTS `statistics`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `statistics` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `timestamp` datetime DEFAULT NULL,
-  `userid` int(11) DEFAULT NULL,
+  `timestamp` datetime NOT NULL,
+  `userid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_statistics_userid` (`userid`),
   CONSTRAINT `FK_statistics_userid` FOREIGN KEY (`userid`) REFERENCES `account` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,7 +182,7 @@ CREATE TABLE `statistics` (
 
 LOCK TABLES `statistics` WRITE;
 /*!40000 ALTER TABLE `statistics` DISABLE KEYS */;
-INSERT INTO `statistics` VALUES (1,'2018-04-24 15:50:30',1),(2,'2018-04-24 15:50:49',1),(3,'2018-04-24 15:50:54',1),(4,'2018-04-24 15:51:00',2),(5,'2018-04-24 15:51:04',2);
+INSERT INTO `statistics` VALUES (1,'2018-04-24 15:50:30',1),(2,'2018-04-24 15:50:49',1),(3,'2018-04-24 15:50:54',1),(4,'2018-04-24 15:51:00',2),(5,'2018-04-24 15:51:04',2),(6,'2018-05-03 14:42:09',1);
 /*!40000 ALTER TABLE `statistics` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -194,4 +195,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-24 15:56:07
+-- Dump completed on 2018-05-03 14:44:22
