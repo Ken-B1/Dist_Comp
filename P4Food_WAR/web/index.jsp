@@ -15,37 +15,51 @@ and open the template in the editor.
 <html>
     <head>
         <title>Login</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <%@include file="headers/header.jsp" %>
+        <script src="http://code.jquery.com/jquery.js"></script>
     </head>
     <body style="background-color: #eeeeee">
         <div class="container">
-        <div align="center" class="panel panel-default" style="margin-top: 10%;">
-            <div class="panel-body" style="background-color: white; padding: 50px 20px 40px 20px; width: 40%; border-radius: 20px; border:solid; border-width: 1px; border-color: #bbbbbb">
-                <form action="login" method="post">
-                    <div class="form-group">
-                        <label>Username:</label>
-                        <input type="text" name="username" />
-                    </div>
-                    <div class="form-group">
-                        <label>Password:</label>
-                        <input type="password" name="password" />
-                    </div>
-                    <div>
-                        <p style="color: red">${loginfail}</p>
-                    </div>
-                    
-                    <input type="submit" value="Submit" class="btn btn-default" style="background-color: #ffffff;border: solid;  border-width: 1px; border-color: #aaaaaa">
-                </form>
-                <p style="padding-top: 20px">No account yet? <a href="Registration">Sign up</a></p>
+            <div align="center" class="panel panel-default" style="margin-top: 10%;">
+                <div class="panel-body" style="background-color: white; padding: 50px 20px 40px 20px; width: 40%; border-radius: 20px; border:solid; border-width: 1px; border-color: #bbbbbb" >
+
+                    <form action="login" method="post">
+                        <p class="font-weight-bold">Welcome to Pinterest 4 Food</p>
+                        <div class="alert alert-danger" id="signInError" role="alert">${loginfail}</div>
+                        <script>
+                            if($("#signInError").text()){
+                                $("#signInError").show();                                
+                            }else{
+                                $("#signInError").hide();
+                            }                           
+                        </script>
+                                            
+                        <div class="form-group">
+                          
+                          <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="Username" name="username">
+                        </div>
+                        <div class="form-group">
+                         
+                          <input type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password" name="password">
+                        </div>
+                        <div class="form-check">
+                          <input type="checkbox" class="form-check-input" id="dropdownCheck2">
+                          <label class="form-check-label" for="dropdownCheck2">
+                            Remember me
+                          </label>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <button type="submit" class="btn btn-primary">Sign In</button>
+                        
+                      </form>
+                    <p style="padding-top: 20px">No account yet? <a href="Registration">Sign up</a></p>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="btn btn-lg btn-block omb_btn-facebook">
+                        <i class="fab fa-facebook"></i>
+                        <span class="hidden-xs">Facebook</span>
+                    </a>
+                </div>
             </div>
-        </div>
         </div>
     </body>
 </html>
