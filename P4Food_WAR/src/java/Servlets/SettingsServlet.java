@@ -6,9 +6,7 @@
 package Servlets;
 
 import Entities.Account;
-import Entities.Statistics;
 import java.io.IOException;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Business.AccountFacade;
+import Business_Utility.RegistrationStatus;
 
 /**
  *
@@ -56,6 +55,9 @@ public class SettingsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account account = new Account();
+        String email = request.getParameter("email");
+        String username = request.getParameter("username");
+        
         account.setEmail(request.getParameter("email"));
         account.setUsername(request.getParameter("username"));
         account.setFname(request.getParameter("fname"));
@@ -64,7 +66,15 @@ public class SettingsServlet extends HttpServlet {
         account.setGender(request.getParameter("gender"));
         
         try {
-            accountbean.updateAccount(account, (int)request.getSession().getAttribute("id"));
+            RegistrationStatus result = accountbean.updateAccount(account, (int)request.getSession().getAttribute("id"));
+            if(result.getStatusCode() == 0){
+                response.sendRedirect("settings");
+            }else{
+                int id = (int)request.getSession().getAttribute("id");
+                request.setAttribute("result", result);
+                request.setAttribute("accountinfo", accountbean.getAccountById(id));
+                request.getRequestDispatcher("settings.jsp").forward(request, response);
+            }
         } catch(javax.persistence.NoResultException e) {
             // TODO: Show a corresponding error
             // Error happens when nonexistent user is somehow requested
