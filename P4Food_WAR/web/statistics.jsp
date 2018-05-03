@@ -8,47 +8,39 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
     <head>
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/fa-svg-with-js.css">
-        <script src="js/bootstrap.bundle.min.js"></script>
-        <script defer src="js/fontawesome-all.js"></script>
-
-        <link rel="icon" href="images\icons\logo.png">
+        <%@include file="headers/adminHeader.jsp" %>
     </head>
 
     <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">
-                <img src="images\icons\logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-                Pin4FooD
-            </a>   
-            <div class="collapse navbar-collapse" id="navbarSupportedContent"> 
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="pinboard"><i class="fas fa-home fa-sm"></i> Home</a>
-                    </li>
-                    <li class="nav-item active">
-                            <a class="nav-link" href="createBoard"><i class="fab fa-flipboard fa-sm"></i> Boards</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="createPin"><i class="fas fa-thumbtack fa-sm"></i> Pins</a>
-                    </li>
-                </ul>
-                <c:if test="${isAdmin}"><a class="nav-item active" href="admin">Admin</a></c:if>
-                <a class="nav-item active" href="settings"><i class="fas fa-user-circle fa-2x"></i></a>
-                <a class="nav-item active" href="statistics">Statistics</a>
-                <button class="btn btn-outline-success my-2 my-sm-0" >Login</button>
-            </div> 
-    </nav>
-   <table>
-    <c:forEach items="${logins}" var="entry">
-        <tr>
-            <td>${entry.id}</td>
-            <td>${entry.userid}</td>
-            <td>${entry.timestamp}</td>
-        </tr>
-    </c:forEach>
-   </table>
+    
+        <div class="container">
+            <div class="dropdown-divider"></div>
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-6">
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">USER ID</th>
+                            <th scope="col">Time</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${logins}" var="entry">
+                                <tr>
+                                    <th scope="row">${entry.id}</th>
+                                    <td>${entry.userid}</td>
+                                    <td>${entry.timestamp}</td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+             <div class="col"></div>
+            </div>
+        </div>
+        
     </body>
 </html>
 
