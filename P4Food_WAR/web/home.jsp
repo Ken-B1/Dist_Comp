@@ -52,6 +52,18 @@
                 <c:if test="${isAdmin}"><a class="nav-item active" href="admin">Admin</a></c:if>
                 <a class="nav-item active" href="settings"><i class="fas fa-user-circle fa-2x"></i></a>
                 <a class="nav-item active" href="statistics">Statistics</a>
+                                <!-- TO DO Notification pop up icon-->
+                <button class="btn btn-links" style="font-size:36px;" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false" >
+                        <i class="far fa-bell"></i>
+                </button>
+                <span class="badge badge-notify">0</span>
+                
+                <!-- TO DO Notification toggle-->
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <button class="dropdown-item" type="button">Action</button>
+                    <button class="dropdown-item" type="button">Another action</button>
+                    <button class="dropdown-item" type="button">Something else here</button>
+                </div>
                 <button class="btn btn-outline-success my-2 my-sm-0" >Login</button>
             </div> 
         </nav>
@@ -158,8 +170,8 @@
                                 <h5>Select atleast three categories</h5>  
                                     <c:forEach items = "${Categories}" var="category" >  
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="${category.getId()}" value="${category.getId()}">
-                                            <label class="custom-control-label" for="African">${category.getName()}</label>
+                                            <input type="checkbox" class="custom-control-input" id="${category.getName()}" value="${category.getId()}">
+                                            <label class="custom-control-label" for="${category.getName()}">${category.getName()}</label>
                                         </div>
                                     </c:forEach>
                                     <div class="dropdown-divider"></div>                                    

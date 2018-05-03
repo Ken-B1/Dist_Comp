@@ -5,6 +5,7 @@
  */
 package Business;
 
+import Business_Utility.RegistrationStatus;
 import Entities.Account;
 import Entities.Categories;
 import java.util.ArrayList;
@@ -33,18 +34,18 @@ public class Admin {
     /*
     * Create a new account then set to admin
     */
-    public int createAdminAccount(String email,String userName,String password,String fname,String lname,String country,String gender){
+    public RegistrationStatus createAdminAccount(String email,String userName,String password,String fname,String lname,String country,String gender){
 
-        int result = regBean.createAccount(email, userName, password, fname, lname, country, gender);
+        RegistrationStatus result = regBean.createAccount(email, userName, password, fname, lname, country, gender);
         
-        if(result != -1){
-            makeAdmin(result);
+        if(result.getStatusCode() == 0){
+            makeAdmin(userName);
         }
         return result;
     }
     
-    public void makeAdmin(int id){
-        Account toChange = em.find(Account.class, id);
+    public void makeAdmin(String username){
+        Account toChange = (Account) em.createNamedQuery("Account.findByUsername").setParameter("username", username).getSingleResult();
         toChange.setAdmin(true);
         em.flush();
     }

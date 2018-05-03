@@ -41,7 +41,6 @@ public class StatisticsServlet extends HttpServlet {
         //Retrieve all logins for this user and display them on the page
         // TODO: Make this xss resistant??
         HttpSession session = request.getSession();
-
         List<Statistics> logins = statisticsBean.getStatistics((int)session.getAttribute("id"));
         request.setAttribute("logins", logins);
         request.getRequestDispatcher("statistics.jsp").forward(request, response);

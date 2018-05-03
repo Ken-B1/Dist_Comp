@@ -5,10 +5,11 @@
  */
 package Business;
 
+import Business_Utility.RegistrationStatus;
 import Entities.Account;
 import Entities.Statistics;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
+import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -17,7 +18,7 @@ import javax.persistence.Query;
  *
  * @author ken
  */
-@Stateless
+@Stateful
 public class AccountFacade extends AbstractFacade<Account> {
 
     @PersistenceContext(unitName = "statistics_EJBPU")
@@ -25,6 +26,11 @@ public class AccountFacade extends AbstractFacade<Account> {
     
     @EJB
     private StatisticsFacade statsfacade;
+    
+    @EJB 
+    private Registration reg;
+    
+    
     private Statistics statistic;
 
     public Account getAccountByUsername(String username) {
@@ -38,16 +44,22 @@ public class AccountFacade extends AbstractFacade<Account> {
     }
     
     
-    public void updateAccount(Account account, int currentUserId) {
-        Account acc = (Account)em.createNamedQuery("Account.findById").setParameter("id", currentUserId).getSingleResult();
-        acc.setEmail(account.getEmail());
-        acc.setFname(account.getFname());
-        acc.setLname(account.getLname());
-        acc.setCountry(account.getCountry());
-        acc.setGender(account.getGender());
-        acc.setUsername(account.getUsername());
-        em.flush();
+    public RegistrationStatus updateAccount(Account account, int currentUserId) {
+        RegistrationStatus result = reg.validate(account.getEmail(), account.getUsername());
+        if(result.getStatusCode() == 0){
+            Account acc = (Account)em.createNamedQuery("Account.findById").setParameter("id", currentUserId).getSingleResult();
+            acc.setEmail(account.getEmail());
+            acc.setFname(account.getFname());
+            acc.setLname(account.getLname());
+            acc.setCountry(account.getCountry());
+            acc.setGender(account.getGender());
+            acc.setUsername(account.getUsername());
+            em.flush();
+        }
+        
+        return result;
     }
+    
     
     public int createAccount(String email, String userName, String password, String fname, String lname, String country, String gender){
         long usernameexists = (long)em.createNamedQuery("Account.existsName").setParameter("username", userName).getSingleResult();

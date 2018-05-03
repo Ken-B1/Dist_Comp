@@ -6,6 +6,7 @@
 package Servlets;
 
 import Business.Registration;
+import Business_Utility.RegistrationStatus;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -58,12 +59,15 @@ public class RegistrationServlet extends HttpServlet {
         String country = request.getParameter("country");
         String gender = request.getParameter("gender");
         
-        if(createAccount.checkValues(email, userName) != 0){
+        RegistrationStatus valid = createAccount.validate(email, userName);
+        
+        if(valid.getStatusCode() != 0){
             //Account with email or username already exists
+            request.setAttribute("Status", valid);
             request.getRequestDispatcher("signup.jsp").forward(request, response);
         };
         
-        int result = createAccount.createAccount(email, userName, password, fname, lname, country, gender);    
+        createAccount.createAccount(email, userName, password, fname, lname, country, gender);    
         
         response.sendRedirect("index.jsp");
     }

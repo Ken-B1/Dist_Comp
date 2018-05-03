@@ -5,6 +5,7 @@
  */
 package Business;
 
+import Business_Utility.RegistrationStatus;
 import Entities.Account;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -31,10 +32,11 @@ public class Registration {
         Returns -1 if account could not be created because of already existing values
         Returns account id otherwise
     */
-    public int createAccount(String email,String userName,String password,String fname,String lname,String country,String gender){
-        if(checkValues(email, userName) != 0){
+    public RegistrationStatus createAccount(String email,String userName,String password,String fname,String lname,String country,String gender){
+        RegistrationStatus returnStatus = validate(email,userName);
+        if(returnStatus.getStatusCode() != 0){
             //Email or username already exists
-            return -1;
+            return returnStatus;
         }
         Account newAccount = new Account();
         newAccount.setEmail(email);
@@ -48,22 +50,26 @@ public class Registration {
         em.persist(newAccount);
         
         Account createdAcc = (Account)em.createNamedQuery("Account.findByUsername").setParameter("username", userName).getSingleResult();
-        return createdAcc.getId();
+        return returnStatus;
     };
     
     /*
     *   Check if an account with values already exists
     *   Returns an id based on the result
+    *   0 = Successful validation
+    *   1 = Email already in use 
+    *   2 = Username already in use
+    *   3 = Valid email (Still to be implemented)
     */
-    public int checkValues(String email, String userName){
+    public RegistrationStatus validate(String email, String userName){
         long usernameexists = (long)em.createNamedQuery("Account.existsName").setParameter("username", userName).getSingleResult();
         if(usernameexists != 0){
-            return 7;
+            return new RegistrationStatus(2, "Username is already in use");
         }
         long emailexists = (long)em.createNamedQuery("Account.existsEmail").setParameter("email", userName).getSingleResult();
         if(emailexists != 0){
-            return 8;
+            return new RegistrationStatus(1, "Email address is already in use");
         }
-        return 0;
+        return new RegistrationStatus(0, "Registration successful");
     }
 }
