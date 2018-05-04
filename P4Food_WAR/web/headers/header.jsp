@@ -45,10 +45,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent"> 
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="home.jsp"><i class="fas fa-home fa-sm"></i> Home</a>
+                        <a class="nav-link" href="pinboard"><i class="fas fa-home fa-sm"></i> Home</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="boards.jsp"><i class="fab fa-flipboard fa-sm"></i> Boards</a>
+                        <a class="nav-link" href="createBoard"><i class="fab fa-flipboard fa-sm"></i> Boards</a>
                     </li>                    
                     <li>
                         <form class="form-inline my-2 my-lg-0">
@@ -57,7 +57,7 @@
                         </form>                      
                     </li>
                 </ul>
-                
+                <c:if test="${isAdmin}"><a class="nav-item active" href="admin">Admin</a></c:if>                
                 <i class="fas fa-user-circle fa-2x"></i>
                 
             </div> 

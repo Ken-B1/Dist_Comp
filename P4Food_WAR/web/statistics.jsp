@@ -8,7 +8,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
     <head>
-        <%@include file="headers/adminHeader.jsp" %>
+        <%@include file="headers/header.jsp" %>
     </head>
 
     <body>
