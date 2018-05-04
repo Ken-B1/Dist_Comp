@@ -64,7 +64,7 @@
                     <button class="dropdown-item" type="button">Another action</button>
                     <button class="dropdown-item" type="button">Something else here</button>
                 </div>
-                <button class="btn btn-outline-success my-2 my-sm-0" >Login</button>
+                <a href="logout"><button class="btn btn-outline-success my-2 my-sm-0" >Login</button></a>
             </div> 
         </nav>
         <div class="dropdown-divider"></div>
