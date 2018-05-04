@@ -28,7 +28,6 @@ hs_err_pid*
 build/
 */dist/
 build.xml
-persistence.xml
 
 TODO.txt
 *.aux
