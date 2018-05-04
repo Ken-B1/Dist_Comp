@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Business.AccountFacade;
-import Business_Utility.RegistrationStatus;
+import Business_Utility.Status;
 
 /**
  *
@@ -66,7 +66,7 @@ public class SettingsServlet extends HttpServlet {
         account.setGender(request.getParameter("gender"));
         
         try {
-            RegistrationStatus result = accountbean.updateAccount(account, (int)request.getSession().getAttribute("id"));
+            Status result = accountbean.updateAccount(account, (int)request.getSession().getAttribute("id"));
             if(result.getStatusCode() == 0){
                 response.sendRedirect("settings");
             }else{

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Business.AccountFacade;
 import Business.Admin;
-import Business_Utility.RegistrationStatus;
+import Business_Utility.Status;
 
 /**
  *
@@ -69,7 +69,7 @@ public class AdminRegistrationServlet extends HttpServlet {
         String country = request.getParameter("country");
         String gender = request.getParameter("gender");
         
-        RegistrationStatus result = admin.createAdminAccount(email, userName, password, fname, lname, country, gender);    
+        Status result = admin.createAdminAccount(email, userName, password, fname, lname, country, gender);    
 
         if(result.getStatusCode() != 0){
             request.setAttribute("Status", result);

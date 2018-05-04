@@ -5,7 +5,7 @@
  */
 package Business;
 
-import Business_Utility.RegistrationStatus;
+import Business_Utility.Status;
 import Entities.Account;
 import Entities.Statistics;
 import javax.ejb.EJB;
@@ -44,8 +44,8 @@ public class AccountFacade extends AbstractFacade<Account> {
     }
     
     
-    public RegistrationStatus updateAccount(Account account, int currentUserId) {
-        RegistrationStatus result = reg.validate(account.getEmail(), account.getUsername());
+    public Status updateAccount(Account account, int currentUserId) {
+        Status result = reg.validate(account.getEmail(), account.getUsername());
         if(result.getStatusCode() == 0){
             Account acc = (Account)em.createNamedQuery("Account.findById").setParameter("id", currentUserId).getSingleResult();
             acc.setEmail(account.getEmail());

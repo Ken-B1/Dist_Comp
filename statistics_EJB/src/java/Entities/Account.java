@@ -96,8 +96,7 @@ public class Account implements Serializable {
     @Column(name = "gender")
     private String gender;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "Country")
     private String country;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")

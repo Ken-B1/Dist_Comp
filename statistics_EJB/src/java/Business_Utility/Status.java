@@ -9,16 +9,17 @@ package Business_Utility;
  *
  * @author Ken
  * 
- * Class that contains a statuscode and potential message when someone logs in
- * Essentially just a dataclass for now
+ * Class that contains a statuscode and potential message 
+ * This class is used often as a statusmessage for when someone for example creates an account
+ * (Where alot of different constraints can be violated)
  */
-public class RegistrationStatus {
+public class Status {
     private int statusCode;
     private String returnmessage;
     
-    public RegistrationStatus(){}
+    public Status(){}
     
-    public RegistrationStatus(int statusCode, String message){
+    public Status(int statusCode, String message){
         this.statusCode = statusCode;
         this.returnmessage = message;
     }

@@ -5,12 +5,13 @@
  */
 package Business;
 
-import Business_Utility.RegistrationStatus;
+import Business_Utility.Status;
 import Entities.Account;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.validation.ConstraintViolation;
 
 /**
  *
@@ -32,8 +33,8 @@ public class Registration {
         Returns -1 if account could not be created because of already existing values
         Returns account id otherwise
     */
-    public RegistrationStatus createAccount(String email,String userName,String password,String fname,String lname,String country,String gender){
-        RegistrationStatus returnStatus = validate(email,userName);
+    public Status createAccount(String email,String userName,String password,String fname,String lname,String country,String gender){
+        Status returnStatus = validate(email,userName);
         if(returnStatus.getStatusCode() != 0){
             //Email or username already exists
             return returnStatus;
@@ -46,10 +47,14 @@ public class Registration {
         newAccount.setLname(lname);
         newAccount.setCountry(country);
         newAccount.setGender(gender);
-        
-        em.persist(newAccount);
-        
-        Account createdAcc = (Account)em.createNamedQuery("Account.findByUsername").setParameter("username", userName).getSingleResult();
+        try{
+            em.persist(newAccount);
+        } catch(javax.validation.ConstraintViolationException e){
+            for(ConstraintViolation<?> u : e.getConstraintViolations()){
+                System.out.println(u.getMessage());
+            };
+        }
+
         return returnStatus;
     };
     
@@ -61,15 +66,15 @@ public class Registration {
     *   2 = Username already in use
     *   3 = Valid email (Still to be implemented)
     */
-    public RegistrationStatus validate(String email, String userName){
+    public Status validate(String email, String userName){
         long usernameexists = (long)em.createNamedQuery("Account.existsName").setParameter("username", userName).getSingleResult();
         if(usernameexists != 0){
-            return new RegistrationStatus(2, "Username is already in use");
+            return new Status(2, "Username is already in use");
         }
         long emailexists = (long)em.createNamedQuery("Account.existsEmail").setParameter("email", userName).getSingleResult();
         if(emailexists != 0){
-            return new RegistrationStatus(1, "Email address is already in use");
+            return new Status(1, "Email address is already in use");
         }
-        return new RegistrationStatus(0, "Registration successful");
+        return new Status(0, "Registration successful");
     }
 }
