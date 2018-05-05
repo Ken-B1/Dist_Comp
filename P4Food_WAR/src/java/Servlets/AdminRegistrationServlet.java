@@ -12,7 +12,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Business.AccountFacade;
 import Business.Admin;
 import Business_Utility.Status;
 
@@ -22,8 +21,6 @@ import Business_Utility.Status;
  */
 @WebServlet(name = "AdminRegistrationServlet", urlPatterns = {"/Adminregistration"})
 public class AdminRegistrationServlet extends HttpServlet {
-    @EJB
-    private AccountFacade accfac;
     @EJB
     private Admin admin;
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

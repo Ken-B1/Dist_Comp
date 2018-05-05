@@ -106,7 +106,7 @@ public class userFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
 
-        if (session == null || session.getAttribute("id") == null) {
+        if (session == null || session.getAttribute("user") == null) {
             res.sendRedirect(req.getContextPath() + "/login"); // No logged-in user found, so redirect to login page.
         } else {
             chain.doFilter(request, response); // Logged-in user found, so just continue request.

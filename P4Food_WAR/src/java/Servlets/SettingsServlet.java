@@ -5,6 +5,7 @@
  */
 package Servlets;
 
+import Business.AccountBean;
 import Entities.Account;
 import java.io.IOException;
 import javax.ejb.EJB;
@@ -13,7 +14,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Business.AccountFacade;
 import Business_Utility.Status;
 
 /**
@@ -22,9 +22,6 @@ import Business_Utility.Status;
  */
 @WebServlet(name = "SettingsServlet", urlPatterns = {"/settings"})
 public class SettingsServlet extends HttpServlet {
-
-    @EJB
-    private AccountFacade accountbean;
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -37,8 +34,7 @@ public class SettingsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = (int)request.getSession().getAttribute("id");
-        Account account = accountbean.getAccountById(id);
+        Account account = ((AccountBean)request.getSession().getAttribute("user")).getAccount();
         request.setAttribute("accountinfo", account);
         request.getRequestDispatcher("settings.jsp").forward(request, response);
     }
@@ -55,8 +51,6 @@ public class SettingsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account account = new Account();
-        String email = request.getParameter("email");
-        String username = request.getParameter("username");
         
         account.setEmail(request.getParameter("email"));
         account.setUsername(request.getParameter("username"));
@@ -65,22 +59,16 @@ public class SettingsServlet extends HttpServlet {
         account.setCountry(request.getParameter("country"));
         account.setGender(request.getParameter("gender"));
         
-        try {
-            Status result = accountbean.updateAccount(account, (int)request.getSession().getAttribute("id"));
-            if(result.getStatusCode() == 0){
-                response.sendRedirect("settings");
-            }else{
-                int id = (int)request.getSession().getAttribute("id");
-                request.setAttribute("result", result);
-                request.setAttribute("accountinfo", accountbean.getAccountById(id));
-                request.getRequestDispatcher("settings.jsp").forward(request, response);
-            }
-        } catch(javax.persistence.NoResultException e) {
-            // TODO: Show a corresponding error
-            // Error happens when nonexistent user is somehow requested
-            System.out.println(e.getMessage());
+        AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
+        
+        Status result = currentUser.updateAccount(account);
+        if(result.getStatusCode() == 0){
+            response.sendRedirect("settings");
+        }else{
+            request.setAttribute("result", result);
+            request.setAttribute("accountinfo", currentUser);
+            request.getRequestDispatcher("settings.jsp").forward(request, response);
         }
-        response.sendRedirect("settings");
     }
 
     /**

@@ -5,10 +5,9 @@
  */
 package Servlets;
 
-import Business.AccountFacade;
+import Business.AccountBean;
 import Business.boardCrudBean;
 import Business.pinCrudBean;
-import Entities.Account;
 import Entities.Board;
 import Entities.Pin;
 import java.io.IOException;
@@ -27,9 +26,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "createPinServlet", urlPatterns = {"/createPin"})
 public class createPinServlet extends HttpServlet {
-    @EJB
-    private AccountFacade account;
-    
     @EJB 
     private pinCrudBean pinBean;
     
@@ -49,13 +45,12 @@ public class createPinServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException { 
-        
-        int id = (int)request.getSession().getAttribute("id");
-        Account currentUser = account.getAccountById(id);
+        AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
 
-        List<Board> userBoards = boardBean.getBoardsForUser(currentUser);
+        List<Board> userBoards = boardBean.getBoardsForUser(currentUser.getAccount());
         List<Pin> boardPins;
-        if(userBoards.size() == 0){
+        
+        if(userBoards.isEmpty()){
             boardPins = new ArrayList();   
         }else{
             boardPins = pinBean.getPinsForBoard(userBoards.get(0));
@@ -63,7 +58,7 @@ public class createPinServlet extends HttpServlet {
 
         request.setAttribute("pinList", boardPins);           
         
-        request.setAttribute("isAdmin", account.getAccountById(id).getAdmin());
+        request.setAttribute("isAdmin", currentUser.getAccount().getAdmin());
         request.getRequestDispatcher("pins.jsp").forward(request, response);
     }
 
@@ -79,9 +74,7 @@ public class createPinServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {        
         String recipeName = request.getParameter("recipeTitle");
-        String recipe = request.getParameter("recipe");
-        
-        int id = (int)request.getSession().getAttribute("id");       
+        String recipe = request.getParameter("recipe");   
         
         pinBean.createPin(recipeName, recipe, 1);          
             

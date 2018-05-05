@@ -5,7 +5,7 @@
  */
 package Servlets;
 
-import Business.AccountFacade;
+import Business.AccountBean;
 import Business.boardCrudBean;
 import Business.databaseConnector;
 import Entities.Account;
@@ -26,9 +26,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "createBoardsServlet", urlPatterns = {"/createBoard"})
 public class createBoardsServlet extends HttpServlet {
-    @EJB
-    private AccountFacade account;
-    
     @EJB 
     private boardCrudBean boardBean;
     
@@ -47,17 +44,16 @@ public class createBoardsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException { 
         
-        int id = (int)request.getSession().getAttribute("id");
-        Account currentUser = account.getAccountById(id);
+        AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
 
-        List<Board> userBoards = boardBean.getBoardsForUser(currentUser);
+        List<Board> userBoards = boardBean.getBoardsForUser(currentUser.getAccount());
 
         request.setAttribute("boardList", userBoards);           
         
         
         List<Categories> allCategories = connector.getAllCategories();
         request.setAttribute("categoryList", allCategories);
-        request.setAttribute("isAdmin", account.getAccountById(id).getAdmin());
+        request.setAttribute("isAdmin", currentUser.getAccount().getAdmin());
         request.getRequestDispatcher("boards.jsp").forward(request, response);
     }
 
@@ -73,15 +69,16 @@ public class createBoardsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {        
         String boardName = request.getParameter("boardname");
-        int id = (int)request.getSession().getAttribute("id");
-        Account currentUser = account.getAccountById(id);        
+        
+        AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
         
         String categoryString = request.getParameter("categorychosen");
+        
         if(categoryString.equals("NoCategory")){
-            boardBean.createBoard(boardName, currentUser); 
+            boardBean.createBoard(boardName, currentUser.getAccount()); 
         }else{
             int category = Integer.parseInt(request.getParameter("categorychosen")); 
-            boardBean.createBoard(boardName,category, currentUser);          
+            boardBean.createBoard(boardName,category, currentUser.getAccount());          
         }
         
         response.sendRedirect("createBoard");

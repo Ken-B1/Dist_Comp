@@ -5,10 +5,9 @@
  */
 package Servlets;
 
-import Business.AccountFacade;
+import Business.AccountBean;
 import Business.boardCrudBean;
 import Business.databaseConnector;
-import Entities.Account;
 import Entities.Categories;
 import java.io.IOException;
 import java.util.List;
@@ -25,9 +24,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "PinboardServlet", urlPatterns = {"/pinboard"})
 public class PinboardServlet extends HttpServlet {
-    @EJB
-    private AccountFacade account;
-    
     @EJB 
     private boardCrudBean boardBean;
     
@@ -44,13 +40,12 @@ public class PinboardServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = (int)request.getSession().getAttribute("id");
-        Account currentUser = account.getAccountById(id);
+        AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
         List<Categories> allCategories = connector.getAllCategories();
         
         
-        request.setAttribute("isAdmin", account.getAccountById(id).getAdmin());
-        request.setAttribute("hasCategories", currentUser.getCategoriesCollection().size() == 0);
+        request.setAttribute("isAdmin", currentUser.getAccount().getAdmin());
+        request.setAttribute("hasCategories", currentUser.hasCategories());
         request.setAttribute("Categories", allCategories);
         request.getRequestDispatcher("home.jsp").forward(request, response);
         

@@ -5,7 +5,7 @@
  */
 package Servlets;
 
-import Entities.Account;
+import Business.AccountBean;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -13,8 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import Business.AccountFacade;
+import Business.LoginBean;
 
 /**
  *
@@ -25,7 +24,7 @@ public class LoginServlet extends HttpServlet {
     //Class that handles login requests
     
     @EJB
-    private AccountFacade loginBean;
+    private LoginBean loginBean;
     
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -54,13 +53,13 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                // Log the user into his/her account and redirect depending on outcome
+        // Log the user into his/her account and redirect depending on outcome
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         
-        Boolean success = loginBean.login(username, password);
-        if(success) {
-            request.getSession().setAttribute("id", loginBean.getId(username));
+        AccountBean account = loginBean.login(username, password);
+        if(account != null) {
+            request.getSession().setAttribute("user", account);
             response.sendRedirect("pinboard");
         }else{
             request.setAttribute("loginfail", "Incorrect username/password");

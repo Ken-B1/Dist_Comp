@@ -147,14 +147,14 @@
                         </script>
                 
             </div>
-           <!-- Add a 'if' condition such that it should display the below script tag only new users  -->
-
+           
+           <c:if test="${hasCategories}">
             <script type="text/javascript">
                 window.onload = function(){
                     $('#myModal').modal('show');
                 };
             </script>
-            
+           </c:if>
             <div class="modal fade" id="myModal" role="dialog">
                 <div class="modal-dialog">
                 

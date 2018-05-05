@@ -5,6 +5,7 @@
  */
 package Servlets;
 
+import Business.AccountBean;
 import Entities.Statistics;
 import java.io.IOException;
 import java.util.List;
@@ -41,7 +42,8 @@ public class StatisticsServlet extends HttpServlet {
         //Retrieve all logins for this user and display them on the page
         // TODO: Make this xss resistant??
         HttpSession session = request.getSession();
-        List<Statistics> logins = statisticsBean.getStatistics((int)session.getAttribute("id"));
+        AccountBean currentUser = (AccountBean)session.getAttribute("user");
+        List<Statistics> logins = statisticsBean.getStatistics(currentUser.getAccount().getId());
         request.setAttribute("logins", logins);
         request.getRequestDispatcher("statistics.jsp").forward(request, response);
     }
