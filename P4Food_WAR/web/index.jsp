@@ -55,8 +55,8 @@ and open the template in the editor.
                     <p style="padding-top: 20px">No account yet? <a href="Registration">Sign up</a></p>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="btn btn-lg btn-block omb_btn-facebook">
-                        <i class="fab fa-facebook"></i>
-                        <span class="hidden-xs">Facebook</span>
+                        <i class="fab fa-google-plus-g"></i>
+                        <span class="hidden-xs">Login with Google</span>
                     </a>
                 </div>
             </div>
