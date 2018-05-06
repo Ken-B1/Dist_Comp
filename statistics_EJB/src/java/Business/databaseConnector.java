@@ -32,4 +32,5 @@ public class databaseConnector {
     public List<Categories> getAllCategories(){
         return em.createNamedQuery("Categories.findAll").getResultList();
     }
+    
 }

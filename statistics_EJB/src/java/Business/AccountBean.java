@@ -60,19 +60,20 @@ public class AccountBean {
         return result;
     }
     
-       public boolean hasCategories(){
-        return em.find(Account.class, currentUser).getCategoriesCollection().isEmpty();
+    public boolean hasCategories(){
+        return !em.find(Account.class, currentUser).getCategoriesCollection().isEmpty();
     }
     
-    public ArrayList<Categories> getUserCategories(int accountId){
-        return new ArrayList<Categories>();
+    public Collection<Categories> getUserCategories(int accountId){
+        return em.find(Account.class, currentUser).getCategoriesCollection();
     }
     
-    public void addUserCategory(int accountId, Categories newCategory){
-        Account currentUser = em.find(Account.class, accountId);
-        Collection<Categories> categories = currentUser.getCategoriesCollection();
+    public void addUserCategory(Categories newCategory){
+        Account user = em.find(Account.class, currentUser);
+        Collection<Categories> categories = user.getCategoriesCollection();
         categories.add(newCategory);
-        currentUser.setCategoriesCollection(categories);
+        user.setCategoriesCollection(categories);
+        em.flush();
     }
     
     // Add an account and make it managed by entity manager

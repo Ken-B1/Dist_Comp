@@ -148,7 +148,7 @@
                 
             </div>
            
-           <c:if test="${hasCategories}">
+           <c:if test="${!hasCategories}">
             <script type="text/javascript">
                 window.onload = function(){
                     $('#myModal').modal('show');
@@ -163,25 +163,27 @@
                     <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><i class="fas fa-times-circle fa-lg"></i></button>
                     </div>
+                    
+                    <form action="ChooseInitialCategories" method="post">
                     <div class="modal-body">
-                        <form action="# createboard.jsp">
                             <div class="row">
                                 <div class="col">
+                                <c:set var="errorMessage" value="${NotEnoughCategories ? '' : 'Select at least 3 categories'}" />
                                 <h5>Select atleast three categories</h5>  
                                     <c:forEach items = "${Categories}" var="category" >  
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="${category.getName()}" value="${category.getId()}">
+                                            <input type="checkbox" class="custom-control-input" name="CategorySelect" id="${category.getName()}" value="${category.getId()}">
                                             <label class="custom-control-label" for="${category.getName()}">${category.getName()}</label>
                                         </div>
                                     </c:forEach>
                                     <div class="dropdown-divider"></div>                                    
                                 </div>                                       
                             </div>
-                        </form>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-default">Add</button>
+                            </div>
                     </div>
-                    <div class="modal-footer">
-                    <button type="submit" class="btn btn-default">Add</button>
-                    </div>
+                    </form>
                 </div>
                 
                 </div>
