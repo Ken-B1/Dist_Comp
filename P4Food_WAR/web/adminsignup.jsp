@@ -13,47 +13,68 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Login</title>
+        <title>Admin Registration</title>
         <%@include file="headers/header.jsp" %>
+        <link rel="stylesheet" href="build/css/countrySelect.css">
     </head>
     <body style="background-color: #eeeeee">
         <div class="container">
-        <div align="center" class="panel panel-default" style="margin-top: 10%;">
-            <div class="panel-body" style="background-color: white; padding: 50px 20px 40px 20px; width: 40%; border-radius: 20px; border:solid; border-width: 1px; border-color: #bbbbbb">
-                <form action="Adminregistration" method="post">
-                    <div class="form-group">
-                        <label>Email:</label>
-                        <input type="text" name="email" />
-                    </div>
-                    <div class="form-group">
-                        <label>Username:</label>
-                        <input type="text" name="username" />
-                    </div>
-                    <div class="form-group">
-                        <label>Password:</label>
-                        <input type="password" name="password" />
-                    </div>
-                    <div class="form-group">
-                        <label>First name:</label>
-                        <input type="text" name="fname" />
-                    </div>
-                    <div class="form-group">
-                        <label>Last name:</label>
-                        <input type="text" name="lname" />
-                    </div>
-                    <div class="form-group">
-                        <label>Country:</label>
-                        <input type="text" name="country" />
-                    </div>
-                    <div class="form-group">
-                        <label>Gender:</label>
-                        <input type="text" name="gender" />
-                    </div>
-                    <button type="submit" class="btn btn-default" style="background-color: #ffffff;border: solid;  border-width: 1px; border-color: #aaaaaa">Submit</button>
-                </form>
-                <p style="padding-top: 20px"><a href="index.jsp">Sign in</a></p>
+            <div align="center" class="panel panel-default" style="margin-top: 5%;">
+                <div class="panel-body" style="background-color: white; padding: 50px 20px 40px 20px; width: 60%; border-radius: 20px; border:solid; border-width: 1px; border-color: #bbbbbb">
+                    <form action="Adminregistration" method="post">
+                        <p class="font-weight-bold">Register an Administrator</p>
+                        <div class="row">
+                            <div class="col-sm">
+                                <p>Admin Credentials</p>
+                                <div class="form-group">
+                                    <input type="text" c id="email" placeholder="Email" name="emal">                            
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="username" placeholder="Username" name="username">
+
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm">
+                                <p>Personal Details</p>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="fname" placeholder="First Name" name="fname">
+
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="lname" placeholder="Last Name" name="lname">
+
+                                </div>
+                                <div class="form-group">                                    
+                                    <input class="form-control" type="text" id="country" name="country">
+
+                                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+                                    <script src="build/js/countrySelect.min.js"></script>
+                                    <script>
+                                        $("#country").countrySelect();
+                                    </script> 
+                                </div>
+                                <div class="form-group">
+                                    <select class="custom-select" name="gender">
+                                        <option selected>Select Gender</option>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                        <option value="U">Other</option>
+                                    </select>  
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </form>
+                    
+                </div>
             </div>
-        </div>
         </div>
     </body>
 </html>

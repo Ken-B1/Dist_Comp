@@ -62,11 +62,11 @@
                             <img class="user" src="images\icons\logo.png" />
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">                     
-                            <a class="dropdown-item" href="boards.jsp">My Profile</a>
-                            <a class="dropdown-item" href="settings.jsp">Settings</a>
-                            <a class="dropdown-item" href="statistics.jsp">Statistics</a>
+                            <a class="dropdown-item" href="createBoard">My Profile</a>
+                            <a class="dropdown-item" href="settings">Settings</a>
+                            <a class="dropdown-item" href="statistics">Statistics</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="index.jsp">Logout</a>
+                            <a class="dropdown-item" href="logout">Logout</a>
 
                             <c:if test="${isAdmin}">
                                 <div class="dropdown-divider"></div>
