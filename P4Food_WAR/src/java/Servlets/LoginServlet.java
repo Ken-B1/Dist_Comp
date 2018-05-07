@@ -60,6 +60,7 @@ public class LoginServlet extends HttpServlet {
         AccountBean account = loginBean.login(username, password);
         if(account != null) {
             request.getSession().setAttribute("user", account);
+            request.getSession().setAttribute("userid",username);
             response.sendRedirect("pinboard");
         }else{
             request.setAttribute("loginfail", "Incorrect username/password");
