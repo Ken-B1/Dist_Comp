@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ken
  */
-@WebServlet(name = "UnfollowPersonServlet", urlPatterns = {"/UnfollowPerson"})
-public class UnfollowPersonServlet extends HttpServlet {
+@WebServlet(name = "blockPersonServlet", urlPatterns = {"/BlockPerson"})
+public class blockPersonServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -53,7 +53,7 @@ public class UnfollowPersonServlet extends HttpServlet {
         if(id != null){
             // If id == null, something went wrong
             personId = Integer.parseInt(id);
-            currentUser.unfollowPerson(personId);
+            currentUser.blockPerson(personId);
             response.sendRedirect(request.getHeader("Referer"));
         }
     }

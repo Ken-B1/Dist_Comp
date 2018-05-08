@@ -35,5 +35,15 @@ and open the template in the editor.
             
             <input type="submit" name="PersonId" value="2">Click</input>
         </form>
+        
+        <form action="BlockPerson" method="post">
+            
+            <input type="submit" name="PersonId" value="2">Click</input>
+        </form>
+        
+        <form action="UnblockPerson" method="post">
+            
+            <input type="submit" name="PersonId" value="2">Click</input>
+        </form>
     </body>
 </html>

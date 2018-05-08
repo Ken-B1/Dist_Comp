@@ -14,6 +14,7 @@ import Entities.Categories;
 import Entities.Peoplefollower;
 import Entities.PeoplefollowerPK;
 import java.util.Collection;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.ejb.LocalBean;
@@ -117,6 +118,43 @@ public class AccountBean {
             throw new NullPointerException("Tried to unfollow a person that could not be found");
         }
     }    
+    
+    // Block a follower
+    public void blockPerson(int toBlock) throws NullPointerException{
+        Peoplefollower blockedPerson = em.find(Peoplefollower.class, new PeoplefollowerPK(toBlock, currentUser));
+        if(blockedPerson != null){
+            blockedPerson.setIsBlocked((short)1);
+            //Check if this person is also following some of my boards
+            List<Boardfollowers> allFollowedBoards =  em.createNamedQuery("Boardfollowers.findByUserid").setParameter("userid", toBlock).getResultList();
+            for(Boardfollowers x: allFollowedBoards){
+                x.setIsBlocked((short)1);
+            }
+            em.flush();
+        }else{
+            // Something went wrong
+            throw new NullPointerException("Tried to block a person that could not be found");
+        }  
+    }
+    
+    // Unblock a follower
+    public void unblockPerson(int tounBlock) throws NullPointerException{
+        Peoplefollower unblockedPerson = em.find(Peoplefollower.class, new PeoplefollowerPK(tounBlock, currentUser));
+        if(unblockedPerson != null){
+            unblockedPerson.setIsBlocked((short)0);
+            //Check if this person is also following some of my boards
+            List<Boardfollowers> allFollowedBoards =  em.createNamedQuery("Boardfollowers.findByUserid").setParameter("userid", tounBlock).getResultList();
+            for(Boardfollowers x: allFollowedBoards){
+                x.setIsBlocked((short)0);
+            }
+            em.flush();
+        }else{
+            // Something went wrong
+            throw new NullPointerException("Tried to block a person that could not be found");
+        }  
+        
+    }
+    
+    
     // Getters and setters for account entity
     
     // Add an account and make it managed by entity manager

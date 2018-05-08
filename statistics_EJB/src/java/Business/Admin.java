@@ -11,8 +11,8 @@ import Entities.Categories;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -20,10 +20,11 @@ import javax.persistence.PersistenceContext;
  *
  * @author Ken
  * Class that facilitates some admin actions
+ * Gives an error, but this might be a netbeans problem. It should work when running
  */
-@Stateless
+@Stateful
 @LocalBean
-public class Admin {
+public class Admin extends AccountBean{
     @PersistenceContext(unitName = "statistics_EJBPU")
     private EntityManager em;
     

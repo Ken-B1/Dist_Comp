@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ken
  */
-@WebServlet(name = "UnfollowPersonServlet", urlPatterns = {"/UnfollowPerson"})
-public class UnfollowPersonServlet extends HttpServlet {
+@WebServlet(name = "UnblockPersonServlet", urlPatterns = {"/UnblockPerson"})
+public class unblockPersonServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -47,13 +47,13 @@ public class UnfollowPersonServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       String id = request.getParameter("PersonId");
+        String id = request.getParameter("PersonId");
         AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
         int personId;
         if(id != null){
             // If id == null, something went wrong
             personId = Integer.parseInt(id);
-            currentUser.unfollowPerson(personId);
+            currentUser.unblockPerson(personId);
             response.sendRedirect(request.getHeader("Referer"));
         }
     }
