@@ -57,7 +57,7 @@
                 <%} else {%>
                 <ul class="nav navbar-nav navbar-right" id="usernmenu">
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                        <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="content:;> 
                             <!-- <i class="fas fa-user-circle fa-1x"></i> -->
                             <img class="user" src="images\icons\logo.png" />
                         </a>
