@@ -7,8 +7,12 @@ package Business;
 
 import Business_Utility.Status;
 import Entities.Account;
+import Entities.Board;
+import Entities.Boardfollowers;
+import Entities.BoardfollowersPK;
 import Entities.Categories;
-import java.util.ArrayList;
+import Entities.Peoplefollower;
+import Entities.PeoplefollowerPK;
 import java.util.Collection;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
@@ -75,6 +79,45 @@ public class AccountBean {
         user.setCategoriesCollection(categories);
         em.flush();
     }
+    
+    // Follow a board
+    public void followBoard(Board toFollow){
+        Boardfollowers newFollower = new Boardfollowers(currentUser, toFollow.getId());
+        newFollower.setBoard(toFollow);
+        newFollower.setAccount(em.find(Account.class, currentUser));
+        em.persist(newFollower);
+    }
+    
+    // Unfollow a board
+    public void unfollowBoard(Board toUnFollow) throws NullPointerException{
+        Boardfollowers toRemove = em.find(Boardfollowers.class, new BoardfollowersPK(currentUser, toUnFollow.getId()));
+        if(toRemove != null){
+            em.remove(toRemove);
+        }else{
+            // Something went wrong
+            throw new NullPointerException("Tried to unfollow a board that could not be found");
+        }
+    }
+    
+    // Follow a person
+    public void followPerson(int toFollow){
+        Peoplefollower newFollower = new Peoplefollower(currentUser, toFollow);
+        newFollower.setAccount(em.find(Account.class, currentUser));
+        newFollower.setAccount1(em.find(Account.class, toFollow));
+        em.persist(newFollower);
+    }    
+    
+    // Unfollow a person
+    public void unfollowPerson(int toUnFollow) throws NullPointerException{
+        Peoplefollower toRemove = em.find(Peoplefollower.class, new PeoplefollowerPK(currentUser, toUnFollow));
+        if(toRemove != null){
+            em.remove(toRemove);
+        }else{
+            // Something went wrong
+            throw new NullPointerException("Tried to unfollow a person that could not be found");
+        }
+    }    
+    // Getters and setters for account entity
     
     // Add an account and make it managed by entity manager
     public void setAccount(Account acc){

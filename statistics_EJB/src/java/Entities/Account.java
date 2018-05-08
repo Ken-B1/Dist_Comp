@@ -48,6 +48,13 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Account.existsEmail", query = "SELECT COUNT(a) FROM Account a WHERE a.email = :email")})
 public class Account implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
+    private Collection<Boardfollowers> boardfollowersCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
+    private Collection<Peoplefollower> peoplefollowerCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "account1")
+    private Collection<Peoplefollower> peoplefollowerCollection1;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "admin")
@@ -245,6 +252,33 @@ public class Account implements Serializable {
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
+    }
+
+    @XmlTransient
+    public Collection<Boardfollowers> getBoardfollowersCollection() {
+        return boardfollowersCollection;
+    }
+
+    public void setBoardfollowersCollection(Collection<Boardfollowers> boardfollowersCollection) {
+        this.boardfollowersCollection = boardfollowersCollection;
+    }
+
+    @XmlTransient
+    public Collection<Peoplefollower> getPeoplefollowerCollection() {
+        return peoplefollowerCollection;
+    }
+
+    public void setPeoplefollowerCollection(Collection<Peoplefollower> peoplefollowerCollection) {
+        this.peoplefollowerCollection = peoplefollowerCollection;
+    }
+
+    @XmlTransient
+    public Collection<Peoplefollower> getPeoplefollowerCollection1() {
+        return peoplefollowerCollection1;
+    }
+
+    public void setPeoplefollowerCollection1(Collection<Peoplefollower> peoplefollowerCollection1) {
+        this.peoplefollowerCollection1 = peoplefollowerCollection1;
     }
     
 }

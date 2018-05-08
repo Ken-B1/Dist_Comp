@@ -47,6 +47,11 @@ public class boardCrudBean {
         createBoard(name, em.find(Categories.class, categoryId), owner);
     }
     
+    public Board getBoard(int boardId){
+        Board returnboard = em.find(Board.class, boardId);
+        return returnboard;
+    }
+    
     public List<Board> getBoardsForUser(Account owner){
         List<Board> resultlist = em.createNamedQuery("Board.findByOwner").setParameter("userid", owner).getResultList();
         return resultlist;

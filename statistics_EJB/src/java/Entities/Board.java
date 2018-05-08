@@ -39,6 +39,9 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Board implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "board")
+    private Collection<Boardfollowers> boardfollowersCollection;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "board")
     private Collection<Pin> pinCollection;
 
     @JoinColumn(name = "category", referencedColumnName = "id")
@@ -129,6 +132,15 @@ public class Board implements Serializable {
 
     public void setPinCollection(Collection<Pin> pinCollection) {
         this.pinCollection = pinCollection;
+    }
+
+    @XmlTransient
+    public Collection<Boardfollowers> getBoardfollowersCollection() {
+        return boardfollowersCollection;
+    }
+
+    public void setBoardfollowersCollection(Collection<Boardfollowers> boardfollowersCollection) {
+        this.boardfollowersCollection = boardfollowersCollection;
     }
     
 }
