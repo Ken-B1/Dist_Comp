@@ -43,7 +43,6 @@ public class createBoardsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException { 
-        
         AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
 
         List<Board> userBoards = boardBean.getBoardsForUser(currentUser.getAccount());

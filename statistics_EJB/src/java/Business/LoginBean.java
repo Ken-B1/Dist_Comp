@@ -29,7 +29,7 @@ public class LoginBean {
 
     // EJB Used to log logins
     @EJB
-    private StatisticsFacade statistics;
+    private StatisticsBean statistics;
     
     public LoginBean() {
     }

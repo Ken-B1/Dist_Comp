@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import Business.StatisticsFacade;
+import Business.StatisticsBean;
 
 /**
  *
@@ -26,7 +26,7 @@ import Business.StatisticsFacade;
 public class StatisticsServlet extends HttpServlet {
     //Statistics bean for fetching entries
     @EJB
-    StatisticsFacade statisticsBean;
+    StatisticsBean statisticsBean;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.

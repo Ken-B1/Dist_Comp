@@ -13,6 +13,8 @@ import Entities.BoardfollowersPK;
 import Entities.Categories;
 import Entities.Peoplefollower;
 import Entities.PeoplefollowerPK;
+import Entities.Statistics;
+import Entities.Useractions;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
@@ -20,6 +22,7 @@ import javax.ejb.Stateful;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -154,6 +157,19 @@ public class AccountBean {
         
     }
     
+    /*
+        Get this user's notifications
+        It uses the last login time for this user to only get notifications received after this time
+    */
+    public List<Useractions> getNotifications(){
+        Account user = em.find(Account.class, currentUser);
+        Statistics lastLogin = (Statistics)em.createNamedQuery("Statistics.findMaxTimestamp").setParameter("userid",user).getSingleResult();
+        Query quer = em.createNamedQuery("Useractions.findNotifications");
+        quer.setParameter("time", lastLogin.getTimestamp());
+        quer.setParameter("user", user);
+        List<Useractions> results = quer.getResultList();
+        return results;
+    }
     
     // Getters and setters for account entity
     

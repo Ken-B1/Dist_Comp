@@ -5,11 +5,10 @@
  */
 package Business;
 
-import Entities.Account;
 import Entities.Board;
 import Entities.Pin;
-import Entities.Categories;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
@@ -24,6 +23,10 @@ import javax.persistence.PersistenceContext;
 public class pinCrudBean {
     @PersistenceContext(unitName = "statistics_EJBPU")
     EntityManager em;
+    
+    @EJB
+    private StatisticsBean stats;
+    
     public pinCrudBean() {
     }
 
@@ -35,6 +38,7 @@ public class pinCrudBean {
         newpin.setBoard(board);
         newpin.setRecipe(recipe);
         em.persist(newpin);
+        stats.createPin(board.getOwner(), newpin);
     }
     
      public void createPin(String name, String recipe, int boardId){
@@ -56,11 +60,13 @@ public class pinCrudBean {
         toUpdate.setRecipeName(name);
         toUpdate.setBoard(em.find(Board.class, boardId));
         em.flush();
+        stats.updatePin(toUpdate.getBoard().getOwner(), toUpdate);
     }
     
     public void deletePin(int pinId){
-        Board toDelete = em.find(Board.class, pinId);
+        Pin toDelete = em.find(Pin.class, pinId);
         em.remove(toDelete);
         em.flush();
+        stats.removePin(toDelete.getBoard().getOwner(), toDelete);
     }
 }

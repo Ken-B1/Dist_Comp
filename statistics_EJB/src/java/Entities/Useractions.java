@@ -28,15 +28,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ken
  */
 @Entity
-@Table(name = "statistics")
+@Table(name = "useractions")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Statistics.findAll", query = "SELECT s FROM Statistics s")
-    , @NamedQuery(name = "Statistics.findById", query = "SELECT s FROM Statistics s WHERE s.id = :id")
-    , @NamedQuery(name = "Statistics.findByUserid", query = "SELECT s FROM Statistics s WHERE s.userid = :userid")
-    , @NamedQuery(name = "Statistics.findMaxTimestamp", query = "SELECT max(timestamp) FROM Statistics s WHERE s.userid = :userid")
-    , @NamedQuery(name = "Statistics.findByTimestamp", query = "SELECT s FROM Statistics s WHERE s.timestamp = :timestamp")})
-public class Statistics implements Serializable {
+    @NamedQuery(name = "Useractions.findAll", query = "SELECT u FROM Useractions u")
+    , @NamedQuery(name = "Useractions.findById", query = "SELECT u FROM Useractions u WHERE u.id = :id")
+    , @NamedQuery(name = "Useractions.findByAction", query = "SELECT u FROM Useractions u WHERE u.action = :action")
+    , @NamedQuery(name = "Useractions.findByTimestamp", query = "SELECT u FROM Useractions u WHERE u.timestamp = :timestamp")
+    , @NamedQuery(name = "Useractions.findNotifications", query = "SELECT u FROM Usertransactions u WHERE u.timestamp >= :time and u.user = :user")})
+public class Useractions implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,22 +46,33 @@ public class Statistics implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "timestamp")
+    @Column(name = "Action")
+    private int action;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "Timestamp")
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
-    @JoinColumn(name = "userid", referencedColumnName = "id")
+    @JoinColumn(name = "User", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Account userid;
+    private Account user;
 
-    public Statistics() {
+    public Useractions() {
     }
 
-    public Statistics(Integer id) {
+    public Useractions(Integer id) {
         this.id = id;
     }
 
-    public Statistics(Integer id, Date timestamp) {
+    public Useractions(int action, Date timestamp) {
         this.id = id;
+        this.action = action;
+        this.timestamp = timestamp;
+    }
+
+    public Useractions(Integer id, int action, Date timestamp) {
+        this.id = id;
+        this.action = action;
         this.timestamp = timestamp;
     }
 
@@ -73,6 +84,14 @@ public class Statistics implements Serializable {
         this.id = id;
     }
 
+    public int getAction() {
+        return action;
+    }
+
+    public void setAction(int action) {
+        this.action = action;
+    }
+
     public Date getTimestamp() {
         return timestamp;
     }
@@ -81,12 +100,12 @@ public class Statistics implements Serializable {
         this.timestamp = timestamp;
     }
 
-    public Account getUserid() {
-        return userid;
+    public Account getUser() {
+        return user;
     }
 
-    public void setUserid(Account userid) {
-        this.userid = userid;
+    public void setUser(Account user) {
+        this.user = user;
     }
 
     @Override
@@ -99,10 +118,10 @@ public class Statistics implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Statistics)) {
+        if (!(object instanceof Useractions)) {
             return false;
         }
-        Statistics other = (Statistics) object;
+        Useractions other = (Useractions) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -111,7 +130,7 @@ public class Statistics implements Serializable {
 
     @Override
     public String toString() {
-        return "Entities.Statistics[ id=" + id + " ]";
+        return "Entities.Useractions[ id=" + id + " ]";
     }
     
 }

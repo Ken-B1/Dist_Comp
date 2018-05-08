@@ -3,7 +3,7 @@
 <html>
     <head>
         <title>Boards - Pin4FooD</title>
-        <%@include file="headers/header.jsp" %>        
+        <%@include file="headers/header.jsp" %>               
         <script src="js/boards.js"></script>
     </head>
 
