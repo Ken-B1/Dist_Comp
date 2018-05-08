@@ -15,7 +15,7 @@ and open the template in the editor.
     <head>
         <title>Login</title>
         <%@include file="headers/header.jsp" %>
-        <link rel="stylesheet" href="build/css/countrySelect.css">
+        <link rel="stylesheet" href="countrySelect/css/countrySelect.css">
     </head>
     <body style="background-color: #eeeeee">
         <div class="container">
@@ -53,7 +53,7 @@ and open the template in the editor.
                                     <input class="form-control" type="text" id="country" name="country">
 
                                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-                                    <script src="build/js/countrySelect.min.js"></script>
+                                    <script src="countrySelect/js/countrySelect.min.js"></script>
                                     <script>
                                         $("#country").countrySelect();
                                     </script> 
