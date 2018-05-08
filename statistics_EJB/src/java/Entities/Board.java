@@ -20,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -37,6 +38,11 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Board.findByBoardname", query = "SELECT b FROM Board b WHERE b.boardname = :boardname")
     , @NamedQuery(name = "Board.findByOwner", query = "SELECT b FROM Board b WHERE b.owner = :userid")})
 public class Board implements Serializable {
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "isprivate")
+    private short isprivate;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "board")
     private Collection<Boardfollowers> boardfollowersCollection;
@@ -141,6 +147,14 @@ public class Board implements Serializable {
 
     public void setBoardfollowersCollection(Collection<Boardfollowers> boardfollowersCollection) {
         this.boardfollowersCollection = boardfollowersCollection;
+    }
+
+    public short getIsprivate() {
+        return isprivate;
+    }
+
+    public void setIsprivate(short isprivate) {
+        this.isprivate = isprivate;
     }
     
 }

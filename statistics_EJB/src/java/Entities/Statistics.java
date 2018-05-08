@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Statistics.findAll", query = "SELECT s FROM Statistics s")
     , @NamedQuery(name = "Statistics.findById", query = "SELECT s FROM Statistics s WHERE s.id = :id")
     , @NamedQuery(name = "Statistics.findByUserid", query = "SELECT s FROM Statistics s WHERE s.userid = :userid")
-    , @NamedQuery(name = "Statistics.findMaxTimestamp", query = "SELECT max(timestamp) FROM Statistics s WHERE s.userid = :userid")
+    , @NamedQuery(name = "Statistics.findMaxTimestamp", query = "SELECT max(s.timestamp) FROM Statistics s WHERE s.userid = :userid")
     , @NamedQuery(name = "Statistics.findByTimestamp", query = "SELECT s FROM Statistics s WHERE s.timestamp = :timestamp")})
 public class Statistics implements Serializable {
 

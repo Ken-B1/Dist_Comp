@@ -75,4 +75,22 @@ public class Admin extends AccountBean{
         return em.createNamedQuery("Categories.findAll").getResultList();
     }
     
+    // Block, unblock or remove users
+    public void blockUser(int userId){
+        Account toBlock = em.find(Account.class, userId);
+        toBlock.setIsBlocked((short)1);
+        em.flush();
+    }
+    
+    public void unblockUser(int userId){
+        Account toUnBlock = em.find(Account.class, userId);
+        toUnBlock.setIsBlocked((short)0);
+        em.flush();
+    }
+    
+    public void removeUser(int userId){
+        Account toRemove = em.find(Account.class, userId);
+        em.remove(toRemove);
+        em.flush();   
+    }
 }
