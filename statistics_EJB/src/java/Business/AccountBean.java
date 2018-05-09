@@ -11,9 +11,9 @@ import Entities.Board;
 import Entities.Boardfollowers;
 import Entities.BoardfollowersPK;
 import Entities.Categories;
+import Entities.Messages;
 import Entities.Peoplefollower;
 import Entities.PeoplefollowerPK;
-import Entities.Statistics;
 import Entities.Useractions;
 import java.util.Collection;
 import java.util.List;
@@ -51,7 +51,6 @@ public class AccountBean {
     }
     
     // Put all crud functionalities here?
-    
     public Status updateAccount(Account account) {
         Status result = reg.validate(account.getEmail(), account.getUsername());
         if(result.getStatusCode() == 0){
@@ -167,6 +166,12 @@ public class AccountBean {
         quer.setParameter("user", user).setMaxResults(20);
         List<Useractions> results = quer.getResultList();
         return results;
+    }
+    
+    // Get this user's messages
+    public Collection<Messages> getMessages(){
+        Account user = em.find(Account.class, currentUser);
+        return user.getMessagesCollection();
     }
     
     // Getters and setters for account entity

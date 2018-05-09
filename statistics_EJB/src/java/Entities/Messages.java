@@ -6,6 +6,7 @@
 package Entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +16,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -31,14 +35,30 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Messages.findByContent", query = "SELECT m FROM Messages m WHERE m.content = :content")})
 public class Messages implements Serializable {
 
+    @Size(max = 45)
+    @Column(name = "content")
+    private String content;
+    @Size(max = 45)
+    @Column(name = "subject")
+    private String subject;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "timestamp")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timestamp;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "isRead")
+    private short isRead;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
     private Integer id;
-    @Column(name = "content")
-    private Integer content;
     @JoinColumn(name = "receiver", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Account receiver;
@@ -61,13 +81,6 @@ public class Messages implements Serializable {
         this.id = id;
     }
 
-    public Integer getContent() {
-        return content;
-    }
-
-    public void setContent(Integer content) {
-        this.content = content;
-    }
 
     public Account getReceiver() {
         return receiver;
@@ -108,6 +121,38 @@ public class Messages implements Serializable {
     @Override
     public String toString() {
         return "Entities.Messages[ id=" + id + " ]";
+    }
+
+    public short getIsRead() {
+        return isRead;
+    }
+
+    public void setIsRead(short isRead) {
+        this.isRead = isRead;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
     
 }

@@ -63,6 +63,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">                     
                             <a class="dropdown-item" href="createBoard">My Profile</a>
+                            <a class="dropdown-item" href="MessageOverview">Messages</a>
                             <a class="dropdown-item" href="settings">Settings</a>
                             <a class="dropdown-item" href="statistics">Statistics</a>
                             <div class="dropdown-divider"></div>

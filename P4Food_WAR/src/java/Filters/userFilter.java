@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author ken
  */
-@WebFilter(filterName = "userFilter", urlPatterns = {"/pinboard", "/admin", "/Admincategories", "/settings", "/statistics", "/createBoard", "/createPin", "/Adminregistration"})
+@WebFilter(filterName = "userFilter", urlPatterns = {"/pinboard", "/admin", "/Admincategories", "/settings", "/statistics", "/createBoard", "/createPin", "/Adminregistration", "/MessageOverview", "/FullMessage", "/WriteMessage"})
 public class userFilter implements Filter {
     
     private static final boolean debug = true;
