@@ -163,10 +163,8 @@ public class AccountBean {
     */
     public List<Useractions> getNotifications(){
         Account user = em.find(Account.class, currentUser);
-        Statistics lastLogin = (Statistics)em.createNamedQuery("Statistics.findMaxTimestamp").setParameter("userid",user).getSingleResult();
         Query quer = em.createNamedQuery("Useractions.findNotifications");
-        quer.setParameter("time", lastLogin.getTimestamp());
-        quer.setParameter("user", user);
+        quer.setParameter("user", user).setMaxResults(20);
         List<Useractions> results = quer.getResultList();
         return results;
     }

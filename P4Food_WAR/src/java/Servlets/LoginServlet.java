@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Business.LoginBean;
+import Entities.Useractions;
+import java.util.List;
 
 /**
  *
@@ -58,6 +60,13 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         
         AccountBean account = loginBean.login(username, password);
+        
+        List<Useractions> notifications = account.getNotifications();
+        for(Useractions x: notifications){
+            System.out.println(x.toString());
+        }
+        
+        
         if(account != null) {
             request.getSession().setAttribute("user", account);
             request.getSession().setAttribute("userid",username);

@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Useractions.findById", query = "SELECT u FROM Useractions u WHERE u.id = :id")
     , @NamedQuery(name = "Useractions.findByAction", query = "SELECT u FROM Useractions u WHERE u.action = :action")
     , @NamedQuery(name = "Useractions.findByTimestamp", query = "SELECT u FROM Useractions u WHERE u.timestamp = :timestamp")
-    , @NamedQuery(name = "Useractions.findNotifications", query = "SELECT u FROM Useractions u WHERE u.timestamp >= :time and u.user = :user")})
+    , @NamedQuery(name = "Useractions.findNotifications", query = "SELECT u FROM Useractions u WHERE u.user = :user ORDER BY u.timestamp DESC")})
 public class Useractions implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -27,7 +27,7 @@ and open the template in the editor.
                             <div class="col-sm">
                                 <p>Credentials</p>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="email" placeholder="Email" name="emal">                            
+                                    <input type="text" class="form-control" id="email" placeholder="Email" name="email">                            
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="username" placeholder="Username" name="username">
