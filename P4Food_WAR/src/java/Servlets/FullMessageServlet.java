@@ -5,8 +5,10 @@
  */
 package Servlets;
 
+import Business.messageCrud;
+import Entities.Messages;
 import java.io.IOException;
-import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,8 +20,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author ken
  */
 @WebServlet(name = "FullMessage", urlPatterns = {"/FullMessage"})
-public class FullMessage extends HttpServlet {
-
+public class FullMessageServlet extends HttpServlet {
+    @EJB
+    private messageCrud messageManager;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -33,7 +36,13 @@ public class FullMessage extends HttpServlet {
             throws ServletException, IOException {
         String idString = request.getParameter("id");
         int id = Integer.parseInt(idString);
-        request.getRequestDispatcher("messagecomplete.jsp").forward(request, response);
+        Messages fullMessage = messageManager.getFullMessage(id);
+        if(fullMessage != null){
+            request.setAttribute("message", fullMessage);
+            request.getRequestDispatcher("messagecomplete.jsp").forward(request, response);
+        }else{
+            // Redirect to Errorpage
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

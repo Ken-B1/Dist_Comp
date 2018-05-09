@@ -5,8 +5,15 @@
  */
 package Business;
 
+import Entities.Account;
+import Entities.Messages;
+import java.util.Date;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 /**
  *
@@ -16,6 +23,49 @@ import javax.ejb.LocalBean;
 @LocalBean
 public class messageCrud {
 
+    @PersistenceContext(unitName = "statistics_EJBPU")
+    private EntityManager em;
+
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+    public messageCrud(){}
+    
+    public Messages getFullMessage(int messageId){
+        Messages toFind = em.find(Messages.class, messageId);
+        return toFind;
+    }
+    
+    public void createMessage(int senderId, int receiverId, String subject, String content){
+        Account sender = em.find(Account.class, senderId);
+        Account receiver = em.find(Account.class, receiverId);
+        if(sender == null || receiver == null){
+            // Cannot create message, because sender or receiver is null
+            return;
+        }
+        
+        
+        Messages newMessage = new Messages();
+        newMessage.setSender(sender);
+        newMessage.setReceiver(receiver);
+        newMessage.setSubject(subject);
+        newMessage.setContent(content);
+        newMessage.setTimestamp(new Date(System.currentTimeMillis()));
+        newMessage.setIsRead((short)0);
+        try{
+            em.persist(newMessage);
+        } catch(ConstraintViolationException e){
+            for(ConstraintViolation u: e.getConstraintViolations()){
+                System.out.println("Message:");
+                System.out.println(u.getMessage());
+                System.out.println(u.toString());
+            }
+        }
+    }
+    
+    public void removeMessage(int messageId){
+        Messages findRemoved = em.find(Messages.class, messageId);
+        if(findRemoved != null){
+            em.remove(findRemoved);
+        }
+    }
 }

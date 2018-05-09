@@ -7,6 +7,13 @@
     </head>
 
     <body>   
-        <p>Whatsupp</p>
+        <form action="WriteMessage" method="Post">
+            <p><b>Sender:</b> ${message.getSender().getUsername()}</p>
+            <p><b>Receiver:</b> <input type="text" name="receiver"> </p>
+            <p><b>Subject: </b> <input type="text" name="subject"> </p>
+            <p><b>Message:</b> <input type="text" name="content"> </input></p>
+            <input type="submit" value="Send"></input>
+            
+        </form>
     </body>
 </html>

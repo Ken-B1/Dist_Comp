@@ -7,7 +7,10 @@
     </head>
 
     <body>   
-
+        <p><b>Sender:</b> ${message.getSender().getUsername()}</p>
+        <p><b>Receiver:</b> ${message.getReceiver().getUsername()}</p>
+        <p><b>Subject: </b> ${message.getSubject()}</p>
+        <p><b>Message:</b> ${message.getContent()}</p>
         <form action="WriteMessage" method="GET">
             <input type="submit" value="Click"></input>
         </form>           
