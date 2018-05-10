@@ -46,15 +46,11 @@ public class createPinServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException { 
         AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
+        int id = Integer.parseInt(request.getParameter("id"));
 
-        List<Board> userBoards = boardBean.getBoardsForUser(currentUser.getAccount());
         List<Pin> boardPins;
         
-        if(userBoards.isEmpty()){
-            boardPins = new ArrayList();   
-        }else{
-            boardPins = pinBean.getPinsForBoard(userBoards.get(0));
-        }
+        boardPins = pinBean.getPinsForBoard(boardBean.getBoard(id));
 
         request.setAttribute("pinList", boardPins);           
         

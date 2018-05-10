@@ -8,10 +8,10 @@ package Servlets;
 import Business.AccountBean;
 import Business.boardCrudBean;
 import Business.databaseConnector;
-import Entities.Account;
 import Entities.Board;
 import Entities.Categories;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -46,8 +46,11 @@ public class createBoardsServlet extends HttpServlet {
         AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
 
         List<Board> userBoards = boardBean.getBoardsForUser(currentUser.getAccount());
-
-        request.setAttribute("boardList", userBoards);           
+        Collection<Categories> userCategories = currentUser.getUserCategories();
+        request.setAttribute("boardList", userBoards);
+        request.setAttribute("userCategories", userCategories);
+        request.setAttribute("followerNum", currentUser.getNumFollowers());
+        request.setAttribute("followingNum", currentUser.getNumFollowing());
         
         
         List<Categories> allCategories = connector.getAllCategories();

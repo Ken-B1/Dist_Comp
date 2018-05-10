@@ -71,7 +71,7 @@ public class AccountBean {
         return !em.find(Account.class, currentUser).getCategoriesCollection().isEmpty();
     }
     
-    public Collection<Categories> getUserCategories(int accountId){
+    public Collection<Categories> getUserCategories(){
         return em.find(Account.class, currentUser).getCategoriesCollection();
     }
     
@@ -174,6 +174,16 @@ public class AccountBean {
         return user.getMessagesCollection();
     }
     
+    // Get number of followers and following
+    public int getNumFollowers(){
+        Account user =  em.find(Account.class, currentUser);
+        return user.getPeoplefollowerCollection().size();
+    }
+    
+    public int getNumFollowing(){
+        Account user =  em.find(Account.class, currentUser);
+        return user.getPeoplefollowerCollection1().size();
+    }
     // Getters and setters for account entity
     
     // Add an account and make it managed by entity manager

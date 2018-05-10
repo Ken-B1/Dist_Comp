@@ -26,11 +26,11 @@
                 <!-- TO DO Following and Followers to updated -->
                 <div class="row">
                     <div class="col"></div>
-                    <div class="col-6 col-md-4"><a href="#"><span class="badge badge-primary">0</span></a> Following</div>
+                    <div class="col-6 col-md-4"><a href="#"><span class="badge badge-primary">${followingNum}</span></a> Following</div>
                 </div>
                 <div class="row">
                     <div class="col"></div>
-                    <div class="col-6 col-md-4"><a href="#"><span class="badge badge-primary">0</span></a> Followers</div>
+                    <div class="col-6 col-md-4"><a href="#"><span class="badge badge-primary">${followerNum}</span></a> Followers</div>
                 </div>
             </div>
 
@@ -47,7 +47,7 @@
                 <!-- Tab content -->
                 <div id="boards" class="tabcontent">
                     <div class="row">
-                        <div class="col-sm">
+                        <div class="col-sm-3">
                             <div class="card bg-light mb-3" style="max-width: 18rem;height:15rem;">
                                 <div class="card-header">Create Board</div>
                                 <div class="card-body" align="center" style="padding: 3.5rem">
@@ -55,38 +55,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm">
-                            <a href="#" class="">
-                                <div class="card bg-light mb-3" style="max-width: 18rem;height:15rem;">
-                                    <div class="card-body" align="center" style="padding: 3.5rem">                            
+                        <c:forEach items = "${boardList}" var="board" >
+                            <div class="col-sm-3">
+                                <a href="createPin?id=12" class="">
+                                    <div class="card bg-light mb-3" style="max-width: 18rem;height:15rem;">
+                                        <div class="card-body" align="center" style="padding: 3.5rem">                            
+                                        </div>
+                                        <div class="card-header">${board.getBoardname()}</div>
                                     </div>
-                                    <div class="card-header">Board Title</div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-sm">
-                            <a href="#" class="">
-                                <div class="card bg-light mb-3" style="max-width: 18rem;height:15rem;">                        
-                                    <div class="card-body" align="center" style="padding: 3.5rem">                            
-                                    </div>
-                                    <div class="card-header">Board Title</div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-sm">
-                            <a href="#" class="">
-                                <div class="card bg-light mb-3" style="max-width: 18rem;height:15rem;">                        
-                                    <div class="card-body" align="center" style="padding: 3.5rem">                            
-                                    </div>
-                                    <div class="card-header">Board Title</div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-
-
-
-
+                                </a>
+                            </div>
+                        </c:forEach> 
+                    </div>    
                     <!-- Modal -->
                     <div class="modal fade" id="myModal" role="dialog">
                         <div class="modal-dialog">
@@ -123,21 +103,19 @@
                 </div>
 
                 <div id="topics" class="tabcontent">
-                    <h3>Topics</h3>
-                    <p>Topics are listed here</p> 
+                    <div class="row">
+                        <c:forEach items = "${userCategories}" var="category" >
+                            <div class="col-sm-3">
+                                <div class="card bg-light mb-3" style="max-width: 18rem;height:15rem;">
+                                    <div class="card-body" align="center" style="padding: 3.5rem">                            
+                                    </div>
+                                    <div class="card-header">${category.getName()}</div>
+                                </div>
+                            </div>
+                        </c:forEach> 
+                    </div>    
                 </div>
             </div>
-
-            <div class="row">
-                <c:forEach items = "${boardList}" var="board" >
-                    <div class="col">
-                        <svg width="260" height="260">
-                        <rect width="250" height="250" style="fill:grey;stroke:black;stroke-width:2;fill-opacity:0.1;stroke-opacity:0.1" /> >
-                        <text fill="#000000" stroke="black" font-size="30" font-family="Verdana" x="65" y="120">${board.getBoardname()}</text>
-                        </svg>
-                    </div>
-                </c:forEach> 
-            </div>  
         </div>
         <script src="js/boards.js"></script>
     </body>
