@@ -45,7 +45,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Account.findByCountry", query = "SELECT a FROM Account a WHERE a.country = :country")
     , @NamedQuery(name = "Account.findByAdmin", query = "SELECT a FROM Account a WHERE a.admin = :admin")
     , @NamedQuery(name = "Account.existsName", query = "SELECT COUNT(a) FROM Account a WHERE a.username = :username")
-    , @NamedQuery(name = "Account.existsEmail", query = "SELECT COUNT(a) FROM Account a WHERE a.email = :email")})
+    , @NamedQuery(name = "Account.existsEmail", query = "SELECT COUNT(a) FROM Account a WHERE a.email = :email")
+    , @NamedQuery(name = "Account.findByExpression", query = "SELECT p FROM Account p WHERE p.username LIKE :expression")})
 public class Account implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver")

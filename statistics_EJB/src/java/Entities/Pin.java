@@ -33,7 +33,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Pin.findById", query = "SELECT p FROM Pin p WHERE p.id = :id")
     , @NamedQuery(name = "Pin.findByRecipeName", query = "SELECT p FROM Pin p WHERE p.recipeName = :recipeName")
     , @NamedQuery(name = "Pin.findByRecipe", query = "SELECT p FROM Pin p WHERE p.recipe = :recipe")
-    , @NamedQuery(name = "Pin.findByBoard", query = "SELECT p FROM Pin p WHERE p.board = :board")})
+    , @NamedQuery(name = "Pin.findByBoard", query = "SELECT p FROM Pin p WHERE p.board = :board")
+    , @NamedQuery(name = "Pin.findByExpression", query = "SELECT p FROM Pin p WHERE p.recipeName LIKE :expression")})
 public class Pin implements Serializable {
 
     private static final long serialVersionUID = 1L;
