@@ -1,37 +1,20 @@
-var itemsArray=[];
-var HttpClient = function() {
-    this.get = function(aUrl, aCallback) {
-        var anHttpRequest = new XMLHttpRequest();
-        anHttpRequest.onreadystatechange = function() { 
-            if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
-                aCallback(anHttpRequest.responseText);
-        }
+function openTab(evt, tabName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
 
-        anHttpRequest.open( "GET", aUrl, true );            
-        anHttpRequest.send( null );
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
     }
-}
 
-var catItems = function(url){
-    var client = new HttpClient();
-    
-    client.get(url, function(response) {
-        //console.log(response);
-        var el = document.createElement( 'html' );
-        el.innerHTML = response
-        //console.log(el.getElementsByTagName('a'));
-        var itArray = el.getElementsByTagName('a');
-        console.log(itArray);
-        for(var i=1;i<itArray.length;i++){
-            var clientCatUrl = url+"/"+(itArray[i].innerHTML).trim();                                            
-            console.log(clientCatUrl);
-            itemsArray[i-1]=clientCatUrl;
-        }       
-    });
-    return itemsArray;
-}
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
 
-var url = "http://localhost:8080/PinterestUI/images/users/"+"username"
-var iTems = catItems(url, function(resArr){
-    console.log("results here" +resArr)
-});
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
