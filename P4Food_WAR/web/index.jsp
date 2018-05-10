@@ -16,7 +16,6 @@ and open the template in the editor.
     <head>
         <title>Login</title>
         <%@include file="headers/header.jsp" %>
-        <script src="http://code.jquery.com/jquery.js"></script>
     </head>
     <body style="background-color: #eeeeee">
         <div class="container">
