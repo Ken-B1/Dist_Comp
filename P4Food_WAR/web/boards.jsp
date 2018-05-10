@@ -4,10 +4,9 @@
     <head>
         <title>Boards - Pin4FooD</title>
         <%@include file="headers/header.jsp" %>               
-        <script src="js/boards.js"></script>
     </head>
 
-    <body>
+    <body onload="showBoards()">
 
         <div class="container" id="wrapper" >
             <!-- Image and text -->            
@@ -47,25 +46,33 @@
                 <!-- Tab content -->
                 <div id="boards" class="tabcontent">
                     <div class="row">
-                        <div class="col-sm-3">
-                            <div class="card bg-light mb-3" style="max-width: 18rem;height:15rem;">
+                        <div class="col-sm-4">
+                            <div class="card bg-light mb-3" style="height:15rem;">
                                 <div class="card-header">Create Board</div>
                                 <div class="card-body" align="center" style="padding: 3.5rem">
                                     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus-circle fa-lg"></i></button>
                                 </div>
                             </div>
                         </div>
+                        
                         <c:forEach items = "${boardList}" var="board" >
-                            <div class="col-sm-3">
-                                <a href="createPin?id=12" class="">
-                                    <div class="card bg-light mb-3" style="max-width: 18rem;height:15rem;">
-                                        <div class="card-body" align="center" style="padding: 3.5rem">                            
+                            <div class="col-sm-4">
+                                <div class="card bg-light mb-3">     
+                                    <a href="createPin?id=12" class="">
+                                        <div class="card-body" style="max-width: 18rem;height:11.5rem;">                            
                                         </div>
-                                        <div class="card-header">${board.getBoardname()}</div>
+                                    </a>
+                                    <div class="card-header">
+                                        <span class="d-inline-block text-truncate" style="max-width: 200px;">
+                                          ${board.getBoardname()}
+                                        </span>
+
+                                        <span style="padding-left: 50px"><a href="#" alt="Edit this board"><i class="fas fa-pencil-alt fa-2x"></a></i>
+                                        </span>
                                     </div>
-                                </a>
-                            </div>
-                        </c:forEach> 
+                                </div>
+                            </div> 
+                        </c:forEach>                          
                     </div>    
                     <!-- Modal -->
                     <div class="modal fade" id="myModal" role="dialog">

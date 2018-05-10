@@ -18,3 +18,7 @@ function openTab(evt, tabName) {
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
 }
+
+function showBoards(){
+    document.getElementById("boards").style.display ="block";
+}

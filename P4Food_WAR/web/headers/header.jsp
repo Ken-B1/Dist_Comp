@@ -131,8 +131,7 @@
 
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="content:;"> 
-                            <!-- <i class="fas fa-user-circle fa-1x"></i> -->
-                            <img class="user" src="images\icons\logo.png" />
+                            <i class="fas fa-user-circle fa-2x"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">                     
                             <a class="dropdown-item" href="createBoard">My Profile</a>
