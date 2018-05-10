@@ -58,7 +58,7 @@
                         <c:forEach items = "${boardList}" var="board" >
                             <div class="col-sm-4">
                                 <div class="card bg-light mb-3">     
-                                    <a href="createPin?id=12" class="">
+                                    <a href="createPin?id=${board.getId()}" class="">
                                         <div class="card-body" style="max-width: 18rem;height:11.5rem;">                            
                                         </div>
                                     </a>
@@ -67,7 +67,7 @@
                                           ${board.getBoardname()}
                                         </span>
 
-                                        <span style="padding-left: 50px"><a href="#" alt="Edit this board"><i class="fas fa-pencil-alt fa-2x"></a></i>
+                                        <span class="float-right"><a href="#" alt="Edit this board"><i class="fas fa-pencil-alt fa-lg"></a></i>
                                         </span>
                                     </div>
                                 </div>
