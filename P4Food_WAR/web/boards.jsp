@@ -66,7 +66,6 @@
                                         <span class="d-inline-block text-truncate" style="max-width: 200px;">
                                           ${board.getBoardname()}
                                         </span>
-
                                         <span class="float-right"><a href="#" alt="Edit this board"><i class="fas fa-pencil-alt fa-lg"></a></i>
                                         </span>
                                     </div>
