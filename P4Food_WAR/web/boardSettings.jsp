@@ -19,6 +19,7 @@
                     </select>
                     <div class="dropdown-divider"></div>
                     <input type="text" class="form-control" placeholder="${board.getBoardname()}" name="boardname">
+                    <input type="checkbox" name="isPrivate">Private</input>
                 </div>                                       
             </div>
             <div class="modal-footer">

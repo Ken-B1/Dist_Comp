@@ -75,7 +75,9 @@ public class boardSettingsServlet extends HttpServlet {
             int boardid = Integer.parseInt(Stringid);
             String newName = request.getParameter("boardname");
             String categoryString = request.getParameter("categorychosen");
+            boolean isPrivate = request.getParameter("isPrivate").equals("on");
             boardCRUD.updateBoard(boardid, newName, Integer.parseInt(categoryString));
+            boardCRUD.makePrivate(boardid, isPrivate);
             response.sendRedirect("profile");
         }
     }

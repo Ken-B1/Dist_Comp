@@ -76,6 +76,15 @@ public class boardCrudBean {
         updateBoard(boardId, newName, em.find(Categories.class, newCategory));
     }
     
+    public void makePrivate(int boardId, boolean isPrivate){
+        Board toUpdate = em.find(Board.class, boardId);
+        if(isPrivate){
+            toUpdate.setIsprivate((short)1);
+        }else{
+            toUpdate.setIsprivate((short)0);
+        }
+        em.flush();
+    }
     
     public void deleteBoard(int boardId){
         Board toDelete = em.find(Board.class, boardId);
