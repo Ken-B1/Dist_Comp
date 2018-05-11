@@ -54,8 +54,8 @@
                         <a class="nav-link" href="pinboard"><i class="fas fa-home fa-sm"></i> Home</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="explore"><i class="fas fa-home fa-sm"></i> Explore</a>
-                    </li>
+                        <a class="nav-link" href="explore"><i class="fab fa-wpexplorer fa-sm"></i> Explore</a>
+                    </li>     
                     <li class="nav-item active">
                         <a class="nav-link" href="recommendations"><i class="fas fa-home fa-sm"></i> Recommendations</a>
                     </li>    
