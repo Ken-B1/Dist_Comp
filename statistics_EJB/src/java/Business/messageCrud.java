@@ -68,4 +68,13 @@ public class messageCrud {
             em.remove(findRemoved);
         }
     }
+    
+    public void markAsRead(int messageId){
+        Messages mark = em.find(Messages.class, messageId);
+        
+        if(mark != null){
+            mark.setIsRead((short)1);
+            em.flush();
+        }
+    }
 }

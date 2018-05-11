@@ -12,6 +12,7 @@
         <p><b>Subject: </b> ${message.getSubject()}</p>
         <p><b>Message:</b> ${message.getContent()}</p>
         <form action="WriteMessage" method="GET">
+            <input type="text" value="${message.getSender().getId()}" name="id" style="display:none;"></input>
             <input type="submit" value="Click"></input>
         </form>           
     </body>

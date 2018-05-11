@@ -19,45 +19,16 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         
-        <link rel="icon" href="images\icons\logo.png">
-        <script type="text/javascript">
-            // A $( document ).ready() block.
-            $( document ).ready(function() {
-                $.get("Notifications", function(data){
-                    alert(data);
-                });
-            });
-        </script>        
+        <link rel="icon" href="images\icons\logo.png">      
     </head>
     <body style="background-color: #eeeeee">
-        <form action="FollowBoard" method="post">
-            
-            <input type="submit" name="BoardId" value="1">Click</input>
-        </form>
-        
-        <form action="UnfollowBoard" method="post">
-            
-            <input type="submit" name="BoardId" value="1">Click</input>
-        </form>
-        
-        <form action="FollowPerson" method="post">
-            
-            <input type="submit" name="PersonId" value="2">Click</input>
-        </form>
-        
-        <form action="UnfollowPerson" method="post">
-            
-            <input type="submit" name="PersonId" value="2">Click</input>
-        </form>
-        
-        <form action="BlockPerson" method="post">
-            
-            <input type="submit" name="PersonId" value="2">Click</input>
-        </form>
-        
-        <form action="UnblockPerson" method="post">
-            
-            <input type="submit" name="PersonId" value="2">Click</input>
+        <form method="POST" action="testServlet" enctype="multipart/form-data" >
+            File:
+            <input type="file" name="file" id="file" /> <br/>
+            Destination:
+            <input type="text" value="/tmp" name="destination"/>
+            </br>
+            <input type="submit" value="Upload" name="upload" id="upload" />
         </form>
     </body>
 </html>

@@ -196,4 +196,8 @@ public class AccountBean {
         return em.find(Account.class, currentUser);
     }
     
+    public Account getAccountForId(int id){
+        return em.find(Account.class, id);
+    }
+    
 }

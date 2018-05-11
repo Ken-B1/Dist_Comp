@@ -10,7 +10,8 @@
         <c:forEach items="${messages}" var="currentMessage">
             <form action="FullMessage" method="GET">
                 <input type="text" value="${currentMessage.getId()}" name="id" style="display:none;"></input>
-                <input type="submit" value="${currentMessage.getSubject()}">${currentMessage.getId()}</input>
+                <c:if test="${currentMessage.getIsRead() == 0}"><b></c:if>${currentMessage.getSubject()}<c:if test="${currentMessage.getIsRead() == 0}"></b></c:if>
+                <input type="submit" value="Read message"></input>
             </form>
         </c:forEach>
     </body>
