@@ -65,11 +65,25 @@ public class boardCrudBean {
     }
     
     public void updateBoard(int boardId, String newName, Categories newCategory){
-        Board toUpdate = em.find(Board.class, newName);
+        Board toUpdate = em.find(Board.class, boardId);
         toUpdate.setBoardname(newName);
         toUpdate.setCategory(newCategory);
         em.flush();
         stats.updateBoard(toUpdate.getOwner(), toUpdate);
+    }
+ 
+    public void updateBoard(int boardId, String newName, int newCategory){
+        updateBoard(boardId, newName, em.find(Categories.class, newCategory));
+    }
+    
+    public void makePrivate(int boardId, boolean isPrivate){
+        Board toUpdate = em.find(Board.class, boardId);
+        if(isPrivate){
+            toUpdate.setIsprivate((short)1);
+        }else{
+            toUpdate.setIsprivate((short)0);
+        }
+        em.flush();
     }
     
     public void deleteBoard(int boardId){

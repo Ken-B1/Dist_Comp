@@ -7,6 +7,24 @@
     </head>
 
     <body>   
-        Complete recipe
+        <form action="boardSettings?boardId=${board.getId()}" method="POST">
+            <div class="row">
+                <div class="col">
+                    <!-- The Selection has to be looped from the exusting user selected categories 
+                    currently hard coded-->
+                    <select class="form-control" name="categorychosen">
+                        <c:forEach items = "${categoryList}" var="category" >
+                            <option value="${category.getId()}" <c:if test="${board.getCategory().getId() == category.getId()}">selected="selected"</c:if>>${category.getName()}</option>    
+                        </c:forEach>
+                    </select>
+                    <div class="dropdown-divider"></div>
+                    <input type="text" class="form-control" placeholder="${board.getBoardname()}" name="boardname">
+                    <input type="checkbox" name="isPrivate">Private</input>
+                </div>                                       
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-default">Create</button>
+            </div>
+        </form>
     </body>
 </html>

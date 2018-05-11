@@ -26,6 +26,7 @@
                 <c:if test="${!ownProfile}">
                     <a href="FollowPerson?PersonId=${userId}">Follow</a>
                     <a href="#">Friend</a>
+                    <a href="WriteMessage?id=${userId}">Send message</a>
                 </c:if>
                 <div class="row">
                     <div class="col"></div>
@@ -72,7 +73,7 @@
                                         <span class="d-inline-block text-truncate" style="max-width: 200px;">
                                           ${board.getBoardname()}
                                         </span>
-                                        <span class="float-right"><a href="#" alt="Edit this board"><i class="fas fa-pencil-alt fa-lg"></a></i>
+                                        <span class="float-right"><a href="boardSettings?boardId=${board.getId()}" alt="Edit this board"><i class="fas fa-pencil-alt fa-lg"></a></i>
                                         </span>
                                     </div>
                                 </div>
