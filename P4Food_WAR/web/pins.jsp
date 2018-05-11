@@ -30,6 +30,10 @@
                     <div class="col"></div>
                     <div class="col-6 col-md-4"><a href="#"><span class="badge badge-primary">${followerNum}</span></a> Followers</div>
                 </div>
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col-6 col-md-4"><a href="#"><span class="badge badge-primary">FollowBoard</span></a></div>
+                </div>
             </div>
 
             <div class="container">

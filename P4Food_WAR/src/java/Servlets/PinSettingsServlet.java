@@ -5,11 +5,8 @@
  */
 package Servlets;
 
-import Business.AccountBean;
-import Business.boardCrudBean;
-import Entities.Board;
 import java.io.IOException;
-import javax.ejb.EJB;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,10 +17,23 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ken
  */
-@WebServlet(name = "FollowBoardServlet", urlPatterns = {"/FollowBoard"})
-public class FollowBoardServlet extends HttpServlet {
-    @EJB
-    private boardCrudBean boardbean;
+@WebServlet(name = "PinSettingsServlet", urlPatterns = {"/PinSettings"})
+public class PinSettingsServlet extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("pinsSettings.jsp").forward(request, response);
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -36,7 +46,7 @@ public class FollowBoardServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("pinboard").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -50,20 +60,7 @@ public class FollowBoardServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("BoardId");
-        AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
-        int BoardId;
-        if(id != null){
-            // If id == null, something went wrong
-            BoardId = Integer.parseInt(id);
-            Board requestedBoard = boardbean.getBoard(BoardId);
-            if(requestedBoard != null){
-                // If requestedBoard is null, a nonexistend board is requested
-                currentUser.followBoard(requestedBoard);
-                response.sendRedirect(request.getHeader("Referer"));
-            }
-        }
-        
+        processRequest(request, response);
     }
 
     /**
