@@ -5,8 +5,13 @@
  */
 package Servlets;
 
+import Business.boardCrudBean;
+import Business.databaseConnector;
+import Entities.Board;
+import Entities.Categories;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,33 +24,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "boardSettingsServlet", urlPatterns = {"/boardSettings"})
 public class boardSettingsServlet extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet boardSettingsServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet boardSettingsServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
+    @EJB
+    boardCrudBean boardCRUD;
+    
+    @EJB
+    private databaseConnector connector;
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -58,7 +41,18 @@ public class boardSettingsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String Stringid = request.getParameter("boardId");
+        if(Stringid == null){
+            // Wrong call
+            request.getRequestDispatcher("pinboard").forward(request, response);
+        }else{
+            int boardid = Integer.parseInt(Stringid);
+            Board currentBoard = boardCRUD.getBoard(boardid);
+            request.setAttribute("board", currentBoard);
+            List<Categories> allCategories = connector.getAllCategories();
+            request.setAttribute("categoryList", allCategories);
+            request.getRequestDispatcher("boardSettings.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -72,7 +66,18 @@ public class boardSettingsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String Stringid = request.getParameter("boardId");
+        
+        if(Stringid == null){
+            // Wrong id
+            request.getRequestDispatcher("pinboard").forward(request, response);
+        }else{
+            int boardid = Integer.parseInt(Stringid);
+            String newName = request.getParameter("boardname");
+            String categoryString = request.getParameter("categorychosen");
+            boardCRUD.updateBoard(boardid, newName, Integer.parseInt(categoryString));
+            response.sendRedirect("profile");
+        }
     }
 
     /**
