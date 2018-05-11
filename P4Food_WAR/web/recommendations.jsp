@@ -7,6 +7,6 @@
     </head>
 
     <body>   
-        Show complete recipe here. This is the result of clicking on a pin.
+        Show 5 random pins here. These pins serve as recommended meals for 5 days. This is the request from the communications students
     </body>
 </html>

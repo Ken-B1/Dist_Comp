@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ken
  */
-@WebServlet(name = "AdminStatisticsServlet", urlPatterns = {"/AdminStatistics"})
-public class AdminStatisticsServlet extends HttpServlet {
+@WebServlet(name = "recommendationsServlet", urlPatterns = {"/recommendations"})
+public class recommendationsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,7 +31,7 @@ public class AdminStatisticsServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("AdminStatistics.jsp").forward(request, response);
+        request.getRequestDispatcher("recommendations.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

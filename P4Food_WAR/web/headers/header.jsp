@@ -55,7 +55,10 @@
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="explore"><i class="fas fa-home fa-sm"></i> Explore</a>
-                    </li>     
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="recommendations"><i class="fas fa-home fa-sm"></i> Recommendations</a>
+                    </li>    
                     <li>
                         <form class="form-inline my-2 my-lg-0" action="Search" method="post">
                             <input class="form-control mr-sm-2" type="search" placeholder="Search" name="searchString">
@@ -134,6 +137,7 @@
                             <c:if test="${isAdmin}">
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="admin">I am Admin</a>
+                                <a class="dropdown-item" href="AdminStatistics">AdminStatistics</a>
                             </c:if>
                         </div>
                     </li>

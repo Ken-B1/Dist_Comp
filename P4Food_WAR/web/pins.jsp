@@ -138,7 +138,8 @@
 
             <c:forEach items = "${pinList}" var="pin" >
                 <p>${pin.getRecipeName()}<br>
-                   ${pin.getRecipe()}
+                    ${pin.getRecipe()}<br>
+                    <a href="fullRecipe">When clicking on a pin, this link should be called correctly</a>
                 
                 </p> 
                 <hr>

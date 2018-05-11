@@ -27,6 +27,7 @@
                     <a href="FollowPerson?PersonId=${userId}">Follow</a>
                     <a href="#">Friend</a>
                     <a href="WriteMessage?id=${userId}">Send message</a>
+                    <a href="#">Block</a>
                 </c:if>
                 <div class="row">
                     <div class="col"></div>
