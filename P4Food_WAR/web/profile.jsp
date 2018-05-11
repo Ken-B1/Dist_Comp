@@ -23,6 +23,10 @@
                     </div>                            
                 </div>
                 <!-- TO DO Following and Followers to updated -->
+                <c:if test="${!ownProfile}">
+                    <a href="FollowPerson?PersonId=${userId}">Follow</a>
+                    <a href="#">Friend</a>
+                </c:if>
                 <div class="row">
                     <div class="col"></div>
                     <div class="col-6 col-md-4"><a href="#"><span class="badge badge-primary">${followingNum}</span></a> Following</div>
@@ -46,14 +50,16 @@
                 <!-- Tab content -->
                 <div id="boards" class="tabcontent">
                     <div class="row">
-                        <div class="col-sm-4">
-                            <div class="card bg-light mb-3" style="height:15rem;">
-                                <div class="card-header">Create Board</div>
-                                <div class="card-body" align="center" style="padding: 3.5rem">
-                                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus-circle fa-lg"></i></button>
+                        <c:if test="${ownProfile}">
+                            <div class="col-sm-4">
+                                <div class="card bg-light mb-3" style="height:15rem;">
+                                    <div class="card-header">Create Board</div>
+                                    <div class="card-body" align="center" style="padding: 3.5rem">
+                                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus-circle fa-lg"></i></button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </c:if>
                         
                         <c:forEach items = "${boardList}" var="board" >
                             <div class="col-sm-4">

@@ -44,7 +44,7 @@
         </script>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.jsp">
+            <a class="navbar-brand" href="login">
                 <img src="images\icons\logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
                 Pin4FooD
             </a>   
@@ -52,7 +52,10 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
                         <a class="nav-link" href="pinboard"><i class="fas fa-home fa-sm"></i> Home</a>
-                    </li>                                      
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="explore"><i class="fas fa-home fa-sm"></i> Explore</a>
+                    </li>     
                     <li>
                         <form class="form-inline my-2 my-lg-0" action="Search" method="post">
                             <input class="form-control mr-sm-2" type="search" placeholder="Search" name="searchString">
@@ -63,7 +66,7 @@
 
                 <% if (userprf == "") {%>
                 <ul class="nav navbar-nav navbar-right" id="loginmenu">
-                    <a class="btn btn-outline-success my-2 my-sm-0" href="index.jsp">Login</a>
+                    <a class="btn btn-outline-success my-2 my-sm-0" href="login">Login</a>
                 </ul>
                 <%} else {%>
                 <ul class="nav navbar-nav navbar-right" id="usernmenu">
@@ -121,7 +124,7 @@
                             <i class="fas fa-user-circle fa-2x"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">                     
-                            <a class="dropdown-item" href="createBoard">My Profile</a>
+                            <a class="dropdown-item" href="profile">My Profile</a>
                             <a class="dropdown-item" href="MessageOverview">Messages</a>
                             <a class="dropdown-item" href="settings">Settings</a>
                             <a class="dropdown-item" href="statistics">Statistics</a>

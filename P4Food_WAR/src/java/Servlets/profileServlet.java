@@ -8,6 +8,7 @@ package Servlets;
 import Business.AccountBean;
 import Business.boardCrudBean;
 import Business.databaseConnector;
+import Entities.Account;
 import Entities.Board;
 import Entities.Categories;
 import java.io.IOException;
@@ -24,8 +25,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ken
  */
-@WebServlet(name = "createBoardsServlet", urlPatterns = {"/createBoard"})
-public class createBoardsServlet extends HttpServlet {
+@WebServlet(name = "profileServlet", urlPatterns = {"/profile"})
+public class profileServlet extends HttpServlet {
     @EJB 
     private boardCrudBean boardBean;
     
@@ -44,8 +45,21 @@ public class createBoardsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException { 
         AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
+        String requestedUser = request.getParameter("username");
+        List<Board> userBoards;
+        if(requestedUser == null || currentUser.getAccount().getUsername().equals(requestedUser)){
+            // The requested profile is the current user's profile
+            request.setAttribute("ownProfile", true);
+            userBoards = boardBean.getBoardsForUser(currentUser.getAccount());
+        }else{
+            // The requested profile is another user's profile
+            request.setAttribute("ownProfile", false);
+            Account acc = currentUser.getAccount(requestedUser);
+            userBoards = boardBean.getBoardsForUser(acc);
+            request.setAttribute("userId", acc.getId());
+        }
+        
 
-        List<Board> userBoards = boardBean.getBoardsForUser(currentUser.getAccount());
         Collection<Categories> userCategories = currentUser.getUserCategories();
         request.setAttribute("boardList", userBoards);
         request.setAttribute("userCategories", userCategories);
@@ -58,7 +72,7 @@ public class createBoardsServlet extends HttpServlet {
         List<Categories> allCategories = connector.getAllCategories();
         request.setAttribute("categoryList", allCategories);
         request.setAttribute("isAdmin", currentUser.getAccount().getAdmin());
-        request.getRequestDispatcher("boards.jsp").forward(request, response);
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
     }
 
     /**
@@ -72,20 +86,6 @@ public class createBoardsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {        
-        String boardName = request.getParameter("boardname");
-        
-        AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
-        
-        String categoryString = request.getParameter("categorychosen");
-        
-        if(categoryString.equals("NoCategory")){
-            boardBean.createBoard(boardName, currentUser.getAccount()); 
-        }else{
-            int category = Integer.parseInt(request.getParameter("categorychosen")); 
-            boardBean.createBoard(boardName,category, currentUser.getAccount());          
-        }
-        
-        response.sendRedirect("createBoard");
     }
 
     /**

@@ -6,6 +6,7 @@
 package Servlets;
 
 import Business.AccountBean;
+import Business.boardCrudBean;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -13,22 +14,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Business.LoginBean;
-import Entities.Useractions;
-import java.util.List;
 
 /**
  *
  * @author ken
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
-public class LoginServlet extends HttpServlet {
-    //Class that handles login requests
-    
-    @EJB
-    private LoginBean loginBean;
-    
-
+@WebServlet(name = "createBoardServlet", urlPatterns = {"/createBoard"})
+public class createBoardServlet extends HttpServlet {
+    @EJB 
+    private boardCrudBean boardBean;
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -41,8 +35,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("Called");
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("profile").forward(request, response);
     }
 
     /**
@@ -56,21 +49,20 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Log the user into his/her account and redirect depending on outcome
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String boardName = request.getParameter("boardname");
         
-        AccountBean account = loginBean.login(username, password);     
+        AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
         
-        if(account != null) {
-            request.getSession().setAttribute("user", account);
-            request.getSession().setAttribute("userid",username);
-            response.sendRedirect("pinboard");
+        String categoryString = request.getParameter("categorychosen");
+        
+        if(categoryString.equals("NoCategory")){
+            boardBean.createBoard(boardName, currentUser.getAccount()); 
         }else{
-            request.setAttribute("loginfail", "Incorrect username/password");
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            int category = Integer.parseInt(request.getParameter("categorychosen")); 
+            boardBean.createBoard(boardName,category, currentUser.getAccount());          
         }
-
+        
+        response.sendRedirect("profile");
     }
 
     /**

@@ -196,6 +196,16 @@ public class AccountBean {
         return em.find(Account.class, currentUser);
     }
     
+    public Account getAccount(String username){
+        Account account = null;
+        try{
+            account = (Account)em.createNamedQuery("Account.findByUsername").setParameter("username", username).getSingleResult();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return account;
+    }
+    
     public Account getAccountForId(int id){
         return em.find(Account.class, id);
     }
