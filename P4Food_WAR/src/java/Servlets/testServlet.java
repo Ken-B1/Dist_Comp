@@ -7,9 +7,13 @@ package Servlets;
 
 import Business.AccountBean;
 import Business.categoryBean;
-import Entities.Categories;
+import Business.uploadImageBean;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -17,6 +21,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -27,6 +32,9 @@ import javax.servlet.http.HttpServletResponse;
 public class testServlet extends HttpServlet {
     @EJB
     categoryBean fb;
+    
+    @EJB
+    uploadImageBean imgbean;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -67,13 +75,28 @@ public class testServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         AccountBean currentAcc = (AccountBean)request.getSession().getAttribute("user");
-        List<Categories> res = fb.getRisingCategories(2);
-        for(Categories x: res){
-            System.out.println(x.getId());
-        }
+        
+        
+        response.setContentType("text/html;charset=UTF-8");
+
+        // Create path components to save the file
+        final Part filePart = request.getPart("file");
+        final String fileName = getFileName(filePart);
+        
+        imgbean.storeImage(fileName, filePart);
         processRequest(request, response);
     }
 
+    private String getFileName(final Part part) {
+        final String partHeader = part.getHeader("content-disposition");
+        for (String content : part.getHeader("content-disposition").split(";")) {
+            if (content.trim().startsWith("filename")) {
+                return content.substring(
+                        content.indexOf('=') + 1).trim().replace("\"", "");
+            }
+        }
+        return null;
+    }
     /**
      * Returns a short description of the servlet.
      *
