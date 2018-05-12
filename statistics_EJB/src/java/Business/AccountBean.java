@@ -9,7 +9,6 @@ import Business_Utility.Status;
 import Entities.Account;
 import Entities.Board;
 import Entities.Boardfollowers;
-import Entities.BoardfollowersPK;
 import Entities.Categories;
 import Entities.Messages;
 import Entities.Peoplefollower;
@@ -85,29 +84,26 @@ public class AccountBean {
     
     // Follow a board
     public void followBoard(Board toFollow){
-        Boardfollowers newFollower = new Boardfollowers(currentUser, toFollow.getId());
-        newFollower.setBoard(toFollow);
-        newFollower.setAccount(em.find(Account.class, currentUser));
-        em.persist(newFollower);
+        Account currentAccount = em.find(Account.class, currentUser);
+        Collection<Board> boardcollection = currentAccount.getBoardCollection();
+        boardcollection.add(toFollow);
+        currentAccount.setBoardCollection(boardcollection);
     }
     
     // Unfollow a board
     public void unfollowBoard(Board toUnFollow) throws NullPointerException{
-        Boardfollowers toRemove = em.find(Boardfollowers.class, new BoardfollowersPK(currentUser, toUnFollow.getId()));
-        if(toRemove != null){
-            em.remove(toRemove);
-        }else{
-            // Something went wrong
-            throw new NullPointerException("Tried to unfollow a board that could not be found");
-        }
+        Account currentAccount = em.find(Account.class, currentUser);
+        Collection<Board> boardcollection = currentAccount.getBoardCollection();
+        boardcollection.remove(toUnFollow);
+        currentAccount.setBoardCollection(boardcollection);
     }
     
     // Follow a person
     public void followPerson(int toFollow){
-        Peoplefollower newFollower = new Peoplefollower(currentUser, toFollow);
-        newFollower.setAccount(em.find(Account.class, currentUser));
-        newFollower.setAccount1(em.find(Account.class, toFollow));
-        em.persist(newFollower);
+        //Peoplefollower newFollower = new Peoplefollower(currentUser, toFollow);
+        //newFollower.setAccount(em.find(Account.class, currentUser));
+        //newFollower.setAccount1(em.find(Account.class, toFollow));
+        //em.persist(newFollower);
     }    
     
     // Unfollow a person

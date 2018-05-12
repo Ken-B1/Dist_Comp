@@ -30,5 +30,9 @@
             </br>
             <input type="submit" value="Upload" name="upload" id="upload" />
         </form>
+        
+        <form method="POST" action="testServlet">
+            <input type="submit" value="followBoard"></input>
+        </form>
     </body>
 </html>

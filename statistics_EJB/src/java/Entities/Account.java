@@ -49,6 +49,22 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Account.findByExpression", query = "SELECT p FROM Account p WHERE p.username LIKE :expression")})
 public class Account implements Serializable {
 
+    @JoinTable(name = "friendrequests", joinColumns = {
+        @JoinColumn(name = "requested", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "requester", referencedColumnName = "id")})
+    @ManyToMany
+    private Collection<Account> accountCollection; // People requesting this user
+    @ManyToMany(mappedBy = "accountCollection")
+    private Collection<Account> accountCollection1; // People requested by this user
+    
+    @JoinTable(name = "friends", joinColumns = {
+        @JoinColumn(name = "user1", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "user2", referencedColumnName = "id")})
+    @ManyToMany
+    private Collection<Account> accountCollection2; // Friends of this user
+    @ManyToMany(mappedBy = "accountCollection2")
+    private Collection<Account> accountCollection3; // Users of which this user is a friend
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver")
     private Collection<Messages> messagesCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sender")
@@ -328,6 +344,42 @@ public class Account implements Serializable {
 
     public void setMessagesCollection1(Collection<Messages> messagesCollection1) {
         this.messagesCollection1 = messagesCollection1;
+    }
+
+    @XmlTransient
+    public Collection<Account> getAccountCollection() {
+        return accountCollection;
+    }
+
+    public void setAccountCollection(Collection<Account> accountCollection) {
+        this.accountCollection = accountCollection;
+    }
+
+    @XmlTransient
+    public Collection<Account> getAccountCollection1() {
+        return accountCollection1;
+    }
+
+    public void setAccountCollection1(Collection<Account> accountCollection1) {
+        this.accountCollection1 = accountCollection1;
+    }
+
+    @XmlTransient
+    public Collection<Account> getAccountCollection2() {
+        return accountCollection2;
+    }
+
+    public void setAccountCollection2(Collection<Account> accountCollection2) {
+        this.accountCollection2 = accountCollection2;
+    }
+
+    @XmlTransient
+    public Collection<Account> getAccountCollection3() {
+        return accountCollection3;
+    }
+
+    public void setAccountCollection3(Collection<Account> accountCollection3) {
+        this.accountCollection3 = accountCollection3;
     }
     
 }
