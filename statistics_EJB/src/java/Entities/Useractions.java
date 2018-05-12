@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -35,8 +36,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Useractions.findById", query = "SELECT u FROM Useractions u WHERE u.id = :id")
     , @NamedQuery(name = "Useractions.findByAction", query = "SELECT u FROM Useractions u WHERE u.action = :action")
     , @NamedQuery(name = "Useractions.findByTimestamp", query = "SELECT u FROM Useractions u WHERE u.timestamp = :timestamp")
-    , @NamedQuery(name = "Useractions.findNotifications", query = "SELECT u FROM Useractions u WHERE u.user = :user ORDER BY u.timestamp DESC")})
+    , @NamedQuery(name = "Useractions.findNotifications", query = "SELECT u FROM Useractions u WHERE u.user = :user ORDER BY u.timestamp DESC")
+    , @NamedQuery(name = "Useractions.findCategoryFollows", query = "SELECT u.description FROM Useractions u WHERE (u.action = 7 and u.timestamp >= :timestamp) GROUP BY u.description ORDER BY COUNT(u.description) DESC")})
 public class Useractions implements Serializable {
+
+    @Size(max = 255)
+    @Column(name = "description")
+    private String description;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -131,6 +137,14 @@ public class Useractions implements Serializable {
     @Override
     public String toString() {
         return "Entities.Useractions[ id=" + id + " ]";
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
     
 }

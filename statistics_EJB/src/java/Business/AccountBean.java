@@ -37,6 +37,10 @@ public class AccountBean {
     @EJB 
     private Registration reg;
     
+    // Stateless bean used to log actions
+    @EJB
+    private StatisticsBean stats;
+    
     // Entity object representing current user in database
     private int currentUser;
     
@@ -80,6 +84,7 @@ public class AccountBean {
         categories.add(newCategory);
         user.setCategoriesCollection(categories);
         em.flush();
+        stats.followCategory(user, newCategory);
     }
     
     // Follow a board

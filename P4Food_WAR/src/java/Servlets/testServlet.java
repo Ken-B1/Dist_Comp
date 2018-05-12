@@ -6,8 +6,10 @@
 package Servlets;
 
 import Business.AccountBean;
-import Business.friendsBean;
+import Business.categoryBean;
+import Entities.Categories;
 import java.io.IOException;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -24,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 @MultipartConfig
 public class testServlet extends HttpServlet {
     @EJB
-    friendsBean fb;
+    categoryBean fb;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -65,7 +67,10 @@ public class testServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         AccountBean currentAcc = (AccountBean)request.getSession().getAttribute("user");
-        fb.acceptFriendRequest(1, 2);
+        List<Categories> res = fb.getRisingCategories(2);
+        for(Categories x: res){
+            System.out.println(x.getId());
+        }
         processRequest(request, response);
     }
 

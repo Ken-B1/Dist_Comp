@@ -7,6 +7,7 @@ package Business;
 
 import Entities.Account;
 import Entities.Board;
+import Entities.Categories;
 import Entities.Pin;
 import Entities.Statistics;
 import Entities.Useractions;
@@ -85,6 +86,18 @@ public class StatisticsBean extends AbstractFacade<Statistics> {
     public void removePin(Account user, Pin pin){
         Useractions action = new Useractions(6, new Date(System.currentTimeMillis()));
         action.setUser(user);
+        em.persist(action);        
+    }    
+    
+    /**
+     * Log the action of following a category in the database
+     * @param user
+     * @param cat 
+     */
+    public void followCategory(Account user, Categories cat){
+        Useractions action = new Useractions(7, new Date(System.currentTimeMillis()));
+        action.setUser(user);
+        action.setDescription(cat.getId().toString());
         em.persist(action);        
     }    
     
