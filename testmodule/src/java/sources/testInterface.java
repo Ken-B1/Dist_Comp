@@ -3,19 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package remoteinterfaces;
+package sources;
+
+import javax.ejb.Remote;
 
 /**
  *
  * @author ken
  */
-public class Main {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-    }
-    
+@Remote
+public interface testInterface {
+    public void print();
 }

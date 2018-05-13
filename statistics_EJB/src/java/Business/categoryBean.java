@@ -6,6 +6,7 @@
 package Business;
 
 import Entities.Categories;
+import static java.lang.Integer.min;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -51,9 +52,8 @@ public class categoryBean {
         }
         
         Collections.sort(popularities, Collections.reverseOrder());
-        
+        amount = min(amount, popularities.size());
         int sizeLimit = popularities.get(amount-1);
-        
         for(Categories x: allcats){
             if(x.getAccountCollection().size() >= sizeLimit){
                 resultList.add(x);
@@ -64,15 +64,14 @@ public class categoryBean {
     }
     
     /**
-     * Returns the most followed categories 
+     * Returns the most followed categories during the last week
      * @param amount Amount of categories to be retrieved. Can return more if there are multiple categories with same amount of popularities
      * @return 
      */
     public List<Categories> getRisingCategories(int amount){      
-        List<Integer> popularities = new ArrayList<Integer>();
-        List<String> allcats = em.createNamedQuery("Useractions.findCategoryFollows").setParameter("timestamp",  new Date(System.currentTimeMillis()-82800000)).getResultList();
+        List<String> allcats = em.createNamedQuery("Useractions.findCategoryFollows").setParameter("timestamp",  new Date(System.currentTimeMillis()-604800000)).getResultList();
         List<Categories> returnList = new ArrayList();
-        
+        amount = min(amount, allcats.size());
         for(String x: allcats.subList(0, amount)){
             returnList.add(em.find(Categories.class, Integer.parseInt(x)));
         }

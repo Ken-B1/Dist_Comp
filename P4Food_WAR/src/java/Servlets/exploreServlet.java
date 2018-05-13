@@ -5,8 +5,11 @@
  */
 package Servlets;
 
+import Business.categoryBean;
+import Entities.Categories;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "exploreServlet", urlPatterns = {"/explore"})
 public class exploreServlet extends HttpServlet {
-
+    @EJB
+    categoryBean cat;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -46,7 +50,11 @@ public class exploreServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        List<Categories> trending = cat.getRisingCategories(10);
+        List<Categories> top = cat.getTopCategories(1);
+        request.setAttribute("trending", trending);
+        request.setAttribute("top", top);
+        request.getRequestDispatcher("explore.jsp").forward(request, response);
     }
 
     /**
