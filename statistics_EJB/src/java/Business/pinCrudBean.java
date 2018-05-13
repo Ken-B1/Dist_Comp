@@ -32,17 +32,18 @@ public class pinCrudBean {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-    public void createPin(String name, String recipe, Board board){
+    public void createPin(String name, String recipe, Board board, String url){
         Pin newpin = new Pin();
         newpin.setRecipeName(name);
         newpin.setBoard(board);
         newpin.setRecipe(recipe);
+        newpin.setLocation(url);
         em.persist(newpin);
         stats.createPin(board.getOwner(), newpin);
     }
     
-     public void createPin(String name, String recipe, int boardId){
-        createPin(name, recipe, em.find(Board.class, boardId));
+     public void createPin(String name, String recipe, int boardId, String url){
+        createPin(name, recipe, em.find(Board.class, boardId), url);
     }   
     
     public Pin getPin(int id){

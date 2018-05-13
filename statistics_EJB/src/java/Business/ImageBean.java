@@ -6,6 +6,7 @@
 package Business;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,14 +22,14 @@ import javax.servlet.http.Part;
  */
 @Stateless
 @LocalBean
-public class uploadImageBean {
+public class ImageBean {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     
-    public void storeImage(String fileName, Part filePart){
+    public String storeImage(String fileName, Part filePart){
         String dirString = System.getProperty("user.home") + File.separator + "p4foodPictures";
-        File dir = new File(dirString);
+        File dir = new File(fileName);
         dir.mkdirs();
         
         OutputStream out = null;
@@ -47,6 +48,7 @@ public class uploadImageBean {
                 out.write(bytes, 0, read);
             }
             System.out.println("New file " + fileName + " created at " + dirString);
+            return dirString + File.separator + fileName;
         } catch (FileNotFoundException fne) {
             System.out.println("You either did not specify a file to upload or are "
                     + "trying to upload a file to a protected or nonexistent "
@@ -54,5 +56,12 @@ public class uploadImageBean {
             System.out.println("<br/> ERROR: " + fne.getMessage());
         } catch ( IOException e){
         }
+        return null;
+    }
+    
+    public File getImage(String imageUrl){
+        File file = new File(imageUrl);
+        
+        return file;
     }
 }

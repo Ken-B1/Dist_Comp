@@ -9,6 +9,7 @@ import Business.AccountBean;
 import Business.boardCrudBean;
 import Business.databaseConnector;
 import Entities.Categories;
+import Entities.Pin;
 import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
@@ -42,7 +43,9 @@ public class PinboardServlet extends HttpServlet {
             throws ServletException, IOException {
         AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
         List<Categories> allCategories = connector.getAllCategories();
+        List<Pin> currentUserPin = currentUser.getTailoredPins();
         
+        request.setAttribute("pinlist", currentUserPin);       
         
         request.setAttribute("isAdmin", currentUser.getAccount().getAdmin());
         request.setAttribute("hasCategories", currentUser.hasCategories());

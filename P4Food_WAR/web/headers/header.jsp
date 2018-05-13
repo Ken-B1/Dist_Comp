@@ -4,6 +4,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -33,6 +34,7 @@
         %>            
 
         <% if (userprf != "") {%> 
+        <c:if test="${Loggedin}">
         <script type="text/javascript">
             // A $( document ).ready() block.
             $( document ).ready(function() {
@@ -40,8 +42,9 @@
                     $( ".messages" ).append(data);
                 });
             });
-        <%}%>
         </script>
+        </c:if>
+        <%}%>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="login">
@@ -68,10 +71,13 @@
                 </ul> 
 
                 <% if (userprf == "") {%>
+                <c:if test="${!Loggedin}">
                 <ul class="nav navbar-nav navbar-right" id="loginmenu">
                     <a class="btn btn-outline-success my-2 my-sm-0" href="login">Login</a>
                 </ul>
+                </c:if>
                 <%} else {%>
+                <c:if test="${Loggedin}">
                 <ul class="nav navbar-nav navbar-right" id="usernmenu">
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="content:;"> 
@@ -143,6 +149,7 @@
                         </div>
                     </li>
                 </ul>  
+                </c:if>
                 <% }
                 %>
 

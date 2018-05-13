@@ -49,6 +49,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Account.findByExpression", query = "SELECT p FROM Account p WHERE p.username LIKE :expression")})
 public class Account implements Serializable {
 
+    @Size(max = 255)
+    @Column(name = "gmailId")
+    private String gmailId;
+
     @JoinTable(name = "friendrequests", joinColumns = {
         @JoinColumn(name = "requested", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "requester", referencedColumnName = "id")})
@@ -380,6 +384,14 @@ public class Account implements Serializable {
 
     public void setAccountCollection3(Collection<Account> accountCollection3) {
         this.accountCollection3 = accountCollection3;
+    }
+
+    public String getGmailId() {
+        return gmailId;
+    }
+
+    public void setGmailId(String gmailId) {
+        this.gmailId = gmailId;
     }
     
 }

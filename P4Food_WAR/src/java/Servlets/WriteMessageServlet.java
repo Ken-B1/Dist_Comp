@@ -70,7 +70,6 @@ public class WriteMessageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
-            System.out.println("Called");
             int id = Integer.parseInt(request.getParameter("recid"));
             String subject = request.getParameter("subject");
             String message = request.getParameter("content");

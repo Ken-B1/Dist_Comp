@@ -37,6 +37,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Pin.findByExpression", query = "SELECT p FROM Pin p WHERE p.recipeName LIKE :expression")})
 public class Pin implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "location")
+    private String location;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -125,6 +131,14 @@ public class Pin implements Serializable {
     @Override
     public String toString() {
         return "Entities.Pin[ id=" + id + " ]";
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
     
 }

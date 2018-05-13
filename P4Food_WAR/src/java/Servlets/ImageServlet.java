@@ -8,10 +8,12 @@ package Servlets;
 import Business.AccountBean;
 import Business.categoryBean;
 import Business.ImageBean;
-import Entities.Pin;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.List;
+import java.io.OutputStream;
 import javax.ejb.EJB;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -24,9 +26,9 @@ import javax.servlet.http.Part;
  *
  * @author ken
  */
-@WebServlet(name = "testServlet", urlPatterns = {"/testServlet"})
+@WebServlet(name = "imageServlet", urlPatterns = {"/Image"})
 @MultipartConfig
-public class testServlet extends HttpServlet {
+public class ImageServlet extends HttpServlet {
     @EJB
     categoryBean fb;
     
@@ -57,8 +59,26 @@ public class testServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
-        List<Pin> currentUserPin = currentUser.getTailoredPins();
+        ServletContext application = getServletContext();
+        String fileName = request.getParameter("filename");
+        String filepath = fileName;
+        String mimeType = application.getMimeType(filepath);
+
+        response.setContentType(mimeType);
+        File file = imgbean.getImage(filepath);
+        response.setContentLength((int)file.length());
+        
+        FileInputStream in = new FileInputStream(file);
+        OutputStream out = response.getOutputStream();
+        byte[] buf = new byte[1024];
+        int len = 0;
+        
+        while((len = in.read(buf)) >= 0){
+            out.write(buf, 0, len);
+        }
+        
+        in.close();
+        out.close();
     }
 
     /**

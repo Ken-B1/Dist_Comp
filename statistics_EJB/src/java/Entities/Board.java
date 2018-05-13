@@ -38,7 +38,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Board.findByBoardname", query = "SELECT b FROM Board b WHERE b.boardname = :boardname")
     , @NamedQuery(name = "Board.findByOwner", query = "SELECT b FROM Board b WHERE b.owner = :userid")
     , @NamedQuery(name = "Board.findByExpression", query = "SELECT p FROM Board p WHERE p.boardname LIKE :expression")
-    , @NamedQuery(name = "Board.findByExpressionCategory", query = "SELECT p FROM Board p WHERE p.category.name LIKE :expression")})
+    , @NamedQuery(name = "Board.findByExpressionCategory", query = "SELECT p FROM Board p WHERE p.category.name LIKE :expression")
+    , @NamedQuery(name = "Board.maxIdForCategory", query = "SELECT max(p.id) FROM Board p WHERE p.category = :category")
+    , @NamedQuery(name = "Board.firstOccurencesAfterId", query = "SELECT p FROM Board p WHERE p.id >= :id")})
 public class Board implements Serializable {
 
     @Basic(optional = false)

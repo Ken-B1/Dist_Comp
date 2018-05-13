@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Business.LoginBean;
-import Entities.Useractions;
+import Entities.Pin;
 import java.util.List;
 
 /**
@@ -41,7 +41,6 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("Called");
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 

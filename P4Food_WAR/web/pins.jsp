@@ -58,8 +58,9 @@
                 <c:forEach items = "${pinList}" var="pin" >
                     <div class="col-sm-4">
                         <div class="card bg-light mb-3">     
-                            <a href="fullRecipe?id=${board.getId()}" class="">
-                                <div class="card-body" style="max-width: 18rem;height:11.5rem;">
+                            <a href="fullRecipe?id=${pin.getId()}" class="">
+                                <div class="card-img-top " style="max-width: 100%;height:11.5rem;">
+                                    <img src="Image?filename=${pin.getLocation()}" style="width: 100%; height: 100%;"></img>
                                 </div>
                             </a>
                             <div class="card-header">
@@ -83,29 +84,28 @@
                             <button type="button" class="close" data-dismiss="modal"><i class="fas fa-times-circle fa-lg"></i></button>
                         </div>
                         <div class="modal-body">
-                            <form action="createPin" method="post" >
-                                <div class="row">
-                                    <form action="createPin" method="post" enctype="multipart/form-data" id="js-upload-form">
-                                        <div class="col">
-                                            <!-- Standard Form -->
-                                            <h5>Select images from your computer</h5>                                                
-                                            <div class="form-inline">
-                                                <div class="form-group">
-                                                    <input type="file" name="files[]" id="js-upload-files" multiple>
-                                                </div>
-                                            </div> 
-                                            <div class="dropdown-divider"></div>
-                                            <label for="exampleTextarea"><i class="fas fa-tag fa-sm"></i> Add Name</label>
-                                            <input type="text" class="form-control" placeholder="Add Your Recipe Name" name="recipeTitle">
-                                            <div class="dropdown-divider"></div>
-                                            <label for="exampleTextarea"><i class="fas fa-pen-square fa-sm"></i> Description</label>
-                                            <textarea class="form-control" id="exampleTextarea" rows="3" name="recipe"></textarea>
-                                            <div class="dropdown-divider"></div> 
-                                            <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload Pins</button>                                                                                                                                                               
-                                        </div>                                           
-                                    </form>                                        
-                                </div>
-                            </form>
+                            <div class="row">
+                                <form action="createPin" method="post" enctype="multipart/form-data" id="js-upload-form">
+                                    <input type="text" name="id" value="${boardId}" style="display:none"></input>
+                                    <div class="col">
+                                        <!-- Standard Form -->
+                                        <h5>Select images from your computer</h5>                                                
+                                        <div class="form-inline">
+                                            <div class="form-group">
+                                                <input type="file" name="file" id="js-upload-files" multiple>
+                                            </div>
+                                        </div> 
+                                        <div class="dropdown-divider"></div>
+                                        <label for="exampleTextarea"><i class="fas fa-tag fa-sm"></i> Add Name</label>
+                                        <input type="text" class="form-control" placeholder="Add Your Recipe Name" name="recipeTitle">
+                                        <div class="dropdown-divider"></div>
+                                        <label for="exampleTextarea"><i class="fas fa-pen-square fa-sm"></i> Description</label>
+                                        <textarea class="form-control" id="exampleTextarea" rows="3" name="recipe"></textarea>
+                                        <div class="dropdown-divider"></div> 
+                                        <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload Pins</button>                                                                                                                                                               
+                                    </div>                                           
+                                </form>                                        
+                            </div>
                         </div>                            
                     </div>             
                 </div>

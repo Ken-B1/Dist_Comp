@@ -6,25 +6,28 @@
 package Servlets;
 
 import Business.AccountBean;
+import Business.ImageBean;
 import Business.boardCrudBean;
 import Business.pinCrudBean;
-import Entities.Board;
 import Entities.Pin;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import static jdk.nashorn.internal.objects.NativeError.getFileName;
 
 /**
  *
  * @author ken
  */
 @WebServlet(name = "createPinServlet", urlPatterns = {"/createPin"})
+@MultipartConfig
 public class createPinServlet extends HttpServlet {
     @EJB 
     private pinCrudBean pinBean;
@@ -32,6 +35,9 @@ public class createPinServlet extends HttpServlet {
     /*Temporary*/
     @EJB
     private boardCrudBean boardBean;
+    
+    @EJB
+    private ImageBean imgbean;
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -55,6 +61,7 @@ public class createPinServlet extends HttpServlet {
         request.setAttribute("pinList", boardPins);           
         
         request.setAttribute("isAdmin", currentUser.getAccount().getAdmin());
+        request.setAttribute("boardId", id);
         request.getRequestDispatcher("pins.jsp").forward(request, response);
     }
 
@@ -71,10 +78,15 @@ public class createPinServlet extends HttpServlet {
             throws ServletException, IOException {        
         String recipeName = request.getParameter("recipeTitle");
         String recipe = request.getParameter("recipe");   
+        int boardId = Integer.parseInt(request.getParameter("id"));
+        final Part filePart = request.getPart("file");
+        final String fileName = getFileName(filePart);
+        String url = imgbean.storeImage(fileName, filePart);
         
-        pinBean.createPin(recipeName, recipe, 1);          
-            
-        response.sendRedirect("createPin");
+        pinBean.createPin(recipeName, recipe, boardId, url);          
+        
+        
+        response.sendRedirect("createPin?id=" + boardId);
     }
 
     /**
@@ -87,4 +99,13 @@ public class createPinServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private String getFileName(final Part part) {
+    for (String content : part.getHeader("content-disposition").split(";")) {
+        if (content.trim().startsWith("filename")) {
+            return content.substring(
+                    content.indexOf('=') + 1).trim().replace("\"", "");
+        }
+    }
+    return null;
+}
 }
