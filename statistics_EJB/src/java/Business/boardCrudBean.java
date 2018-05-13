@@ -47,6 +47,7 @@ public class boardCrudBean {
         newboard.setOwner(owner);
         newboard.setCategory(category);
         em.persist(newboard);
+        em.flush();
         stats.createBoard(owner, newboard);
     }
     
@@ -69,7 +70,6 @@ public class boardCrudBean {
         toUpdate.setBoardname(newName);
         toUpdate.setCategory(newCategory);
         em.flush();
-        stats.updateBoard(toUpdate.getOwner(), toUpdate);
     }
  
     public void updateBoard(int boardId, String newName, int newCategory){
@@ -90,6 +90,5 @@ public class boardCrudBean {
         Board toDelete = em.find(Board.class, boardId);
         em.remove(toDelete);
         em.flush();
-        stats.removeBoard(toDelete.getOwner(), toDelete);
     }
 }

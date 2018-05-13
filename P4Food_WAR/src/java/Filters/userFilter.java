@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author ken
  */
-@WebFilter(filterName = "userFilter", urlPatterns = {"/pinboard", "/admin", "/Admincategories", "/settings", "/statistics", "/createBoard", "/createPin", "/Adminregistration", "/MessageOverview", "/FullMessage", "/WriteMessage", "/Search", "/UnblockPerson", "/Messages", "/PinSettings", "/FollowBoard", "/ChooseInitialCategories", "/AdminStatistics", "/FollowPerson", "/explore", "/fullRecipe", "/profile", "/recommendations", "/boardSettings", "/BlockPerson", "/UnfollowPerson","/UnfollowBoard", "/Search", "/Notifications", "/FriendRequest"})
+@WebFilter(filterName = "userFilter", urlPatterns = {"/pinboard", "/admin", "/Admincategories", "/settings", "/statistics", "/createBoard", "/createPin", "/Adminregistration", "/MessageOverview", "/FullMessage", "/WriteMessage", "/Search", "/UnblockPerson", "/Messages", "/PinSettings", "/FollowBoard", "/ChooseInitialCategories", "/AdminStatistics", "/FollowPerson", "/explore", "/fullRecipe", "/profile", "/recommendations", "/boardSettings", "/BlockPerson", "/UnfollowPerson","/UnfollowBoard", "/Search", "/Notifications", "/FriendRequest", "/NotificationRedirect"})
 public class userFilter implements Filter {
     
     private static final boolean debug = true;
@@ -106,8 +106,7 @@ public class userFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
-            request.setAttribute("Loggedin", false);
-            req.getRequestDispatcher("login").forward(req, res); // No logged-in user found, so redirect to login page.
+            res.sendRedirect("login");
         } else {
             // Continue request
             request.setAttribute("Loggedin", true);

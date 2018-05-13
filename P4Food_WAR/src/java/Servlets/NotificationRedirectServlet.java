@@ -5,12 +5,10 @@
  */
 package Servlets;
 
-import Business.AccountBean;
+import Business.StatisticsBean;
 import Entities.Notifications;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,9 +19,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ken
  */
-@WebServlet(name = "NotificationServlet", urlPatterns = {"/Notifications"})
-public class NotificationServlet extends HttpServlet {
-
+@WebServlet(name = "NotificationRedirectServlet", urlPatterns = {"/NotificationRedirect"})
+public class NotificationRedirectServlet extends HttpServlet {
+    @EJB
+    StatisticsBean statsbean;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,11 +34,7 @@ public class NotificationServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            
-        }
+        response.sendRedirect("pinboard");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -54,36 +49,29 @@ public class NotificationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
-        List<Notifications> notifications = new ArrayList(currentUser.getAccount().getNotificationsCollection1());
+        int id = Integer.parseInt(request.getParameter("id"));
+        Notifications notif = statsbean.getNotification(id);
+        statsbean.markAsRead(id);
         
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            for(Notifications u: notifications){
-                if(u.getIsread() == 1){
-                    continue;
-                }
-                out.write("<a href=\"");
-                out.write("NotificationRedirect?id=" + u.getIdnotifications());
-                out.write("\" class=\"list-group-item list-group-item-action flex-column align-items-start\"><div class=\"d-flex w-100 justify-content-between\"><h5 class=\"mb-1\">");
-                switch(u.getType()){
-                    case 1:
-                        out.write(u.getCreator().getUsername() + " created a new board.");
-                        break;
-                    case 2:
-                        // Redirect to new pin    
-                        out.write(u.getCreator().getUsername() + " created a new pin.");
-                        break;
-                    case 3:
-                        // Redirect to new follower
-                        out.write(u.getCreator().getUsername() + " started following you.");
-                        break;
-                    default:
-                }                
-                out.write("</h5></div></a>");
-            }
-        }       
+        switch(notif.getType()){
+            case 1:
+                // Redirect to new board
+                request.setAttribute("id", notif.getDescription());
+                request.getRequestDispatcher("createPin").forward(request, response);
+                break;
+            case 2:
+                // Redirect to new pin
+                request.setAttribute("id", notif.getDescription());
+                request.getRequestDispatcher("fullRecipe").forward(request, response); 
+                break;
+            case 3:
+                // Redirect to new follower
+                response.sendRedirect("profile?username=" + notif.getCreator().getUsername());
+                break;
+            default:
+                response.sendRedirect("pinboard");
+        }
+        
     }
 
     /**

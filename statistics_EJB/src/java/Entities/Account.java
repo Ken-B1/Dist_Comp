@@ -49,6 +49,11 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Account.findByExpression", query = "SELECT p FROM Account p WHERE p.username LIKE :expression")})
 public class Account implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "creator")
+    private Collection<Notifications> notificationsCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver")
+    private Collection<Notifications> notificationsCollection1;
+
     @Size(max = 255)
     @Column(name = "gmailId")
     private String gmailId;
@@ -78,9 +83,6 @@ public class Account implements Serializable {
     @NotNull
     @Column(name = "isBlocked")
     private short isBlocked;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Collection<Useractions> useractionsCollection;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
     private Collection<Boardfollowers> boardfollowersCollection;
@@ -314,16 +316,7 @@ public class Account implements Serializable {
     public void setPeoplefollowerCollection1(Collection<Peoplefollower> peoplefollowerCollection1) {
         this.peoplefollowerCollection1 = peoplefollowerCollection1;
     }
-
-    @XmlTransient
-    public Collection<Useractions> getUseractionsCollection() {
-        return useractionsCollection;
-    }
-
-    public void setUseractionsCollection(Collection<Useractions> useractionsCollection) {
-        this.useractionsCollection = useractionsCollection;
-    }
-
+    
     public short getIsBlocked() {
         return isBlocked;
     }
@@ -392,6 +385,24 @@ public class Account implements Serializable {
 
     public void setGmailId(String gmailId) {
         this.gmailId = gmailId;
+    }
+
+    @XmlTransient
+    public Collection<Notifications> getNotificationsCollection() {
+        return notificationsCollection;
+    }
+
+    public void setNotificationsCollection(Collection<Notifications> notificationsCollection) {
+        this.notificationsCollection = notificationsCollection;
+    }
+
+    @XmlTransient
+    public Collection<Notifications> getNotificationsCollection1() {
+        return notificationsCollection1;
+    }
+
+    public void setNotificationsCollection1(Collection<Notifications> notificationsCollection1) {
+        this.notificationsCollection1 = notificationsCollection1;
     }
     
 }

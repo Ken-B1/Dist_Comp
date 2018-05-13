@@ -61,13 +61,11 @@ public class pinCrudBean {
         toUpdate.setRecipeName(name);
         toUpdate.setBoard(em.find(Board.class, boardId));
         em.flush();
-        stats.updatePin(toUpdate.getBoard().getOwner(), toUpdate);
     }
     
     public void deletePin(int pinId){
         Pin toDelete = em.find(Pin.class, pinId);
         em.remove(toDelete);
         em.flush();
-        stats.removePin(toDelete.getBoard().getOwner(), toDelete);
     }
 }

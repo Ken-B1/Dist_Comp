@@ -43,8 +43,25 @@
                 });
             });
         </script>
+        
+        <script type="text/javascript">
+            // A $( document ).ready() block.
+            $( document ).ready(function() {
+                $.get("Notifications", function(data){
+                    if(data == ""){
+                        $("#notIcon").css("visibility", "hidden");
+                    }else{
+                        $("#notIcon").css("visibility", "visible");
+                    };
+                    $( ".notifications" ).append(data);
+                });
+            });
+        </script>
+        
         </c:if>
         <%}%>
+    </head>
+    <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="login">
@@ -81,7 +98,7 @@
                 <ul class="nav navbar-nav navbar-right" id="usernmenu">
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="content:;"> 
-                            <i class="far fa-comment-alt fa-2x" style="margin-top:10%"></i>                      
+                            <i class="far fa-comment-alt fa-2x"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" style="min-width:25rem;border:0px;">                     
 
@@ -97,31 +114,18 @@
 
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="content:;"> 
-                            <i class="far fa-bell fa-2x" style="margin-top:10%"></i>                      
+                            <span class="fa-stack" id="notifIcon" style="margin-top:10%">
+                                <i class="far fa-bell fa-2x"></i>
+                                <i class="fa fa-flag fa-stack-1x" id="notIcon" style="color:red; top: -25px;left: -25px"></i>
+                            </span>                            
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" style="min-width:25rem;border:0px;">                     
 
-                            <div class="list-group"style="height: 300px;overflow:auto">
+                            <div class="list-group notifications" style="height: 300px;overflow:auto">
                                 <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
                                     <div class="d-flex w-100 justify-content-between">
                                         <h5 class="mb-1">Notifications</h5>                                       
                                     </div>                                    
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">Someone commented on your pic</h5>
-                                        <small class="text-muted">1 day ago</small>
-                                    </div>
-                                    <p class="mb-1">Here not present in the previous example. Also supported is the .active state;</p>
-                                    <small class="text-muted">Your post details</small>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">Someone liked your food</h5>
-                                        <small class="text-muted">3 days ago</small>
-                                    </div>
-                                    <p class="mb-1">This is the example for the notification message</p>
-                                    <small class="text-muted">Your post details</small>
                                 </a>
                             </div>
                         </div>
@@ -159,10 +163,9 @@
             </div> 
         </div>
     </nav>
-</head>
-<body>
     <div class="dropdown-divider"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
 </body>
 </html>

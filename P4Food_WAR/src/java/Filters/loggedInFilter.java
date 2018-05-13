@@ -109,8 +109,7 @@ public class loggedInFilter implements Filter {
             request.setAttribute("Loggedin", false);
             chain.doFilter(request, response); 
         } else { 
-            request.setAttribute("Loggedin", true);
-            req.getRequestDispatcher("pinboard").forward(req, res);// User is already logged in, so redirect to pinpage
+            res.sendRedirect("pinboard");
         }
     }
 

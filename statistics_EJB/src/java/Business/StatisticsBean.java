@@ -7,15 +7,18 @@ package Business;
 
 import Entities.Account;
 import Entities.Board;
-import Entities.Categories;
+import Entities.Notifications;
+import Entities.Peoplefollower;
 import Entities.Pin;
 import Entities.Statistics;
-import Entities.Useractions;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 /**
  *
@@ -47,60 +50,86 @@ public class StatisticsBean extends AbstractFacade<Statistics> {
         Log specific actions for specific users.
         Log codes are as follows:
          - createBoard: 1
-         - updateBoard: 2
-         - removeBoard: 3
-         - createPin: 4
-         - updatePin: 5
-         - removePin: 6
+         - createPin: 2
+         - follow: 3
     */
     public void createBoard(Account user, Board board){
-        Useractions action = new Useractions(1, new Date(System.currentTimeMillis()));
-        action.setUser(user);
-        em.persist(action);
+        em.refresh(board);
+        try{
+            for(Account receiver: user.getAccountCollection2()){
+                // Add a notification for each friend
+                Notifications newnot = new Notifications();
+                newnot.setCreator(user);
+                newnot.setReceiver(receiver);
+                newnot.setType(1);
+                newnot.setDescription(board.getId().toString());
+                em.persist(newnot);
+            }
+
+            List<Peoplefollower> followers = new ArrayList(user.getPeoplefollowerCollection1());
+
+            for(Peoplefollower receiver: followers){
+                Account actualRec = receiver.getAccount();
+                Notifications newnot = new Notifications();
+                newnot.setCreator(user);
+                newnot.setReceiver(actualRec);
+                newnot.setType(1);
+                newnot.setDescription(board.getId().toString());
+                em.persist(newnot);            
+            }
+        }catch(ConstraintViolationException e){
+            System.out.println("Violations:");
+            for(ConstraintViolation u: e.getConstraintViolations()){
+                System.out.println(u.getMessage());
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }
     
-    public void updateBoard(Account user, Board board){
-        Useractions action = new Useractions(2, new Date(System.currentTimeMillis()));
-        action.setUser(user);
-        em.persist(action);        
-    }
+    public void createPin(Account user, Pin pin){   
+        for(Account receiver: user.getAccountCollection2()){
+            // Add a notification for each friend
+            Notifications newnot = new Notifications();
+            newnot.setCreator(user);
+            newnot.setReceiver(receiver);
+            newnot.setType(2);
+            newnot.setDescription(pin.getId().toString());
+            em.persist(newnot);
+        }
         
-    public void removeBoard(Account user, Board board){
-        Useractions action = new Useractions(3, new Date(System.currentTimeMillis()));
-        action.setUser(user);
-        em.persist(action);       
-    }
-    
-    public void createPin(Account user, Pin pin){
-        Useractions action = new Useractions(4, new Date(System.currentTimeMillis()));
-        action.setUser(user);
-        em.persist(action);        
-    }
-    
-    public void updatePin(Account user, Pin pin){
-        Useractions action = new Useractions(5, new Date(System.currentTimeMillis()));
-        action.setUser(user);
-        em.persist(action);        
-    }
+        List<Peoplefollower> followers = em.createNamedQuery("Peoplefollower.findByFollowedUser").setParameter("followedUser", user.getId()).getResultList();
         
-    public void removePin(Account user, Pin pin){
-        Useractions action = new Useractions(6, new Date(System.currentTimeMillis()));
-        action.setUser(user);
-        em.persist(action);        
-    }    
+        for(Peoplefollower receiver: followers){
+            Account actualRec = receiver.getAccount1();
+            Notifications newnot = new Notifications();
+            newnot.setCreator(user);
+            newnot.setReceiver(actualRec);
+            newnot.setType(2);
+            newnot.setDescription(pin.getId().toString());
+            em.persist(newnot);            
+        }
+    }
     
-    /**
-     * Log the action of following a category in the database
-     * @param user
-     * @param cat 
-     */
-    public void followCategory(Account user, Categories cat){
-        Useractions action = new Useractions(7, new Date(System.currentTimeMillis()));
-        action.setUser(user);
-        action.setDescription(cat.getId().toString());
-        em.persist(action);        
-    }    
+    public void follow( Account follower, Account followed){
+            Notifications newnot = new Notifications();
+            newnot.setCreator(follower);
+            newnot.setReceiver(followed);
+            newnot.setType(3);
+            em.persist(newnot);         
+    }
     
+    public void markAsRead(int notificationId){
+        Notifications not = em.find(Notifications.class, notificationId);
+        not.setIsread((short)1);
+        em.flush();
+    }
+    
+    public Notifications getNotification(int notificationId){
+        return em.find(Notifications.class, notificationId);
+    }
+    
+
     public List<Statistics> getStatistics(final int id) {
         Account returnvalue = (Account)em.createNamedQuery("Account.findById").setParameter("id", id).getSingleResult();
         return em.createNamedQuery("Statistics.findByUserid").setParameter("userid", returnvalue).getResultList();

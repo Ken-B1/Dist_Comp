@@ -11,10 +11,10 @@ import Entities.Board;
 import Entities.Boardfollowers;
 import Entities.Categories;
 import Entities.Messages;
+import Entities.Notifications;
 import Entities.Peoplefollower;
 import Entities.PeoplefollowerPK;
 import Entities.Pin;
-import Entities.Useractions;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -24,7 +24,6 @@ import javax.ejb.Stateful;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
@@ -87,7 +86,6 @@ public class AccountBean {
         categories.add(newCategory);
         user.setCategoriesCollection(categories);
         em.flush();
-        stats.followCategory(user, newCategory);
     }
     
     // Follow a board
@@ -108,10 +106,11 @@ public class AccountBean {
     
     // Follow a person
     public void followPerson(int toFollow){
-        //Peoplefollower newFollower = new Peoplefollower(currentUser, toFollow);
-        //newFollower.setAccount(em.find(Account.class, currentUser));
-        //newFollower.setAccount1(em.find(Account.class, toFollow));
-        //em.persist(newFollower);
+        Peoplefollower newFollower = new Peoplefollower(currentUser, toFollow);
+        newFollower.setAccount(em.find(Account.class, currentUser));
+        newFollower.setAccount1(em.find(Account.class, toFollow));
+        em.persist(newFollower);
+        stats.follow(em.find(Account.class, currentUser), em.find(Account.class, toFollow));
     }    
     
     // Unfollow a person
@@ -158,18 +157,6 @@ public class AccountBean {
             throw new NullPointerException("Tried to block a person that could not be found");
         }  
         
-    }
-    
-    /*
-        Get this user's notifications
-        It uses the last login time for this user to only get notifications received after this time
-    */
-    public List<Useractions> getNotifications(){
-        Account user = em.find(Account.class, currentUser);
-        Query quer = em.createNamedQuery("Useractions.findNotifications");
-        quer.setParameter("user", user).setMaxResults(20);
-        List<Useractions> results = quer.getResultList();
-        return results;
     }
     
     // Get this user's messages
