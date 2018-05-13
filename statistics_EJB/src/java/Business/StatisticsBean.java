@@ -7,10 +7,12 @@ package Business;
 
 import Entities.Account;
 import Entities.Board;
+import Entities.Categories;
 import Entities.Notifications;
 import Entities.Peoplefollower;
 import Entities.Pin;
 import Entities.Statistics;
+import Entities.Useractions;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -77,6 +79,8 @@ public class StatisticsBean extends AbstractFacade<Statistics> {
                 newnot.setDescription(board.getId().toString());
                 em.persist(newnot);            
             }
+            
+            boardCategory(user, board.getCategory());
         }catch(ConstraintViolationException e){
             System.out.println("Violations:");
             for(ConstraintViolation u: e.getConstraintViolations()){
@@ -112,12 +116,20 @@ public class StatisticsBean extends AbstractFacade<Statistics> {
     }
     
     public void follow( Account follower, Account followed){
-            Notifications newnot = new Notifications();
-            newnot.setCreator(follower);
-            newnot.setReceiver(followed);
-            newnot.setType(3);
-            em.persist(newnot);         
+        Notifications newnot = new Notifications();
+        newnot.setCreator(follower);
+        newnot.setReceiver(followed);
+        newnot.setType(3);
+        em.persist(newnot);         
     }
+    
+    public void boardCategory(Account user, Categories category){
+        Useractions action = new Useractions();
+        action.setCategory(category);
+        action.setUser(user);
+        action.setTimestamp(new Date(System.currentTimeMillis()));
+        em.persist(action);
+    }   
     
     public void markAsRead(int notificationId){
         Notifications not = em.find(Notifications.class, notificationId);
@@ -129,7 +141,6 @@ public class StatisticsBean extends AbstractFacade<Statistics> {
         return em.find(Notifications.class, notificationId);
     }
     
-
     public List<Statistics> getStatistics(final int id) {
         Account returnvalue = (Account)em.createNamedQuery("Account.findById").setParameter("id", id).getSingleResult();
         return em.createNamedQuery("Statistics.findByUserid").setParameter("userid", returnvalue).getResultList();

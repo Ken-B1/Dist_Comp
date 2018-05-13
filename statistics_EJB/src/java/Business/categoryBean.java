@@ -69,13 +69,6 @@ public class categoryBean {
      * @return 
      */
     public List<Categories> getRisingCategories(int amount){      
-        List<String> allcats = em.createNamedQuery("Useractions.findCategoryFollows").setParameter("timestamp",  new Date(System.currentTimeMillis()-604800000)).getResultList();
-        List<Categories> returnList = new ArrayList();
-        amount = min(amount, allcats.size());
-        for(String x: allcats.subList(0, amount)){
-            returnList.add(em.find(Categories.class, Integer.parseInt(x)));
-        }
-        
-        return returnList;
+        return em.createNamedQuery("Useractions.findCategoryFollows").setParameter("timestamp",  new Date(System.currentTimeMillis()-604800000)).setMaxResults(amount).getResultList();
     }
 }

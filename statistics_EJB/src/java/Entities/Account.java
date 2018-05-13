@@ -49,6 +49,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Account.findByExpression", query = "SELECT p FROM Account p WHERE p.username LIKE :expression")})
 public class Account implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Collection<Useractions> useractionsCollection;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "creator")
     private Collection<Notifications> notificationsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver")
@@ -403,6 +406,15 @@ public class Account implements Serializable {
 
     public void setNotificationsCollection1(Collection<Notifications> notificationsCollection1) {
         this.notificationsCollection1 = notificationsCollection1;
+    }
+
+    @XmlTransient
+    public Collection<Useractions> getUseractionsCollection() {
+        return useractionsCollection;
+    }
+
+    public void setUseractionsCollection(Collection<Useractions> useractionsCollection) {
+        this.useractionsCollection = useractionsCollection;
     }
     
 }

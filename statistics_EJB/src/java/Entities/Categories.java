@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,6 +40,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Categories.findByName", query = "SELECT c FROM Categories c WHERE c.name = :name")
     , @NamedQuery(name = "Categories.findByImagelocation", query = "SELECT c FROM Categories c WHERE c.imagelocation = :imagelocation")})
 public class Categories implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    private Collection<Useractions> useractionsCollection;
     @OneToMany(mappedBy = "category")
     private Collection<Board> boardCollection;
 
@@ -137,6 +141,15 @@ public class Categories implements Serializable {
 
     public void setBoardCollection(Collection<Board> boardCollection) {
         this.boardCollection = boardCollection;
+    }
+
+    @XmlTransient
+    public Collection<Useractions> getUseractionsCollection() {
+        return useractionsCollection;
+    }
+
+    public void setUseractionsCollection(Collection<Useractions> useractionsCollection) {
+        this.useractionsCollection = useractionsCollection;
     }
     
 }

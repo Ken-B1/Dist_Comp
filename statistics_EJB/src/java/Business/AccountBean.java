@@ -11,7 +11,6 @@ import Entities.Board;
 import Entities.Boardfollowers;
 import Entities.Categories;
 import Entities.Messages;
-import Entities.Notifications;
 import Entities.Peoplefollower;
 import Entities.PeoplefollowerPK;
 import Entities.Pin;

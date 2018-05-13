@@ -44,24 +44,8 @@
             });
         </script>
         
-        <script type="text/javascript">
-            // A $( document ).ready() block.
-            $( document ).ready(function() {
-                $.get("Notifications", function(data){
-                    if(data == ""){
-                        $("#notIcon").css("visibility", "hidden");
-                    }else{
-                        $("#notIcon").css("visibility", "visible");
-                    };
-                    $( ".notifications" ).append(data);
-                });
-            });
-        </script>
-        
         </c:if>
         <%}%>
-    </head>
-    <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="login">
@@ -116,7 +100,7 @@
                         <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="content:;"> 
                             <span class="fa-stack" id="notifIcon" style="margin-top:10%">
                                 <i class="far fa-bell fa-2x"></i>
-                                <i class="fa fa-flag fa-stack-1x" id="notIcon" style="color:red; top: -25px;left: -25px"></i>
+                                <i class="fa fa-flag fa-stack-1x" id="notIcon" style="color:red; top: -25px;left: -25px; display:none"></i>
                             </span>                            
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" style="min-width:25rem;border:0px;">                     
@@ -163,9 +147,20 @@
             </div> 
         </div>
     </nav>
+</head>
+<body>
     <div class="dropdown-divider"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            // A $( document ).ready() block.
+            $( document ).ready(function() {
+                $.get("Notifications", function(data){
+                    $( ".notifications" ).append(data);
+                    $("#notIcon").toggle();
 
+                });
+            });
+        </script>
 </body>
 </html>

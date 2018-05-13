@@ -10,6 +10,7 @@ import Entities.Messages;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import javax.servlet.ServletException;
@@ -45,6 +46,7 @@ public class MessagesServlet extends HttpServlet {
         // finding a json library will probably take longer
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            String totalString = "";
             for(Messages x: messages){
                 Date currentDate = new Date(System.currentTimeMillis());
                 long daysAgo = currentDate.getTime() - x.getTimestamp().getTime();
@@ -61,8 +63,10 @@ public class MessagesServlet extends HttpServlet {
                 }else{
                     toAdd += " days ago</small></div></a>";
                 }
-                out.println(toAdd);
+                totalString = toAdd + totalString;
             }
+            
+            out.println(totalString);
         }
     }
 
