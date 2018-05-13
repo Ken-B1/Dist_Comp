@@ -7,6 +7,7 @@ package Business;
 
 import Entities.Account;
 import java.util.Collection;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
@@ -70,16 +71,15 @@ public class friendsBean {
             // Incorrect account requested
             return;
         }
-        
         // Needs to refresh, because for some reason the entity manager persists between calls even though this is stateless
         em.refresh(requester);
         em.refresh(requested);
         
-        if(!requester.getAccountCollection1().contains(requested)){
-            // Friend request no longer exists
+        if(!requester.getAccountCollection2().contains(requested)){
+            // These people are no longer friends
             return;
         }
-        
+
         Query query = em.createNativeQuery("DELETE FROM friends WHERE ((user1 = ?1 AND user2 =  ?2) or (user1 = ?2 AND user2 =  ?1))");
         query.setParameter(1,requesterId);
         query.setParameter(2,requestedId);
@@ -148,5 +148,15 @@ public class friendsBean {
         query.setParameter(2,requestedId);
         query.executeUpdate();
         em.flush();        
+    }
+    
+    public Collection<Account> getFriends(int userId){
+        Account currentUser = em.find(Account.class, userId);
+        return currentUser.getAccountCollection2();
+    }
+    
+    public Collection<Account> getFriendRequests(int userId){
+        Account currentUser = em.find(Account.class, userId);
+        return currentUser.getAccountCollection();
     }
 }
