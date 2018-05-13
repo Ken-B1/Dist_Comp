@@ -48,6 +48,8 @@ public class ImageBean {
                 out.write(bytes, 0, read);
             }
             System.out.println("New file " + fileName + " created at " + dirString);
+            filecontent.close();
+            out.close();
             return dirString + File.separator + fileName;
         } catch (FileNotFoundException fne) {
             System.out.println("You either did not specify a file to upload or are "
@@ -55,6 +57,7 @@ public class ImageBean {
                     + "location.");
             System.out.println("<br/> ERROR: " + fne.getMessage());
         } catch ( IOException e){
+            
         }
         return null;
     }

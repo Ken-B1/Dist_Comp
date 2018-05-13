@@ -211,7 +211,7 @@ public class AccountBean {
         Random rand = new Random(System.currentTimeMillis());
         
         for(int x = 0; x < numFromBoard ; x++){
-            if(listofBoards.size() == 0){
+            if(listofBoards.isEmpty()){
                 break;
             }
             // Keep adding a random pin from a random board
@@ -223,16 +223,22 @@ public class AccountBean {
         }
         
         for(int x = 0; x < numFromCategories ; x++){
-            if(listofCategories.size() == 0){
+            if(listofCategories.isEmpty()){
                 break;
             }
             // Add random pins from selected categories
             int currentIndex = rand.nextInt(listofCategories.size());
+            System.out.println("Currentindex:" + currentIndex);
             Categories currentCategory = (Categories)listofCategories.toArray()[currentIndex];
-            int maxIdForCat = em.createNamedQuery("Board.maxIdForCategory").setParameter("category", currentCategory).getFirstResult();
+            System.out.println(currentCategory.getId());
+            int maxIdForCat = (int)em.createNamedQuery("Board.maxIdForCategory").setParameter("category", currentCategory).getSingleResult();
+            System.out.println("maxId: " + maxIdForCat);
             int boardId = rand.nextInt(maxIdForCat + 1);
             Board selectedBoard = (Board)em.createNamedQuery("Board.firstOccurencesAfterId").setParameter("id", boardId).setMaxResults(1).getSingleResult();
             Collection<Pin> allPins = selectedBoard.getPinCollection();
+            if(allPins.size() == 0){
+                continue;
+            }
             int pinIndex = rand.nextInt(allPins.size());
             resultList.add((Pin)allPins.toArray()[pinIndex]);            
         }
