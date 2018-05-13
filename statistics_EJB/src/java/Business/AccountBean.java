@@ -210,7 +210,10 @@ public class AccountBean {
         Collection<Categories> listofCategories = acc.getCategoriesCollection();
         Random rand = new Random(System.currentTimeMillis());
         
-        while(resultList.size() < numFromBoard){
+        for(int x = 0; x < numFromBoard ; x++){
+            if(listofBoards.size() == 0){
+                break;
+            }
             // Keep adding a random pin from a random board
             int currentIndex = rand.nextInt(listofBoards.size());
             Board currentBoard = listofBoards.get(currentIndex).getBoard();
@@ -219,7 +222,10 @@ public class AccountBean {
             resultList.add((Pin)allPins.toArray()[pinIndex]);
         }
         
-        while(resultList.size() < numFromCategories){
+        for(int x = 0; x < numFromCategories ; x++){
+            if(listofCategories.size() == 0){
+                break;
+            }
             // Add random pins from selected categories
             int currentIndex = rand.nextInt(listofCategories.size());
             Categories currentCategory = (Categories)listofCategories.toArray()[currentIndex];
