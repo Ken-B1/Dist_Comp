@@ -14,8 +14,15 @@
 
     <body>
         <div class="container">
-            <a class="link" href="Adminregistration" style="color:#cccccc">New Admin</a><br/>
-            <a class="link" href="Admincategories" style="color:#cccccc">New Category</a>
+            <div class="row justify-content-md-center" style="margin-top: 10%">
+                <a class="btn btn-primary btn-lg" href="Adminregistration">Add New Administrator</a>
+
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="row justify-content-md-center">
+
+                <a class="btn btn-dark btn-lg" href="Admincategories">Add New Category</a>
+            </div>            
         </div>
     </body>
 </html>

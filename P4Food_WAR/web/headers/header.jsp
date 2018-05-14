@@ -61,7 +61,7 @@
                         <a class="nav-link" href="explore"><i class="fab fa-wpexplorer fa-sm"></i> Explore</a>
                     </li>     
                     <li class="nav-item active">
-                        <a class="nav-link" href="recommendations"><i class="fas fa-home fa-sm"></i> Recommendations</a>
+                        <a class="nav-link" href="recommendations"><i class="fas fa-box-open fa-sm"></i></i> Recommendations</a>
                     </li>    
                     <li>
                         <form class="form-inline my-2 my-lg-0" action="Search" method="post">
