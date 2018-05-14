@@ -9,9 +9,6 @@ import Entities.Categories;
 import services.categoryBeanInterface;
 import java.io.IOException;
 import java.util.List;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -19,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import remotesettings.setRemote;
 
 /**
  *
@@ -27,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "exploreServlet", urlPatterns = {"/explore"})
 public class exploreServlet extends HttpServlet {
     private categoryBeanInterface cat;
+    
     /**
     * The context to be used to perform lookups of remote beans
     */
@@ -57,10 +56,9 @@ public class exploreServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        loadProperties("192.168.1.2", "3700");
-        
         try{
+            ic = new InitialContext(setRemote.setProperties());   
+            
             cat = (categoryBeanInterface) ic.lookup("java:global/statistics_EJB/categoryBean!services.categoryBeanInterface");
             List<Categories> trending = cat.getRisingCategories(10);
             List<Categories> top = cat.getTopCategories(1);
@@ -96,25 +94,4 @@ public class exploreServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    //private String host="",port="";
-    public void loadProperties(String h, String p) {
-        try {
-            Properties props = new Properties();
-  
-            System.out.println("h: " + h + " p: " + p);
-  
-            props.setProperty("java.naming.factory.initial",
-                    "com.sun.enterprise.naming.SerialInitContextFactory");
-            props.setProperty("java.naming.factory.url.pkgs",
-                    "com.sun.enterprise.naming");
-            props.setProperty("java.naming.factory.state",
-                    "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
-            props.setProperty("org.omg.CORBA.ORBInitialHost", h);
-            props.setProperty("org.omg.CORBA.ORBInitialPort", p);
-  
-            ic = new InitialContext(props);
-        } catch (NamingException ex) {
-            Logger.getLogger(exploreServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 }
