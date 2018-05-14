@@ -35,12 +35,6 @@ public class AdminRegistrationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println(request.getSession(false));
-        if (request.getSession(false) == null) {
-            // Session does not exist yet, which means user is not logged in
-            response.sendRedirect("login");
-            return;
-        }
         response.sendRedirect("adminsignup.jsp");
     }
 

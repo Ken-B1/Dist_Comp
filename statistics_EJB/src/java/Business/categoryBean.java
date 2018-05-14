@@ -5,14 +5,15 @@
  */
 package Business;
 
+import services.categoryBeanInterface;
 import Entities.Categories;
+import entityWrapper.category;
 import static java.lang.Integer.min;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -33,7 +34,7 @@ public class categoryBean implements categoryBeanInterface{
      * @return 
      */
     @Override
-    public List<Categories> getTopCategories(){
+    public List<category> getTopCategories(){
         return getTopCategories(10);
     }
     
@@ -43,10 +44,10 @@ public class categoryBean implements categoryBeanInterface{
      * @return 
      */
     @Override
-    public List<Categories> getTopCategories(int amount){      
-        List<Integer> popularities = new ArrayList<Integer>();
+    public List<category> getTopCategories(int amount){      
+        List<Integer> popularities = new ArrayList<>();
         List<Categories> allcats = em.createNamedQuery("Categories.findAll").getResultList();
-        List<Categories> resultList = new ArrayList<Categories>();
+        List<category> resultList = new ArrayList<>();
         
         for(Categories x: allcats){
             popularities.add(x.getAccountCollection().size());
@@ -57,7 +58,11 @@ public class categoryBean implements categoryBeanInterface{
         int sizeLimit = popularities.get(amount-1);
         for(Categories x: allcats){
             if(x.getAccountCollection().size() >= sizeLimit){
-                resultList.add(x);
+                category toAdd = new category();
+                toAdd.setId(x.getId());
+                toAdd.setName(x.getName());
+                toAdd.setImageLocation(x.getImagelocation());
+                resultList.add(toAdd);
             }
         }
         
@@ -70,7 +75,7 @@ public class categoryBean implements categoryBeanInterface{
      * @return 
      */
     @Override
-    public List<Categories> getRisingCategories(int amount){      
+    public List<category> getRisingCategories(int amount){      
         return em.createNamedQuery("Useractions.findCategoryFollows").setParameter("timestamp",  new Date(System.currentTimeMillis()-604800000)).setMaxResults(amount).getResultList();
     }
 }

@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Business;
+package services;
 
-import Entities.Categories;
+import entityWrapper.category;
 import java.util.List;
-import javax.ejb.Local;
 import javax.ejb.Remote;
 
 /**
@@ -16,9 +15,9 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface categoryBeanInterface {
-    public List<Categories> getTopCategories();
+    public List<category> getTopCategories();
     
-    public List<Categories> getTopCategories(int amount);
+    public List<category> getTopCategories(int amount);
     
-    public List<Categories> getRisingCategories(int amount);
+    public List<category> getRisingCategories(int amount);
 }
