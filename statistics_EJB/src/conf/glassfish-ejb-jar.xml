@@ -4,7 +4,7 @@
   <enterprise-beans>
     <ejb>
       <ejb-name>categoryBean</ejb-name>
-      <jndi-name>java:global/WebCalculator_EJB/categoryBean!services.categoryBeanInterface</jndi-name>
+      <jndi-name>java:global/P4Food/statistics_EJB/categoryBean!Business.categoryBeanInterface</jndi-name>
     </ejb>
   </enterprise-beans>
 </glassfish-ejb-jar>
