@@ -5,8 +5,8 @@
  */
 package Servlets;
 
+import Entities.Categories;
 import services.categoryBeanInterface;
-import entityWrapper.category;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
@@ -58,14 +58,12 @@ public class exploreServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        loadProperties("localhost", "3700");
+        loadProperties("192.168.1.2", "3700");
         
         try{
-            System.out.println("Hello:");
             cat = (categoryBeanInterface) ic.lookup("java:global/statistics_EJB/categoryBean!services.categoryBeanInterface");
-            System.out.println("World");
-            List<category> trending = cat.getRisingCategories(10);
-            List<category> top = cat.getTopCategories(1);
+            List<Categories> trending = cat.getRisingCategories(10);
+            List<Categories> top = cat.getTopCategories(1);
             request.setAttribute("trending", trending);
             request.setAttribute("top", top);
             request.getRequestDispatcher("explore.jsp").forward(request, response);
