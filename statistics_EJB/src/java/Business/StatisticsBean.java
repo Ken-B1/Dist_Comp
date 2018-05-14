@@ -16,6 +16,7 @@ import Entities.Useractions;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,25 +28,17 @@ import javax.validation.ConstraintViolationException;
  * @author ken
  */
 @Stateless
-public class StatisticsBean extends AbstractFacade<Statistics> {
+@LocalBean
+public class StatisticsBean{
 
     @PersistenceContext(unitName = "statistics_EJBPU")
     private EntityManager em;
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
-    public StatisticsBean() {
-        super(Statistics.class);
-    }
-    
     public void log(final Account username) {
         Statistics stats = new Statistics();
         stats.setUserid(username);
         stats.setTimestamp(new Date(System.currentTimeMillis()));
-        getEntityManager().persist(stats);
+        em.persist(stats);
     }
     
     /*
@@ -55,6 +48,7 @@ public class StatisticsBean extends AbstractFacade<Statistics> {
          - createPin: 2
          - follow: 3
     */
+    
     public void createBoard(Account user, Board board){
         em.refresh(board);
         try{

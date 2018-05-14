@@ -7,11 +7,9 @@ package Business;
 
 import Entities.Account;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.naming.InitialContext;
-import javax.naming.NameClassPair;
-import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,7 +20,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 @LocalBean
-public class LoginBean {
+public class LoginBean{
 
     @PersistenceContext(unitName = "statistics_EJBPU")
     private EntityManager em;
@@ -31,12 +29,8 @@ public class LoginBean {
     @EJB
     private StatisticsBean statistics;
     
-    public LoginBean() {
-    }
-
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-    
    public AccountBean login(String username, String password) {
         if((long)em.createNamedQuery("Account.existsName").setParameter("username", username).getSingleResult() == 0){
             // Account does not exist

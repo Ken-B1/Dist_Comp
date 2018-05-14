@@ -7,8 +7,8 @@ package Business;
 
 import Business_Utility.Status;
 import Entities.Account;
-import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolation;
@@ -20,13 +20,9 @@ import javax.validation.ConstraintViolation;
  */
 @Stateless
 @LocalBean
-public class Registration {
+public class Registration{
     @PersistenceContext(unitName = "statistics_EJBPU")
     private EntityManager em;
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-    
-    public Registration(){};
     
     /*
         Method that creates a new account. 

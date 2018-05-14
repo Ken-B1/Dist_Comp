@@ -8,8 +8,8 @@ package Business;
 import Entities.Account;
 import Entities.Messages;
 import java.util.Date;
-import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolation;
@@ -21,14 +21,10 @@ import javax.validation.ConstraintViolationException;
  */
 @Stateless
 @LocalBean
-public class messageCrud {
+public class messageCrud{
 
     @PersistenceContext(unitName = "statistics_EJBPU")
     private EntityManager em;
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-    public messageCrud(){}
     
     public Messages getFullMessage(int messageId){
         Messages toFind = em.find(Messages.class, messageId);

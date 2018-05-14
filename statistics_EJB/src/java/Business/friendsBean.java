@@ -7,9 +7,8 @@ package Business;
 
 import Entities.Account;
 import java.util.Collection;
-import java.util.List;
-import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -20,12 +19,10 @@ import javax.persistence.Query;
  */
 @Stateless
 @LocalBean
-public class friendsBean {
+public class friendsBean{
 
     @PersistenceContext(unitName = "statistics_EJBPU")
     private EntityManager em;
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
     
     /**
      * Method that sends a friendRequest to a user.

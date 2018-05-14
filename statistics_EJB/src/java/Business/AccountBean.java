@@ -19,8 +19,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import javax.ejb.EJB;
-import javax.ejb.Stateful;
 import javax.ejb.LocalBean;
+import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -30,7 +30,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateful
 @LocalBean
-public class AccountBean {
+public class AccountBean{
     @PersistenceContext(unitName = "statistics_EJBPU")
     private EntityManager em;
     
@@ -96,7 +96,7 @@ public class AccountBean {
     }
     
     // Unfollow a board
-    public void unfollowBoard(Board toUnFollow) throws NullPointerException{
+    public void unfollowBoard(Board toUnFollow){
         Account currentAccount = em.find(Account.class, currentUser);
         Collection<Board> boardcollection = currentAccount.getBoardCollection();
         boardcollection.remove(toUnFollow);
@@ -113,7 +113,7 @@ public class AccountBean {
     }    
     
     // Unfollow a person
-    public void unfollowPerson(int toUnFollow) throws NullPointerException{
+    public void unfollowPerson(int toUnFollow){
         Peoplefollower toRemove = em.find(Peoplefollower.class, new PeoplefollowerPK(currentUser, toUnFollow));
         if(toRemove != null){
             em.remove(toRemove);
@@ -124,7 +124,7 @@ public class AccountBean {
     }    
     
     // Block a follower
-    public void blockPerson(int toBlock) throws NullPointerException{
+    public void blockPerson(int toBlock){
         Peoplefollower blockedPerson = em.find(Peoplefollower.class, new PeoplefollowerPK(toBlock, currentUser));
         if(blockedPerson != null){
             blockedPerson.setIsBlocked((short)1);
@@ -141,7 +141,7 @@ public class AccountBean {
     }
     
     // Unblock a follower
-    public void unblockPerson(int tounBlock) throws NullPointerException{
+    public void unblockPerson(int tounBlock){
         Peoplefollower unblockedPerson = em.find(Peoplefollower.class, new PeoplefollowerPK(tounBlock, currentUser));
         if(unblockedPerson != null){
             unblockedPerson.setIsBlocked((short)0);
@@ -199,6 +199,7 @@ public class AccountBean {
     public Account getAccountForId(int id){
         return em.find(Account.class, id);
     }
+    
     public List<Pin> getTailoredPins(){
         return getTailoredPins(20, 30);
     }

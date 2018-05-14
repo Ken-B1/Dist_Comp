@@ -9,8 +9,8 @@ import Entities.Board;
 import Entities.Pin;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -20,15 +20,12 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 @LocalBean
-public class pinCrudBean {
+public class pinCrudBean{
     @PersistenceContext(unitName = "statistics_EJBPU")
     EntityManager em;
     
     @EJB
     private StatisticsBean stats;
-    
-    public pinCrudBean() {
-    }
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
@@ -42,7 +39,7 @@ public class pinCrudBean {
         stats.createPin(board.getOwner(), newpin);
     }
     
-     public void createPin(String name, String recipe, int boardId, String url){
+    public void createPin(String name, String recipe, int boardId, String url){
         createPin(name, recipe, em.find(Board.class, boardId), url);
     }   
     

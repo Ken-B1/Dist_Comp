@@ -10,8 +10,8 @@ import Entities.Board;
 import Entities.Categories;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -21,18 +21,13 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 @LocalBean
-public class boardCrudBean {
+public class boardCrudBean{
     @PersistenceContext(unitName = "statistics_EJBPU")
     EntityManager em;
     
     @EJB
     private StatisticsBean stats;
-    
-    public boardCrudBean() {
-    }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
     public void createBoard(String name, Account owner){
         Board newboard = new Board();
         newboard.setBoardname(name);

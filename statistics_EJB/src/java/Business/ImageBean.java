@@ -6,14 +6,13 @@
 package Business;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.servlet.http.Part;
 
 /**
@@ -26,7 +25,6 @@ public class ImageBean {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-    
     public String storeImage(String fileName, Part filePart){
         String dirString = System.getProperty("user.home") + File.separator + "p4foodPictures";
         File dir = new File(fileName);

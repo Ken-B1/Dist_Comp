@@ -10,8 +10,8 @@ import Entities.Board;
 import Entities.Pin;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -23,14 +23,10 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 @LocalBean
-public class searchBean {
+public class searchBean{
 
     @PersistenceContext(unitName = "statistics_EJBPU")
     private EntityManager em;
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-    public searchBean(){}
     
     /**
      * Method which returns a List of pins that contain parts of the searchFunction in it's recipename.

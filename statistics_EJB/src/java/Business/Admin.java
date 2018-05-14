@@ -24,13 +24,12 @@ import javax.persistence.PersistenceContext;
  */
 @Stateful
 @LocalBean
-public class Admin extends AccountBean{
+public class Admin{
     @PersistenceContext(unitName = "statistics_EJBPU")
     private EntityManager em;
     
     @EJB
     Registration regBean;
-    public Admin(){};
     
     /*
     * Create a new account then set to admin
@@ -50,11 +49,6 @@ public class Admin extends AccountBean{
         toChange.setAdmin(true);
         em.flush();
     }
-    
-    /*
-    * Temporary methods
-    * Will likely be moved to category class later
-    */
     
     public void addCategory(String name){
         Categories newcategory = new Categories();
