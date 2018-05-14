@@ -16,26 +16,41 @@ and open the template in the editor.
     <head>
         <%@include file="headers/header.jsp" %>
     </head>
-    <body style="background-color: #eeeeee">
-        <div>
-            <b>Pins:</b>
-        <c:forEach items="${resultingPins}" var="currentPin">
-            <p>${currentPin.getRecipeName()}</p>
-        </c:forEach>
-        </div>
-        
-        <div>
-        <b>Boards</b>
-        <c:forEach items="${resultingBoards}" var="currentBoard">
-            <p>${currentBoard.getBoardname()}</p>
-        </c:forEach>
-        </div>
-        
-        <div>
-        <b>Users:</b>
-        <c:forEach items="${resultingUsers}" var="currentUser">
-            <p>${currentUser.getUsername()}</p>
-        </c:forEach>
+    <body>
+        <div class="container">
+            <div class="row" style="margin-left: 5%">
+                <div class="col-sm-3">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action active">
+                            Pins
+                        </a>
+                        <c:forEach items="${resultingPins}" var="currentPin">
+                            <a href="#" class="list-group-item list-group-item-action">${currentPin.getRecipeName()}</a>
+                        </c:forEach>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action active">
+                            Boards
+                        </a>
+                        <c:forEach items="${resultingBoards}" var="currentBoard">
+                            <a href="#" class="list-group-item list-group-item-action">${currentBoard.getBoardname()}</a>
+                        </c:forEach>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action active">
+                            Users
+                        </a>
+                         <c:forEach items="${resultingUsers}" var="currentUser">
+                            <a href="#" class="list-group-item list-group-item-action">${currentUser.getUsername()}</a>
+                        </c:forEach>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>
