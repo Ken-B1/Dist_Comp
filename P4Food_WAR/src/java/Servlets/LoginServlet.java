@@ -14,8 +14,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Business.LoginBean;
-import Entities.Pin;
-import java.util.List;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
@@ -28,7 +31,9 @@ public class LoginServlet extends HttpServlet {
     @EJB
     private LoginBean loginBean;
     
-
+    /**
+    * The context to be used to perform lookups of remote beans
+    */
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -71,7 +76,6 @@ public class LoginServlet extends HttpServlet {
         }
 
     }
-
     /**
      * Returns a short description of the servlet.
      *
