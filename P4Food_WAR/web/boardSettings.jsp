@@ -7,24 +7,35 @@
     </head>
 
     <body>   
-        <form action="boardSettings?boardId=${board.getId()}" method="POST">
-            <div class="row">
-                <div class="col">
-                    <!-- The Selection has to be looped from the exusting user selected categories 
-                    currently hard coded-->
-                    <select class="form-control" name="categorychosen">
-                        <c:forEach items = "${categoryList}" var="category" >
-                            <option value="${category.getId()}" <c:if test="${board.getCategory().getId() == category.getId()}">selected="selected"</c:if>>${category.getName()}</option>    
-                        </c:forEach>
-                    </select>
-                    <div class="dropdown-divider"></div>
-                    <input type="text" class="form-control" placeholder="${board.getBoardname()}" name="boardname">
-                    <input type="checkbox" name="isPrivate">Private</input>
-                </div>                                       
+        <div class="container">
+            <div class="panel panel-primary" style="margin-left: 30%;margin-top: 5%" >
+                <h3>Edit your board</h3>
+                <div class="panel-body" style="background-color: white; padding: 50px 20px 40px 20px; width: 50%; border-radius: 20px; border:solid; border-width: 1px; border-color: #bbbbbb">
+                    <form action="boardSettings?boardId=${board.getId()}" method="POST">
+                        <div class="row">
+                            <div class="col">
+                                <!-- The Selection has to be looped from the exusting user selected categories 
+                                currently hard coded-->
+                                <label>Category</label>
+                                <select class="form-control" name="categorychosen">
+                                    <c:forEach items = "${categoryList}" var="category" >
+                                        <option value="${category.getId()}" <c:if test="${board.getCategory().getId() == category.getId()}">selected="selected"</c:if>>${category.getName()}</option>    
+                                    </c:forEach>
+                                </select>
+                                <div class="dropdown-divider"></div>
+                                <label>Board Name</label>
+                                <input type="text" class="form-control" placeholder="${board.getBoardname()}" name="boardname">
+                                <div class="dropdown-divider"></div>
+                                <input type="checkbox" name="isPrivate">    Private</input>
+                            </div>                                       
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-default">Create</button>
-            </div>
-        </form>
+        </div>
+
     </body>
 </html>
