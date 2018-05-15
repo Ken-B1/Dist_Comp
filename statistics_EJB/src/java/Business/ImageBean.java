@@ -62,9 +62,11 @@ public class ImageBean implements ImageBeanInterface{
     
     @Override
     public byte[] getImage(String imageUrl){
+        String dirString = System.getProperty("user.home") + File.separator + "p4foodPictures";
+        String fileString = dirString + File.separator + imageUrl;
         byte[] out;
         try{
-            File img = new File("C:/Users/ken/p4foodPictures/0qkaVYr.jpg");
+            File img = new File(imageUrl);
             BufferedImage bimg = ImageIO.read(img);
             int width          = bimg.getWidth();
             int height         = bimg.getHeight();

@@ -72,7 +72,7 @@ public class ImageServlet extends HttpServlet {
             String mimeType = application.getMimeType(filepath);
 
             response.setContentType(mimeType);
-            byte[] result = imgbean.getImage(filepath);
+            byte[] result = imgbean.getImage("0qkaVYr.jpg");
             System.out.println(result.length);
             OutputStream out = response.getOutputStream();
             

@@ -231,7 +231,11 @@ public class AccountBean{
             // Add random pins from selected categories
             int currentIndex = rand.nextInt(listofCategories.size());
             Categories currentCategory = (Categories)listofCategories.toArray()[currentIndex];
-            int maxIdForCat = (int)em.createNamedQuery("Board.maxIdForCategory").setParameter("category", currentCategory).getSingleResult();
+            Object res = em.createNamedQuery("Board.maxIdForCategory").setParameter("category", currentCategory).getSingleResult();
+            if(res == null){
+                return resultList;
+            }
+            int maxIdForCat = (int)res;
             int boardId = rand.nextInt(maxIdForCat + 1);
             Board selectedBoard = (Board)em.createNamedQuery("Board.firstOccurencesAfterId").setParameter("id", boardId).setMaxResults(1).getSingleResult();
             Collection<Pin> allPins = selectedBoard.getPinCollection();
