@@ -10,9 +10,10 @@ import Entities.Account;
 import Entities.Categories;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -28,8 +29,19 @@ public class Admin{
     @PersistenceContext(unitName = "statistics_EJBPU")
     private EntityManager em;
     
-    @EJB
     Registration regBean;
+    
+    public Admin(){
+        InitialContext ic;
+            try{
+                // Use jndi lookup to create a container managed instance of the accountbean
+                ic = new InitialContext();
+                regBean = (Registration)ic.lookup("java:global/statistics_EJB/Registration!services.RegistrationBeanInterface");
+            }catch(NamingException e){
+                System.out.println("Admin error:");
+                System.out.println(e.getMessage());
+            }
+    }
     
     /*
     * Create a new account then set to admin

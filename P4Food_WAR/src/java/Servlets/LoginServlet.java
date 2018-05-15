@@ -7,13 +7,15 @@ package Servlets;
 
 import Business.AccountBean;
 import java.io.IOException;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Business.LoginBean;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import remotesettings.setRemote;
+import services.LoginBeanInterface;
 
 /**
  *
@@ -23,9 +25,12 @@ import Business.LoginBean;
 public class LoginServlet extends HttpServlet {
     //Class that handles login requests
     
-    @EJB
-    private LoginBean loginBean;
-    
+    private LoginBeanInterface loginBean;
+
+    /**
+    * The context to be used to perform lookups of remote beans
+    */
+    private static InitialContext ic;    
     /**
     * The context to be used to perform lookups of remote beans
     */
@@ -55,19 +60,26 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Log the user into his/her account and redirect depending on outcome
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        try{
+            ic = new InitialContext(setRemote.setProperties());   
+            
+            loginBean = (LoginBeanInterface) ic.lookup("java:global/statistics_EJB/LoginBean!services.LoginBeanInterface");        
+            // Log the user into his/her account and redirect depending on outcome
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
 
-        AccountBean account = loginBean.login(username, password);     
+            int accountId = loginBean.login(username, password);     
 
-        if(account != null) {
-            request.getSession().setAttribute("user", account);
-            request.getSession().setAttribute("userid",username);
-            response.sendRedirect("pinboard");
-        }else{
-            request.setAttribute("loginfail", "Incorrect username/password");
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            if(accountId != -1) {
+                request.getSession().setAttribute("user", accountId);
+                request.getSession().setAttribute("userid",username);
+                response.sendRedirect("pinboard");
+            }else{
+                request.setAttribute("loginfail", "Incorrect username/password");
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            }
+        }catch(NamingException e){
+            System.out.println(e.getMessage());    
         }
 
     }

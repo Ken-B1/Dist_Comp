@@ -14,5 +14,5 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface LoginBeanInterface {
-    public AccountBean login(String username, String password);
+    public int login(String username, String password);
 }
