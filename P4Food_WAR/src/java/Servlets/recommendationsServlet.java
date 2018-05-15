@@ -5,8 +5,15 @@
  */
 package Servlets;
 
+import Business.AccountBean;
+import Business.boardCrudBean;
+import Business.databaseConnector;
+import Entities.Categories;
+import Entities.Pin;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +26,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "recommendationsServlet", urlPatterns = {"/recommendations"})
 public class recommendationsServlet extends HttpServlet {
+    
+    @EJB 
+    private boardCrudBean boardBean;
+    
+    @EJB
+    private databaseConnector connector;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,6 +44,12 @@ public class recommendationsServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
+        List<Categories> allCategories = connector.getAllCategories();
+        List<Pin> currentUserPin = currentUser.getTailoredPins();
+        
+        request.setAttribute("pinlist", currentUserPin); 
         request.getRequestDispatcher("recommendations.jsp").forward(request, response);
     }
 
