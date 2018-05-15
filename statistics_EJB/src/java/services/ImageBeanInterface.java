@@ -15,7 +15,7 @@ import javax.servlet.http.Part;
  */
 @Remote
 public interface ImageBeanInterface {
-    public String storeImage(String fileName, Part filePart);
+    public String storeImage(String fileName, byte[] data);
     
     public File getImage(String imageUrl);
 }

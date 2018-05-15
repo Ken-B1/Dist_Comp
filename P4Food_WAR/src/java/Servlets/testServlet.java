@@ -6,12 +6,10 @@
 package Servlets;
 
 import Business.AccountBean;
-import Business.categoryBean;
-import Business.ImageBean;
-import Entities.Pin;
 import java.io.IOException;
-import java.util.List;
-import javax.ejb.EJB;
+import java.io.InputStream;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import remotesettings.setRemote;
+import services.ImageBeanInterface;
 
 /**
  *
@@ -27,11 +27,11 @@ import javax.servlet.http.Part;
 @WebServlet(name = "testServlet", urlPatterns = {"/testServlet"})
 @MultipartConfig
 public class testServlet extends HttpServlet {
-    @EJB
-    categoryBean fb;
-    
-    @EJB
-    ImageBean imgbean;
+    ImageBeanInterface imgbean;
+    /**
+    * The context to be used to perform lookups of remote beans
+    */
+    private static InitialContext ic;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -57,8 +57,7 @@ public class testServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
-        List<Pin> currentUserPin = currentUser.getTailoredPins();
+        processRequest(request, response);
     }
 
     /**
@@ -72,17 +71,25 @@ public class testServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AccountBean currentAcc = (AccountBean)request.getSession().getAttribute("user");
-        
-        
-        response.setContentType("text/html;charset=UTF-8");
+        try{
+            ic = new InitialContext(setRemote.setProperties());           
+            imgbean = (ImageBeanInterface) ic.lookup("java:global/statistics_EJB/ImageBean!services.ImageBeanInterface");
+            AccountBean currentAcc = (AccountBean)request.getSession().getAttribute("user");
 
-        // Create path components to save the file
-        final Part filePart = request.getPart("file");
-        final String fileName = getFileName(filePart);
-        
-        imgbean.storeImage(fileName, filePart);
-        processRequest(request, response);
+
+            response.setContentType("text/html;charset=UTF-8");
+
+            // Create path components to save the file
+            final Part filePart = request.getPart("file");
+            final String fileName = getFileName(filePart);
+            InputStream inputStream = filePart.getInputStream();
+            byte [] mydata = new byte[1024*512];
+            inputStream.read(mydata);
+            imgbean.storeImage(fileName, mydata);
+            processRequest(request, response);
+        }catch(NamingException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     private String getFileName(final Part part) {

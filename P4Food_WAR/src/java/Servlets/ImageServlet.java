@@ -6,12 +6,12 @@
 package Servlets;
 
 import Business.AccountBean;
-import Business.ImageBean;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import javax.ejb.EJB;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import remotesettings.setRemote;
+import services.ImageBeanInterface;
 
 /**
  *
@@ -28,8 +30,12 @@ import javax.servlet.http.Part;
 @WebServlet(name = "imageServlet", urlPatterns = {"/Image"})
 @MultipartConfig
 public class ImageServlet extends HttpServlet {
-    @EJB
-    ImageBean imgbean;
+    ImageBeanInterface imgbean;
+    
+    /**
+    * The context to be used to perform lookups of remote beans
+    */
+    private static InitialContext ic;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -55,26 +61,34 @@ public class ImageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ServletContext application = getServletContext();
-        String fileName = request.getParameter("filename");
-        String filepath = fileName;
-        String mimeType = application.getMimeType(filepath);
+        try{
+            ic = new InitialContext(setRemote.setProperties());   
 
-        response.setContentType(mimeType);
-        File file = imgbean.getImage(filepath);
-        response.setContentLength((int)file.length());
-        
-        FileInputStream in = new FileInputStream(file);
-        OutputStream out = response.getOutputStream();
-        byte[] buf = new byte[1024];
-        int len = 0;
-        
-        while((len = in.read(buf)) >= 0){
-            out.write(buf, 0, len);
+            imgbean = (ImageBeanInterface) ic.lookup("java:global/statistics_EJB/ImageBean!services.ImageBeanInterface");
+            
+            ServletContext application = getServletContext();
+            String fileName = request.getParameter("filename");
+            String filepath = fileName;
+            String mimeType = application.getMimeType(filepath);
+
+            response.setContentType(mimeType);
+            File file = imgbean.getImage(filepath);
+            response.setContentLength((int)file.length());
+
+            FileInputStream in = new FileInputStream(file);
+            OutputStream out = response.getOutputStream();
+            byte[] buf = new byte[1024];
+            int len = 0;
+
+            while((len = in.read(buf)) >= 0){
+                out.write(buf, 0, len);
+            }
+
+            in.close();
+            out.close();
+        }catch(NamingException e){
+            System.out.println(e.getMessage());
         }
-        
-        in.close();
-        out.close();
     }
 
     /**
@@ -88,17 +102,24 @@ public class ImageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AccountBean currentAcc = (AccountBean)request.getSession().getAttribute("user");
-        
-        
-        response.setContentType("text/html;charset=UTF-8");
+        try{
+            ic = new InitialContext(setRemote.setProperties());   
 
-        // Create path components to save the file
-        final Part filePart = request.getPart("file");
-        final String fileName = getFileName(filePart);
-        
-        imgbean.storeImage(fileName, filePart);
-        processRequest(request, response);
+            imgbean = (ImageBeanInterface) ic.lookup("java:global/statistics_EJB/ImageBean!services.ImageBeanInterface");        
+            AccountBean currentAcc = (AccountBean)request.getSession().getAttribute("user");
+
+
+            response.setContentType("text/html;charset=UTF-8");
+
+            // Create path components to save the file
+            final Part filePart = request.getPart("file");
+            final String fileName = getFileName(filePart);
+
+            imgbean.storeImage(fileName, new byte[0]);
+            processRequest(request, response);
+        }catch(NamingException e){
+            System.out.println(e.getMessage());
+        }    
     }
 
     private String getFileName(final Part part) {

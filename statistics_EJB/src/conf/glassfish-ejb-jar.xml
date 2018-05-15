@@ -18,5 +18,9 @@
       <ejb-name>messageCrud</ejb-name>
       <jndi-name>java:global/statistics_EJB/messageCrud!services.messageCrudInterface</jndi-name>
     </ejb>
+    <ejb>
+      <ejb-name>ImageBean</ejb-name>
+      <jndi-name>java:global/statistics_EJB/ImageBean!services.ImageBeanInterface</jndi-name>
+    </ejb>    
   </enterprise-beans>
 </glassfish-ejb-jar>

@@ -11,42 +11,35 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.servlet.http.Part;
+import services.ImageBeanInterface;
 
 /**
  *
  * @author ken
  */
 @Stateless
-@LocalBean
-public class ImageBean {
+public class ImageBean implements ImageBeanInterface{
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-    public String storeImage(String fileName, Part filePart){
+    @Override
+    public String storeImage(String fileName, byte[] data){
         String dirString = System.getProperty("user.home") + File.separator + "p4foodPictures";
         File dir = new File(fileName);
         dir.mkdirs();
         
         OutputStream out = null;
-        InputStream filecontent = null;
 
         try {
             out = new FileOutputStream(new File(dirString + File.separator
                     + fileName));
             
-            filecontent = filePart.getInputStream();
 
-            int read = 0;
-            final byte[] bytes = new byte[1024];
-
-            while ((read = filecontent.read(bytes)) != -1) {
-                out.write(bytes, 0, read);
-            }
+            out.write(data);
+            
             System.out.println("New file " + fileName + " created at " + dirString);
-            filecontent.close();
             out.close();
             return dirString + File.separator + fileName;
         } catch (FileNotFoundException fne) {
@@ -60,6 +53,7 @@ public class ImageBean {
         return null;
     }
     
+    @Override
     public File getImage(String imageUrl){
         File file = new File(imageUrl);
         

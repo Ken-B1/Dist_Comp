@@ -6,7 +6,6 @@
 package Servlets;
 
 import Business.AccountBean;
-import Business.ImageBean;
 import Business.boardCrudBean;
 import Entities.Pin;
 import java.io.IOException;
@@ -22,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import remotesettings.setRemote;
+import services.ImageBeanInterface;
 import services.pinCrudInterface;
 
 /**
@@ -37,8 +37,8 @@ public class createPinServlet extends HttpServlet {
     @EJB
     private boardCrudBean boardBean;
     
-    @EJB
-    private ImageBean imgbean;
+    private ImageBeanInterface imgbean;
+    
     
     /**
     * The context to be used to perform lookups of remote beans
@@ -91,13 +91,15 @@ public class createPinServlet extends HttpServlet {
         try{
             ic = new InitialContext(setRemote.setProperties());   
 
-            pinBean = (pinCrudInterface) ic.lookup("java:global/statistics_EJB/pinCrudBean!services.pinCrudInterface");  
+            pinBean = (pinCrudInterface) ic.lookup("java:global/statistics_EJB/pinCrudBean!services.pinCrudInterface"); 
+            imgbean = (ImageBeanInterface) ic.lookup("java:global/statistics_EJB/ImageBean!services.ImageBeanInterface");
+            
             String recipeName = request.getParameter("recipeTitle");
             String recipe = request.getParameter("recipe");   
             int boardId = Integer.parseInt(request.getParameter("id"));
             final Part filePart = request.getPart("file");
             final String fileName = getFileName(filePart);
-            String url = imgbean.storeImage(fileName, filePart);
+            String url = imgbean.storeImage(fileName, new byte[0]);
 
             pinBean.createPin(recipeName, recipe, boardId, url);          
 
