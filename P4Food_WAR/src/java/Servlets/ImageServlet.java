@@ -9,6 +9,7 @@ import Business.AccountBean;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -72,8 +73,8 @@ public class ImageServlet extends HttpServlet {
             String mimeType = application.getMimeType(filepath);
 
             response.setContentType(mimeType);
-            byte[] result = imgbean.getImage("0qkaVYr.jpg");
-            System.out.println(result.length);
+            byte[] result = imgbean.getImage(fileName);
+
             OutputStream out = response.getOutputStream();
             
             out.write(result);
@@ -107,8 +108,11 @@ public class ImageServlet extends HttpServlet {
             // Create path components to save the file
             final Part filePart = request.getPart("file");
             final String fileName = getFileName(filePart);
-
-            imgbean.storeImage(fileName, new byte[0]);
+            InputStream inputStream = filePart.getInputStream();
+            byte [] mydata = new byte[1024*1024];
+            inputStream.read(mydata);
+            imgbean.storeImage(fileName, mydata);
+            
             processRequest(request, response);
         }catch(NamingException e){
             System.out.println(e.getMessage());

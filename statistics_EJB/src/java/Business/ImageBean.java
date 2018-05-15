@@ -48,7 +48,7 @@ public class ImageBean implements ImageBeanInterface{
             
             System.out.println("New file " + fileName + " created at " + dirString);
             out.close();
-            return dirString + File.separator + fileName;
+            return fileName;
         } catch (FileNotFoundException fne) {
             System.out.println("You either did not specify a file to upload or are "
                     + "trying to upload a file to a protected or nonexistent "
@@ -66,7 +66,7 @@ public class ImageBean implements ImageBeanInterface{
         String fileString = dirString + File.separator + imageUrl;
         byte[] out;
         try{
-            File img = new File(imageUrl);
+            File img = new File(fileString);
             BufferedImage bimg = ImageIO.read(img);
             int width          = bimg.getWidth();
             int height         = bimg.getHeight();

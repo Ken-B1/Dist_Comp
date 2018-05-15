@@ -9,6 +9,7 @@ import Business.AccountBean;
 import Business.boardCrudBean;
 import Entities.Pin;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.naming.InitialContext;
@@ -99,7 +100,10 @@ public class createPinServlet extends HttpServlet {
             int boardId = Integer.parseInt(request.getParameter("id"));
             final Part filePart = request.getPart("file");
             final String fileName = getFileName(filePart);
-            String url = imgbean.storeImage(fileName, new byte[0]);
+            InputStream inputStream = filePart.getInputStream();
+            byte [] mydata = new byte[1024*1024];
+            inputStream.read(mydata);
+            String url = imgbean.storeImage(fileName, mydata);
 
             pinBean.createPin(recipeName, recipe, boardId, url);          
 

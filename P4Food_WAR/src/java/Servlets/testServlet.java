@@ -83,7 +83,7 @@ public class testServlet extends HttpServlet {
             final Part filePart = request.getPart("file");
             final String fileName = getFileName(filePart);
             InputStream inputStream = filePart.getInputStream();
-            byte [] mydata = new byte[1024*512];
+            byte [] mydata = new byte[1024*1024];
             inputStream.read(mydata);
             imgbean.storeImage(fileName, mydata);
             processRequest(request, response);
