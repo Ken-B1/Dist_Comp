@@ -35,5 +35,6 @@
                 <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload Pins</button>                                                                                                                                                               
             </div>                                           
         </form>        
+            <img src="Image?filename=0qkaVYr.jpg">
     </body>
 </html>

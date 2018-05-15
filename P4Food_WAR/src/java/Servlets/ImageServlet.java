@@ -72,19 +72,12 @@ public class ImageServlet extends HttpServlet {
             String mimeType = application.getMimeType(filepath);
 
             response.setContentType(mimeType);
-            File file = imgbean.getImage(filepath);
-            response.setContentLength((int)file.length());
-
-            FileInputStream in = new FileInputStream(file);
+            byte[] result = imgbean.getImage(filepath);
+            System.out.println(result.length);
             OutputStream out = response.getOutputStream();
-            byte[] buf = new byte[1024];
-            int len = 0;
-
-            while((len = in.read(buf)) >= 0){
-                out.write(buf, 0, len);
-            }
-
-            in.close();
+            
+            out.write(result);
+            
             out.close();
         }catch(NamingException e){
             System.out.println(e.getMessage());

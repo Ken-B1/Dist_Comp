@@ -5,14 +5,15 @@
  */
 package Business;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import javax.ejb.Stateless;
-import javax.servlet.http.Part;
+import javax.imageio.ImageIO;
 import services.ImageBeanInterface;
 
 /**
@@ -28,8 +29,14 @@ public class ImageBean implements ImageBeanInterface{
     public String storeImage(String fileName, byte[] data){
         String dirString = System.getProperty("user.home") + File.separator + "p4foodPictures";
         File dir = new File(fileName);
-        dir.mkdirs();
-        
+
+        new File(dirString).mkdirs();
+        try{
+            dir.createNewFile();
+        } catch(IOException e){
+            System.out.println(e.getMessage());
+        }
+
         OutputStream out = null;
 
         try {
@@ -54,9 +61,24 @@ public class ImageBean implements ImageBeanInterface{
     }
     
     @Override
-    public File getImage(String imageUrl){
-        File file = new File(imageUrl);
-        
-        return file;
+    public byte[] getImage(String imageUrl){
+        byte[] out;
+        try{
+            File img = new File("C:/Users/ken/p4foodPictures/0qkaVYr.jpg");
+            BufferedImage bimg = ImageIO.read(img);
+            int width          = bimg.getWidth();
+            int height         = bimg.getHeight();
+            
+            FileInputStream in = new FileInputStream(img);
+            out = new byte[width*height];
+            in.read(out);
+            in.close();
+
+            return out;
+        } catch(IOException e){
+
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }
