@@ -62,7 +62,7 @@ public class SearchServlet extends HttpServlet {
             throws ServletException, IOException {
         try{
             ic = new InitialContext(setRemote.setProperties());   
-            search = (searchBeanInterface) ic.lookup("java:global/P4Food/statistics_EJB/searchBean!services.searchBeanInterface");     
+            search = (searchBeanInterface) ic.lookup("java:global/statistics_EJB/searchBean!services.searchBeanInterface");     
             
             String searchString = request.getParameter("searchString");
             List<Pin> Pins = search.findPinsForSearch(searchString);

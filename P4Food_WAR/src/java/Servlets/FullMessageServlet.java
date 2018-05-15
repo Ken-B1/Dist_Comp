@@ -44,7 +44,7 @@ public class FullMessageServlet extends HttpServlet {
         try{
             ic = new InitialContext(setRemote.setProperties());   
 
-            messageManager = (messageCrudInterface) ic.lookup("java:global/P4Food/statistics_EJB/messageCrud!services.messageCrudInterface");    
+            messageManager = (messageCrudInterface) ic.lookup("java:global/statistics_EJB/messageCrud!services.messageCrudInterface");    
             
             String idString = request.getParameter("id");
             int id = Integer.parseInt(idString);

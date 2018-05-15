@@ -8,15 +8,15 @@
     </ejb>
     <ejb>
       <ejb-name>searchBean</ejb-name>
-      <jndi-name> java:global/P4Food/statistics_EJB/searchBean!services.searchBeanInterface</jndi-name>
+      <jndi-name> java:global/statistics_EJB/searchBean!services.searchBeanInterface</jndi-name>
     </ejb>
     <ejb>
       <ejb-name>pinCrudBean</ejb-name>
-      <jndi-name>java:global/P4Food/statistics_EJB/pinCrudBean!services.pinCrudInterface</jndi-name>
+      <jndi-name>java:global/statistics_EJB/pinCrudBean!services.pinCrudInterface</jndi-name>
     </ejb>
     <ejb>
       <ejb-name>messageCrud</ejb-name>
-      <jndi-name>java:global/P4Food/statistics_EJB/messageCrud!services.messageCrudInterface</jndi-name>
+      <jndi-name>java:global/statistics_EJB/messageCrud!services.messageCrudInterface</jndi-name>
     </ejb>
   </enterprise-beans>
 </glassfish-ejb-jar>

@@ -86,7 +86,7 @@ public class WriteMessageServlet extends HttpServlet {
         try{
             ic = new InitialContext(setRemote.setProperties());   
             
-            messageHandler = (messageCrudInterface) ic.lookup("java:global/P4Food/statistics_EJB/messageCrud!services.messageCrudInterface");
+            messageHandler = (messageCrudInterface) ic.lookup("java:global/statistics_EJB/messageCrud!services.messageCrudInterface");
             
             AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
             int id = Integer.parseInt(request.getParameter("recid"));

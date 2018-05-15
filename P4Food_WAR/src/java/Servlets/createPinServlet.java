@@ -59,7 +59,7 @@ public class createPinServlet extends HttpServlet {
         try{
             ic = new InitialContext(setRemote.setProperties());   
             
-            pinBean = (pinCrudInterface) ic.lookup("java:global/P4Food/statistics_EJB/pinCrudBean!services.pinCrudInterface");        
+            pinBean = (pinCrudInterface) ic.lookup("java:global/statistics_EJB/pinCrudBean!services.pinCrudInterface");        
             AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
             int id = Integer.parseInt(request.getParameter("id"));
 
@@ -91,7 +91,7 @@ public class createPinServlet extends HttpServlet {
         try{
             ic = new InitialContext(setRemote.setProperties());   
 
-            pinBean = (pinCrudInterface) ic.lookup("java:global/P4Food/statistics_EJB/pinCrudBean!services.pinCrudInterface");  
+            pinBean = (pinCrudInterface) ic.lookup("java:global/statistics_EJB/pinCrudBean!services.pinCrudInterface");  
             String recipeName = request.getParameter("recipeTitle");
             String recipe = request.getParameter("recipe");   
             int boardId = Integer.parseInt(request.getParameter("id"));
