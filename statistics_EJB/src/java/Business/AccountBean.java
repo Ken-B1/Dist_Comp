@@ -21,6 +21,8 @@ import java.util.Random;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -35,7 +37,6 @@ public class AccountBean{
     private EntityManager em;
     
     // Stateless bean used for registration and validation
-    @EJB 
     private Registration reg;
     
     // Stateless bean used to log actions
@@ -44,10 +45,23 @@ public class AccountBean{
     
     // Entity object representing current user in database
     private int currentUser;
-    
+  
+    /**
+    * The context to be used to perform lookups of remote beans
+    */
+    private static InitialContext ic;
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-    public AccountBean(){}
+    public AccountBean(){
+        try{
+            ic = new InitialContext();
+            reg = (Registration)ic.lookup("java:global/statistics_EJB/Registration");
+        
+        }catch(NamingException e){
+            System.out.println("Accountbean error:");
+            System.out.println(e.getMessage());
+        }
+    }
     
     public AccountBean(Account acc){
         currentUser = acc.getId();

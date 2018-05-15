@@ -13,6 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import remotesettings.setRemote;
 
 /**
  *
@@ -45,7 +46,7 @@ public class LoginBean{
             try{
                 // Use jndi lookup to create a container managed instance of the accountbean
                 ic = new InitialContext();
-                AccountBean accountbean = (AccountBean)ic.lookup("java:module/AccountBean");
+                AccountBean accountbean = (AccountBean)ic.lookup("java:global/P4Food/statistics_EJB/AccountBean!Business.AccountBean");
                 accountbean.setAccount(returnvalue);
                 return accountbean;
             } catch(NamingException e){

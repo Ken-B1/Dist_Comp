@@ -21,6 +21,10 @@
     <ejb>
       <ejb-name>ImageBean</ejb-name>
       <jndi-name>java:global/statistics_EJB/ImageBean!services.ImageBeanInterface</jndi-name>
-    </ejb>    
+    </ejb> 
+    <ejb>
+      <ejb-name>Registration</ejb-name>
+      <jndi-name>java:global/statistics_EJB/Registration!services.RegistrationBeanInterface</jndi-name>
+    </ejb>      
   </enterprise-beans>
 </glassfish-ejb-jar>

@@ -7,11 +7,11 @@ package Business;
 
 import Business_Utility.Status;
 import Entities.Account;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolation;
+import services.RegistrationBeanInterface;
 
 /**
  *
@@ -19,8 +19,7 @@ import javax.validation.ConstraintViolation;
  * Stateless because after creating an account, state can be thrown away
  */
 @Stateless
-@LocalBean
-public class Registration{
+public class Registration implements RegistrationBeanInterface{
     @PersistenceContext(unitName = "statistics_EJBPU")
     private EntityManager em;
     
@@ -29,6 +28,7 @@ public class Registration{
         Returns -1 if account could not be created because of already existing values
         Returns account id otherwise
     */
+    @Override
     public Status createAccount(String email,String userName,String password,String fname,String lname,String country,String gender){
         Status returnStatus = validate(email,userName);
         if(returnStatus.getStatusCode() != 0){
@@ -62,6 +62,7 @@ public class Registration{
     *   2 = Username already in use
     *   3 = Valid email (Still to be implemented)
     */
+    @Override
     public Status validate(String email, String userName){
         long usernameexists = (long)em.createNamedQuery("Account.existsName").setParameter("username", userName).getSingleResult();
         if(usernameexists != 0){

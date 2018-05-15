@@ -14,11 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Business.LoginBean;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 
 /**
  *
@@ -63,9 +58,9 @@ public class LoginServlet extends HttpServlet {
         // Log the user into his/her account and redirect depending on outcome
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        
+
         AccountBean account = loginBean.login(username, password);     
-        
+
         if(account != null) {
             request.getSession().setAttribute("user", account);
             request.getSession().setAttribute("userid",username);
