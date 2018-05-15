@@ -5,6 +5,8 @@
  */
 package Business_Utility;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Ken
@@ -13,7 +15,7 @@ package Business_Utility;
  * This class is used often as a statusmessage for when someone for example creates an account
  * (Where alot of different constraints can be violated)
  */
-public class Status {
+public class Status implements Serializable{
     private int statusCode;
     private String returnmessage;
     

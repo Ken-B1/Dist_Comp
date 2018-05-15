@@ -21,7 +21,7 @@ public class setRemote {
                 "com.sun.enterprise.naming");
         props.setProperty("java.naming.factory.state",
                 "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
-        props.setProperty("org.omg.CORBA.ORBInitialHost", "localhost");
+        props.setProperty("org.omg.CORBA.ORBInitialHost", "192.168.1.3");
         props.setProperty("org.omg.CORBA.ORBInitialPort", "3700");
         
         return props;
