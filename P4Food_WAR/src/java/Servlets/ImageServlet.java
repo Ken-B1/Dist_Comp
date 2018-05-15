@@ -6,7 +6,6 @@
 package Servlets;
 
 import Business.AccountBean;
-import Business.categoryBean;
 import Business.ImageBean;
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,9 +28,6 @@ import javax.servlet.http.Part;
 @WebServlet(name = "imageServlet", urlPatterns = {"/Image"})
 @MultipartConfig
 public class ImageServlet extends HttpServlet {
-    @EJB
-    categoryBean fb;
-    
     @EJB
     ImageBean imgbean;
     /**

@@ -207,6 +207,7 @@ public class AccountBean{
     public List<Pin> getTailoredPins(int numFromBoard, int numFromCategories){
         List<Pin> resultList = new ArrayList();
         Account acc = getAccount();
+        em.refresh(acc);
         List<Boardfollowers> listofBoards = em.createNamedQuery("Boardfollowers.findByUserid").setParameter("userid", acc.getId()).getResultList();
         Collection<Categories> listofCategories = acc.getCategoriesCollection();
         Random rand = new Random(System.currentTimeMillis());

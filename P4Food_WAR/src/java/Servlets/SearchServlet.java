@@ -11,12 +11,15 @@ import Entities.Board;
 import Entities.Pin;
 import java.io.IOException;
 import java.util.List;
-import javax.ejb.EJB;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import remotesettings.setRemote;
+import services.searchBeanInterface;
 
 /**
  *
@@ -24,9 +27,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "SearchServlet", urlPatterns = {"/Search"})
 public class SearchServlet extends HttpServlet {
-    @EJB
-    private searchBean search;
 
+    private searchBeanInterface search;
+
+    /**
+    * The context to be used to perform lookups of remote beans
+    */
+    private static InitialContext ic;
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -53,14 +60,21 @@ public class SearchServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String searchString = request.getParameter("searchString");
-        List<Pin> Pins = search.findPinsForSearch(searchString);
-        List<Board> boards = search.findBoardsForSearch(searchString);
-        List<Account> users = search.findUsersForSearch(searchString);
-        request.setAttribute("resultingPins", Pins);
-        request.setAttribute("resultingBoards", boards);
-        request.setAttribute("resultingUsers", users);
-        request.getRequestDispatcher("resultPage.jsp").forward(request, response);        
+        try{
+            ic = new InitialContext(setRemote.setProperties());   
+            search = (searchBeanInterface) ic.lookup("java:global/P4Food/statistics_EJB/searchBean!services.searchBeanInterface");     
+            
+            String searchString = request.getParameter("searchString");
+            List<Pin> Pins = search.findPinsForSearch(searchString);
+            List<Board> boards = search.findBoardsForSearch(searchString);
+            List<Account> users = search.findUsersForSearch(searchString);
+            request.setAttribute("resultingPins", Pins);
+            request.setAttribute("resultingBoards", boards);
+            request.setAttribute("resultingUsers", users);
+            request.getRequestDispatcher("resultPage.jsp").forward(request, response);
+        }catch(NamingException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     /**

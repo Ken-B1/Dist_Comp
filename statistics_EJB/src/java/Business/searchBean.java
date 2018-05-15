@@ -10,10 +10,10 @@ import Entities.Board;
 import Entities.Pin;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import services.searchBeanInterface;
 
 /**
  *
@@ -22,8 +22,7 @@ import javax.persistence.PersistenceContext;
  * Can search for pins, boards and users
  */
 @Stateless
-@LocalBean
-public class searchBean{
+public class searchBean implements searchBeanInterface{
 
     @PersistenceContext(unitName = "statistics_EJBPU")
     private EntityManager em;
@@ -35,6 +34,7 @@ public class searchBean{
      * @param searchFunction
      * @return
      */
+    @Override
     public List<Pin> findPinsForSearch(String searchFunction){
         String searchList[] = searchFunction.split(" ");
         List<Pin> resultList = new ArrayList<>();
@@ -54,6 +54,7 @@ public class searchBean{
      * @param limit Indicates amount of records returned
      * @return
      */
+    @Override
     public List<Pin> findPinsForSearch(String searchFunction, int limit){
         String searchList[] = searchFunction.split(" ");
         List<Pin> resultList = new ArrayList<>();
@@ -73,6 +74,7 @@ public class searchBean{
      * @param searchFunction
      * @return
      */
+    @Override
     public List<Board> findBoardsForSearch(String searchFunction){
         String searchList[] = searchFunction.split(" ");
         List<Board> resultList = new ArrayList<>();
@@ -98,6 +100,7 @@ public class searchBean{
      * @param limit Indicates amount of records returned
      * @return
      */
+    @Override
     public List<Board> findBoardsForSearch(String searchFunction, int limit){
         String searchList[] = searchFunction.split(" ");
         List<Board> resultList = new ArrayList<>();
@@ -123,6 +126,7 @@ public class searchBean{
      * @param searchFunction
      * @return
      */
+    @Override
     public List<Account> findUsersForSearch(String searchFunction){
         String searchList[] = searchFunction.split(" ");
         List<Account> resultList = new ArrayList<>();
@@ -142,6 +146,7 @@ public class searchBean{
      * @param limit Indicates amount of records returned 
      * @return
      */
+    @Override
     public List<Account> findUsersForSearch(String searchFunction, int limit){
         String searchList[] = searchFunction.split(" ");
         List<Account> resultList = new ArrayList<>();

@@ -9,18 +9,17 @@ import Entities.Board;
 import Entities.Pin;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import services.pinCrudInterface;
 
 /**
  *
  * @author ken
  */
 @Stateless
-@LocalBean
-public class pinCrudBean{
+public class pinCrudBean implements pinCrudInterface{
     @PersistenceContext(unitName = "statistics_EJBPU")
     EntityManager em;
     
@@ -29,6 +28,7 @@ public class pinCrudBean{
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+    @Override
     public void createPin(String name, String recipe, Board board, String url){
         Pin newpin = new Pin();
         newpin.setRecipeName(name);
@@ -39,19 +39,23 @@ public class pinCrudBean{
         stats.createPin(board.getOwner(), newpin);
     }
     
+    @Override
     public void createPin(String name, String recipe, int boardId, String url){
         createPin(name, recipe, em.find(Board.class, boardId), url);
     }   
     
+    @Override
     public Pin getPin(int id){
         return em.find(Pin.class, id);
     }
     
+    @Override
     public List<Pin> getPinsForBoard(Board board){
         List<Pin> resultlist = em.createNamedQuery("Pin.findByBoard").setParameter("board", board).getResultList();
         return resultlist;
     }
     
+    @Override
     public void updatePin(int id, String name, String recipe, int boardId){
         Pin toUpdate = em.find(Pin.class, id);
         toUpdate.setRecipe(recipe);
@@ -60,6 +64,7 @@ public class pinCrudBean{
         em.flush();
     }
     
+    @Override
     public void deletePin(int pinId){
         Pin toDelete = em.find(Pin.class, pinId);
         em.remove(toDelete);

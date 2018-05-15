@@ -6,15 +6,18 @@
 package Servlets;
 
 import Business.AccountBean;
-import Business.messageCrud;
 import Entities.Account;
 import java.io.IOException;
-import javax.ejb.EJB;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import remotesettings.setRemote;
+import services.categoryBeanInterface;
+import services.messageCrudInterface;
 
 /**
  *
@@ -22,8 +25,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "WriteMessage", urlPatterns = {"/WriteMessage"})
 public class WriteMessageServlet extends HttpServlet {
-    @EJB
-    private messageCrud messageHandler;
+
+    private messageCrudInterface messageHandler;
+    
+    /**
+    * The context to be used to perform lookups of remote beans
+    */
+    private static InitialContext ic;
     
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -36,25 +44,31 @@ public class WriteMessageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
-        String idString = request.getParameter("id");
-        int receiverId;
-        if(idString == null){
-            // Something went wrong
-            request.getRequestDispatcher("pinboard").forward(request, response);
-            System.out.println("id = null");
-        }else{
-            receiverId = Integer.parseInt(idString);
-            Account receiver = currentUser.getAccountForId(receiverId);
-            if(receiver == null){
-                // Nonexistent user is requested
-                request.getRequestDispatcher("pinboard").forward(request, response);     
-                System.out.println("receiver = null");
+        try{
+            ic = new InitialContext(setRemote.setProperties());
+            
+            AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
+            String idString = request.getParameter("id");
+            int receiverId;
+            if(idString == null){
+                // Something went wrong
+                request.getRequestDispatcher("pinboard").forward(request, response);
+                System.out.println("id = null");
             }else{
-                request.setAttribute("receiverName", receiver.getUsername());
-                request.setAttribute("receiverId", receiver.getId());
-                request.getRequestDispatcher("messagewrite.jsp").forward(request, response);
+                receiverId = Integer.parseInt(idString);
+                Account receiver = currentUser.getAccountForId(receiverId);
+                if(receiver == null){
+                    // Nonexistent user is requested
+                    request.getRequestDispatcher("pinboard").forward(request, response);     
+                    System.out.println("receiver = null");
+                }else{
+                    request.setAttribute("receiverName", receiver.getUsername());
+                    request.setAttribute("receiverId", receiver.getId());
+                    request.getRequestDispatcher("messagewrite.jsp").forward(request, response);
+                }
             }
+        }catch(NamingException e){
+            System.out.println(e.getMessage());
         }
     }
 
@@ -69,6 +83,11 @@ public class WriteMessageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try{
+            ic = new InitialContext(setRemote.setProperties());   
+            
+            messageHandler = (messageCrudInterface) ic.lookup("java:global/P4Food/statistics_EJB/messageCrud!services.messageCrudInterface");
+            
             AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
             int id = Integer.parseInt(request.getParameter("recid"));
             String subject = request.getParameter("subject");
@@ -77,6 +96,9 @@ public class WriteMessageServlet extends HttpServlet {
             messageHandler.createMessage(currentUser.getAccount().getId(), id, subject, message);
             
             request.getRequestDispatcher("MessageOverview").forward(request, response);
+        }catch(NamingException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     /**

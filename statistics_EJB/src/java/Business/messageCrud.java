@@ -8,29 +8,30 @@ package Business;
 import Entities.Account;
 import Entities.Messages;
 import java.util.Date;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import services.messageCrudInterface;
 
 /**
  *
  * @author ken
  */
 @Stateless
-@LocalBean
-public class messageCrud{
+public class messageCrud implements messageCrudInterface{
 
     @PersistenceContext(unitName = "statistics_EJBPU")
     private EntityManager em;
     
+    @Override
     public Messages getFullMessage(int messageId){
         Messages toFind = em.find(Messages.class, messageId);
         return toFind;
     }
     
+    @Override
     public void createMessage(int senderId, int receiverId, String subject, String content){
         Account sender = em.find(Account.class, senderId);
         Account receiver = em.find(Account.class, receiverId);
@@ -58,6 +59,7 @@ public class messageCrud{
         }
     }
     
+    @Override
     public void removeMessage(int messageId){
         Messages findRemoved = em.find(Messages.class, messageId);
         if(findRemoved != null){
@@ -65,6 +67,7 @@ public class messageCrud{
         }
     }
     
+    @Override
     public void markAsRead(int messageId){
         Messages mark = em.find(Messages.class, messageId);
         

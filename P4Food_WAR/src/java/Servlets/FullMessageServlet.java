@@ -5,15 +5,17 @@
  */
 package Servlets;
 
-import Business.messageCrud;
 import Entities.Messages;
 import java.io.IOException;
-import javax.ejb.EJB;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import remotesettings.setRemote;
+import services.messageCrudInterface;
 
 /**
  *
@@ -21,8 +23,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "FullMessage", urlPatterns = {"/FullMessage"})
 public class FullMessageServlet extends HttpServlet {
-    @EJB
-    private messageCrud messageManager;
+
+    private messageCrudInterface messageManager;
+    
+    /**
+    * The context to be used to perform lookups of remote beans
+    */
+    private static InitialContext ic;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,15 +41,23 @@ public class FullMessageServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String idString = request.getParameter("id");
-        int id = Integer.parseInt(idString);
-        Messages fullMessage = messageManager.getFullMessage(id);
-        if(fullMessage != null){
-            messageManager.markAsRead(fullMessage.getId());
-            request.setAttribute("message", fullMessage);
-            request.getRequestDispatcher("messagecomplete.jsp").forward(request, response);
-        }else{
-            // Redirect to Errorpage
+        try{
+            ic = new InitialContext(setRemote.setProperties());   
+
+            messageManager = (messageCrudInterface) ic.lookup("java:global/P4Food/statistics_EJB/messageCrud!services.messageCrudInterface");    
+            
+            String idString = request.getParameter("id");
+            int id = Integer.parseInt(idString);
+            Messages fullMessage = messageManager.getFullMessage(id);
+            if(fullMessage != null){
+                messageManager.markAsRead(fullMessage.getId());
+                request.setAttribute("message", fullMessage);
+                request.getRequestDispatcher("messagecomplete.jsp").forward(request, response);
+            }else{
+                // Redirect to Errorpage
+            }
+        }catch(NamingException e){
+            System.out.println(e.getMessage());
         }
     }
 

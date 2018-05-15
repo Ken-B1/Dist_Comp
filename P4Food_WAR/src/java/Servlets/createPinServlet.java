@@ -8,11 +8,12 @@ package Servlets;
 import Business.AccountBean;
 import Business.ImageBean;
 import Business.boardCrudBean;
-import Business.pinCrudBean;
 import Entities.Pin;
 import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +21,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import static jdk.nashorn.internal.objects.NativeError.getFileName;
+import remotesettings.setRemote;
+import services.pinCrudInterface;
 
 /**
  *
@@ -29,8 +31,7 @@ import static jdk.nashorn.internal.objects.NativeError.getFileName;
 @WebServlet(name = "createPinServlet", urlPatterns = {"/createPin"})
 @MultipartConfig
 public class createPinServlet extends HttpServlet {
-    @EJB 
-    private pinCrudBean pinBean;
+    private pinCrudInterface pinBean;
     
     /*Temporary*/
     @EJB
@@ -39,7 +40,11 @@ public class createPinServlet extends HttpServlet {
     @EJB
     private ImageBean imgbean;
     
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+    * The context to be used to perform lookups of remote beans
+    */
+    private static InitialContext ic;
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -51,18 +56,25 @@ public class createPinServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException { 
-        AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
-        int id = Integer.parseInt(request.getParameter("id"));
+        try{
+            ic = new InitialContext(setRemote.setProperties());   
+            
+            pinBean = (pinCrudInterface) ic.lookup("java:global/P4Food/statistics_EJB/pinCrudBean!services.pinCrudInterface");        
+            AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
+            int id = Integer.parseInt(request.getParameter("id"));
 
-        List<Pin> boardPins;
-        
-        boardPins = pinBean.getPinsForBoard(boardBean.getBoard(id));
+            List<Pin> boardPins;
 
-        request.setAttribute("pinList", boardPins);           
-        
-        request.setAttribute("isAdmin", currentUser.getAccount().getAdmin());
-        request.setAttribute("boardId", id);
-        request.getRequestDispatcher("pins.jsp").forward(request, response);
+            boardPins = pinBean.getPinsForBoard(boardBean.getBoard(id));
+
+            request.setAttribute("pinList", boardPins);           
+
+            request.setAttribute("isAdmin", currentUser.getAccount().getAdmin());
+            request.setAttribute("boardId", id);
+            request.getRequestDispatcher("pins.jsp").forward(request, response);
+        }catch(NamingException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -76,17 +88,24 @@ public class createPinServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {        
-        String recipeName = request.getParameter("recipeTitle");
-        String recipe = request.getParameter("recipe");   
-        int boardId = Integer.parseInt(request.getParameter("id"));
-        final Part filePart = request.getPart("file");
-        final String fileName = getFileName(filePart);
-        String url = imgbean.storeImage(fileName, filePart);
-        
-        pinBean.createPin(recipeName, recipe, boardId, url);          
-        
-        
-        response.sendRedirect("createPin?id=" + boardId);
+        try{
+            ic = new InitialContext(setRemote.setProperties());   
+
+            pinBean = (pinCrudInterface) ic.lookup("java:global/P4Food/statistics_EJB/pinCrudBean!services.pinCrudInterface");  
+            String recipeName = request.getParameter("recipeTitle");
+            String recipe = request.getParameter("recipe");   
+            int boardId = Integer.parseInt(request.getParameter("id"));
+            final Part filePart = request.getPart("file");
+            final String fileName = getFileName(filePart);
+            String url = imgbean.storeImage(fileName, filePart);
+
+            pinBean.createPin(recipeName, recipe, boardId, url);          
+
+
+            response.sendRedirect("createPin?id=" + boardId);
+        }catch(NamingException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     /**

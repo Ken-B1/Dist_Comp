@@ -6,14 +6,11 @@
 package services;
 
 import Entities.Messages;
-import javax.ejb.Remote;
 
 /**
  *
  * @author ken
  */
-
-@Remote
 public interface messageCrudInterface {
     public Messages getFullMessage(int messageId);
     
