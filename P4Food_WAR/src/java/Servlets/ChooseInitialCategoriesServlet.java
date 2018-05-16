@@ -5,11 +5,9 @@
  */
 package Servlets;
 
-import Business.databaseConnector;
 import Entities.Categories;
 import java.io.IOException;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -19,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import remotesettings.setRemote;
 import services.AccountBeanInterface;
+import services.databaseConnectorInterface;
 
 /**
  *
@@ -26,8 +25,7 @@ import services.AccountBeanInterface;
  */
 @WebServlet(name = "ChooseInitialCategoriesServlet", urlPatterns = {"/ChooseInitialCategories"})
 public class ChooseInitialCategoriesServlet extends HttpServlet {
-    @EJB
-    private databaseConnector connector;
+    private databaseConnectorInterface connector;
     
     /**
     * The context to be used to perform lookups of remote beans
@@ -62,6 +60,7 @@ public class ChooseInitialCategoriesServlet extends HttpServlet {
             throws ServletException, IOException {
         try{
             ic = new InitialContext(setRemote.setProperties());
+            connector = (databaseConnectorInterface)ic.lookup("java:global/statistics_EJB/databaseConnector!services.databaseConnectorInterface");
             String[] results = request.getParameterValues("CategorySelect");
             AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");        
             // Check if at least 3 categories have been selected.

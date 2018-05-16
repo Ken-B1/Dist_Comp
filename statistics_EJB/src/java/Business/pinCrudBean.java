@@ -13,6 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.validation.ConstraintViolation;
 import services.StatisticsBeanInterface;
 import services.pinCrudInterface;
 
@@ -43,13 +44,16 @@ public class pinCrudBean implements pinCrudInterface{
     @Override
     public void createPin(String name, String recipe, Board board, String url){
         Pin newpin = new Pin();
+
         newpin.setRecipeName(name);
         newpin.setBoard(board);
         newpin.setRecipe(recipe);
         newpin.setLocation(url);
+
         em.persist(newpin);
         em.flush();
         em.refresh(newpin);
+
         stats.createPin(board.getOwner(), newpin);
     }
     

@@ -7,10 +7,10 @@ package Business;
 
 import Entities.Categories;
 import java.util.List;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import services.databaseConnectorInterface;
 
 /**
  *
@@ -19,8 +19,7 @@ import javax.persistence.PersistenceContext;
  * This class is used to maintain the separation of presentation/business/data interactions
  */
 @Stateless
-@LocalBean
-public class databaseConnector{
+public class databaseConnector implements databaseConnectorInterface{
     @PersistenceContext(unitName = "statistics_EJBPU")
     EntityManager em;
     public databaseConnector() {
@@ -28,6 +27,7 @@ public class databaseConnector{
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+    @Override
     public List<Categories> getAllCategories(){
         return em.createNamedQuery("Categories.findAll").getResultList();
     }

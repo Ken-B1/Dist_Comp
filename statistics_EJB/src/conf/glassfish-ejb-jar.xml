@@ -41,6 +41,10 @@
     <ejb>
       <ejb-name>Admin</ejb-name>
       <jndi-name>java:global/statistics_EJB/Admin!services.AdminInterface</jndi-name>
-    </ejb>           
+    </ejb>   
+    <ejb>
+      <ejb-name>databaseConnector</ejb-name>
+      <jndi-name>java:global/statistics_EJB/databaseConnector!services.databaseConnectorInterface</jndi-name>
+    </ejb>              
   </enterprise-beans>
 </glassfish-ejb-jar>

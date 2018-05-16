@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import remotesettings.setRemote;
 import services.AccountBeanInterface;
+import services.databaseConnectorInterface;
 
 /**
  *
@@ -31,8 +32,7 @@ public class PinboardServlet extends HttpServlet {
     @EJB 
     private boardCrudBean boardBean;
     
-    @EJB
-    private databaseConnector connector;
+    private databaseConnectorInterface connector;
     /**
     * The context to be used to perform lookups of remote beans
     */
@@ -50,6 +50,7 @@ public class PinboardServlet extends HttpServlet {
             throws ServletException, IOException {
         try{
             ic = new InitialContext(setRemote.setProperties());
+            connector = (databaseConnectorInterface)ic.lookup("java:global/statistics_EJB/databaseConnector!services.databaseConnectorInterface");
             AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
             List<Categories> allCategories = connector.getAllCategories();
             List<Pin> currentUserPin = currentUser.getTailoredPins();

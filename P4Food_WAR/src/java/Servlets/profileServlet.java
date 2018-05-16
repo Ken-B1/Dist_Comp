@@ -6,7 +6,6 @@
 package Servlets;
 
 import Business.boardCrudBean;
-import Business.databaseConnector;
 import Entities.Account;
 import Entities.Board;
 import Entities.Categories;
@@ -23,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import remotesettings.setRemote;
 import services.AccountBeanInterface;
+import services.databaseConnectorInterface;
 
 /**
  *
@@ -33,8 +33,7 @@ public class profileServlet extends HttpServlet {
     @EJB 
     private boardCrudBean boardBean;
     
-    @EJB
-    private databaseConnector connector;
+    private databaseConnectorInterface connector;
     
     /**
     * The context to be used to perform lookups of remote beans
@@ -54,6 +53,7 @@ public class profileServlet extends HttpServlet {
             throws ServletException, IOException { 
         try{
             ic = new InitialContext(setRemote.setProperties());
+            connector = (databaseConnectorInterface)ic.lookup("java:global/statistics_EJB/databaseConnector!services.databaseConnectorInterface");
             AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
             String requestedUser = request.getParameter("username");
             List<Board> userBoards;
