@@ -5,10 +5,8 @@
  */
 package Servlets;
 
-import Business.boardCrudBean;
 import Entities.Board;
 import java.io.IOException;
-import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -18,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import remotesettings.setRemote;
 import services.AccountBeanInterface;
+import services.boardCrudBeanInterface;
+import services.categoryBeanInterface;
 
 /**
  *
@@ -25,8 +25,8 @@ import services.AccountBeanInterface;
  */
 @WebServlet(name = "FollowBoardServlet", urlPatterns = {"/FollowBoard"})
 public class FollowBoardServlet extends HttpServlet {
-    @EJB
-    private boardCrudBean boardbean;
+
+    private boardCrudBeanInterface boardbean;
     
     /**
     * The context to be used to perform lookups of remote beans
@@ -60,17 +60,20 @@ public class FollowBoardServlet extends HttpServlet {
             throws ServletException, IOException {
         try{
             ic = new InitialContext(setRemote.setProperties());
-            String id = request.getParameter("BoardId");
+            boardbean = (boardCrudBeanInterface) ic.lookup("java:global/statistics_EJB/boardCrudBean!services.boardCrudBeanInterface");
+            
+            String id = request.getParameter("BoardId");          
             AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
             int BoardId;
             if(id != null){
                 // If id == null, something went wrong
                 BoardId = Integer.parseInt(id);
+                             
                 Board requestedBoard = boardbean.getBoard(BoardId);
                 if(requestedBoard != null){
                     // If requestedBoard is null, a nonexistend board is requested
                     currentUser.followBoard(requestedBoard);
-                    response.sendRedirect(request.getHeader("Referer"));
+                    //response.sendRedirect(request.getHeader("Referer"));
                 }
             }
         }catch(NamingException e){

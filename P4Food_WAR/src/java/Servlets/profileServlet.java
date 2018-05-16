@@ -5,14 +5,12 @@
  */
 package Servlets;
 
-import Business.boardCrudBean;
 import Entities.Account;
 import Entities.Board;
 import Entities.Categories;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -22,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import remotesettings.setRemote;
 import services.AccountBeanInterface;
+import services.boardCrudBeanInterface;
 import services.databaseConnectorInterface;
 
 /**
@@ -30,8 +29,7 @@ import services.databaseConnectorInterface;
  */
 @WebServlet(name = "profileServlet", urlPatterns = {"/profile"})
 public class profileServlet extends HttpServlet {
-    @EJB 
-    private boardCrudBean boardBean;
+    private boardCrudBeanInterface boardBean;
     
     private databaseConnectorInterface connector;
     
@@ -54,6 +52,8 @@ public class profileServlet extends HttpServlet {
         try{
             ic = new InitialContext(setRemote.setProperties());
             connector = (databaseConnectorInterface)ic.lookup("java:global/statistics_EJB/databaseConnector!services.databaseConnectorInterface");
+            boardBean = (boardCrudBeanInterface) ic.lookup("java:global/statistics_EJB/boardCrudBean!services.boardCrudBeanInterface");
+            
             AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
             String requestedUser = request.getParameter("username");
             List<Board> userBoards;

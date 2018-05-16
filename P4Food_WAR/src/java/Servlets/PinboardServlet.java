@@ -29,8 +29,6 @@ import services.databaseConnectorInterface;
  */
 @WebServlet(name = "PinboardServlet", urlPatterns = {"/pinboard"})
 public class PinboardServlet extends HttpServlet {
-    @EJB 
-    private boardCrudBean boardBean;
     
     private databaseConnectorInterface connector;
     /**

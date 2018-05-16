@@ -5,13 +5,10 @@
  */
 package Servlets;
 
-import Business.boardCrudBean;
-import Business.databaseConnector;
 import Entities.Board;
 import Entities.Categories;
 import java.io.IOException;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -20,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import remotesettings.setRemote;
+import services.boardCrudBeanInterface;
 import services.databaseConnectorInterface;
 
 /**
@@ -28,8 +26,8 @@ import services.databaseConnectorInterface;
  */
 @WebServlet(name = "boardSettingsServlet", urlPatterns = {"/boardSettings"})
 public class boardSettingsServlet extends HttpServlet {
-    @EJB
-    boardCrudBean boardCRUD;
+
+    private boardCrudBeanInterface boardCRUD;
     
     private databaseConnectorInterface connector;
     
@@ -52,6 +50,8 @@ public class boardSettingsServlet extends HttpServlet {
         try{
             ic = new InitialContext(setRemote.setProperties());            
             connector = (databaseConnectorInterface)ic.lookup("java:global/statistics_EJB/databaseConnector!services.databaseConnectorInterface");
+            boardCRUD = (boardCrudBeanInterface) ic.lookup("java:global/statistics_EJB/boardCrudBean!services.boardCrudBeanInterface");
+            
             String Stringid = request.getParameter("boardId");
             if(Stringid == null){
                 // Wrong call
@@ -82,7 +82,9 @@ public class boardSettingsServlet extends HttpServlet {
             throws ServletException, IOException {
         String Stringid = request.getParameter("boardId");
         try{
-            ic = new InitialContext(setRemote.setProperties());           
+            ic = new InitialContext(setRemote.setProperties());  
+            boardCRUD = (boardCrudBeanInterface) ic.lookup("java:global/statistics_EJB/boardCrudBean!services.boardCrudBeanInterface");
+            
             if(Stringid == null){
                 // Wrong id
                 request.getRequestDispatcher("pinboard").forward(request, response);

@@ -5,10 +5,8 @@
  */
 package Servlets;
 
-import Business.boardCrudBean;
 import Entities.Board;
 import java.io.IOException;
-import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -18,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import remotesettings.setRemote;
 import services.AccountBeanInterface;
+import services.boardCrudBeanInterface;
 
 /**
  *
@@ -25,8 +24,7 @@ import services.AccountBeanInterface;
  */
 @WebServlet(name = "UnfollowBoardServlet", urlPatterns = {"/UnfollowBoard"})
 public class UnfollowBoardServlet extends HttpServlet {
-    @EJB
-    private boardCrudBean boardbean;
+    private boardCrudBeanInterface boardbean;
     /**
     * The context to be used to perform lookups of remote beans
     */
@@ -58,6 +56,8 @@ public class UnfollowBoardServlet extends HttpServlet {
             throws ServletException, IOException {
         try{
             ic = new InitialContext(setRemote.setProperties());
+            boardbean = (boardCrudBeanInterface) ic.lookup("java:global/statistics_EJB/boardCrudBean!services.boardCrudBeanInterface");
+                    
             String id = request.getParameter("BoardId");
             AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
             int BoardId;

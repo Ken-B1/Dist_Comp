@@ -99,7 +99,7 @@ public class Account implements Serializable {
     @NotNull
     @Column(name = "admin")
     private boolean admin;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner",fetch = FetchType.EAGER)
     private Collection<Board> boardCollection;
     @JoinTable(name = "accountcategoryjunction", joinColumns = {
         @JoinColumn(name = "accountid", referencedColumnName = "id")}, inverseJoinColumns = {

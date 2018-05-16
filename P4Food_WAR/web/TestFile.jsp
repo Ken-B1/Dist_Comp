@@ -22,19 +22,11 @@
         <link rel="icon" href="images\icons\logo.png">      
     </head>
     <body style="background-color: #eeeeee">
-        <form action="testServlet" method="post" enctype="multipart/form-data" id="js-upload-form">
-            <input type="text" name="id" value="${boardId}" style="display:none"></input>
+        <form action="UnfollowBoard" method="post"id="js-upload-form">
+            <input type="text" name="BoardId" value="14" style="display:none"></input>
             <div class="col">
-                <!-- Standard Form -->
-                <h5>Select images from your computer</h5>                                                
-                <div class="form-inline">
-                    <div class="form-group">
-                        <input type="file" name="file" id="js-upload-files" multiple>
-                    </div>
-                </div> 
                 <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload Pins</button>                                                                                                                                                               
             </div>                                           
         </form>        
-            <img src="Image?filename=0qkaVYr.jpg">
     </body>
 </html>

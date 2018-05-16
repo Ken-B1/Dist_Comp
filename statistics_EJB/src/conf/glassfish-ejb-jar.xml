@@ -45,6 +45,10 @@
     <ejb>
       <ejb-name>databaseConnector</ejb-name>
       <jndi-name>java:global/statistics_EJB/databaseConnector!services.databaseConnectorInterface</jndi-name>
+    </ejb>    
+    <ejb>
+      <ejb-name>boardCrudBean</ejb-name>
+      <jndi-name>java:global/statistics_EJB/boardCrudBean!services.boardCrudBeanInterface</jndi-name>
     </ejb>              
   </enterprise-beans>
 </glassfish-ejb-jar>

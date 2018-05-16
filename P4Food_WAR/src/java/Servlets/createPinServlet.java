@@ -5,12 +5,10 @@
  */
 package Servlets;
 
-import Business.boardCrudBean;
 import Entities.Pin;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -23,6 +21,7 @@ import javax.servlet.http.Part;
 import remotesettings.setRemote;
 import services.AccountBeanInterface;
 import services.ImageBeanInterface;
+import services.boardCrudBeanInterface;
 import services.pinCrudInterface;
 
 /**
@@ -34,9 +33,7 @@ import services.pinCrudInterface;
 public class createPinServlet extends HttpServlet {
     private pinCrudInterface pinBean;
     
-    /*Temporary*/
-    @EJB
-    private boardCrudBean boardBean;
+    private boardCrudBeanInterface boardBean;
     
     private ImageBeanInterface imgbean;
     
@@ -59,6 +56,7 @@ public class createPinServlet extends HttpServlet {
             throws ServletException, IOException { 
         try{
             ic = new InitialContext(setRemote.setProperties());   
+            boardBean = (boardCrudBeanInterface) ic.lookup("java:global/statistics_EJB/boardCrudBean!services.boardCrudBeanInterface");
             
             pinBean = (pinCrudInterface) ic.lookup("java:global/statistics_EJB/pinCrudBean!services.pinCrudInterface");        
             AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
@@ -94,6 +92,7 @@ public class createPinServlet extends HttpServlet {
 
             pinBean = (pinCrudInterface) ic.lookup("java:global/statistics_EJB/pinCrudBean!services.pinCrudInterface"); 
             imgbean = (ImageBeanInterface) ic.lookup("java:global/statistics_EJB/ImageBean!services.ImageBeanInterface");
+            boardBean = (boardCrudBeanInterface) ic.lookup("java:global/statistics_EJB/boardCrudBean!services.boardCrudBeanInterface");
             
             String recipeName = request.getParameter("recipeTitle");
             String recipe = request.getParameter("recipe");   

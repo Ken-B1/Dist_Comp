@@ -9,21 +9,20 @@ import Entities.Account;
 import Entities.Board;
 import Entities.Categories;
 import java.util.List;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import services.StatisticsBeanInterface;
+import services.boardCrudBeanInterface;
 
 /**
  *
  * @author ken
  */
 @Stateless
-@LocalBean
-public class boardCrudBean{
+public class boardCrudBean implements boardCrudBeanInterface{
     @PersistenceContext(unitName = "statistics_EJBPU")
     EntityManager em;
     
@@ -44,6 +43,7 @@ public class boardCrudBean{
         }            
     }
     
+    @Override
     public void createBoard(String name, Account owner){
         Board newboard = new Board();
         newboard.setBoardname(name);
@@ -54,6 +54,7 @@ public class boardCrudBean{
         stats.createBoard(owner, newboard);
     }
     
+    @Override
     public void createBoard(String name, Categories category, Account owner){
         Board newboard = new Board();
         newboard.setBoardname(name);
@@ -65,20 +66,24 @@ public class boardCrudBean{
         stats.createBoard(owner, newboard);
     }
     
+    @Override
     public void createBoard(String name, int categoryId, Account owner){
         createBoard(name, em.find(Categories.class, categoryId), owner);
     }
     
+    @Override
     public Board getBoard(int boardId){
         Board returnboard = em.find(Board.class, boardId);
         return returnboard;
     }
     
+    @Override
     public List<Board> getBoardsForUser(Account owner){
         List<Board> resultlist = em.createNamedQuery("Board.findByOwner").setParameter("userid", owner).getResultList();
         return resultlist;
     }
     
+    @Override
     public void updateBoard(int boardId, String newName, Categories newCategory){
         Board toUpdate = em.find(Board.class, boardId);
         toUpdate.setBoardname(newName);
@@ -86,10 +91,12 @@ public class boardCrudBean{
         em.flush();
     }
  
+    @Override
     public void updateBoard(int boardId, String newName, int newCategory){
         updateBoard(boardId, newName, em.find(Categories.class, newCategory));
     }
     
+    @Override
     public void makePrivate(int boardId, boolean isPrivate){
         Board toUpdate = em.find(Board.class, boardId);
         if(isPrivate){
@@ -100,6 +107,7 @@ public class boardCrudBean{
         em.flush();
     }
     
+    @Override
     public void deleteBoard(int boardId){
         Board toDelete = em.find(Board.class, boardId);
         em.remove(toDelete);

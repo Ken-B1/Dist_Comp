@@ -23,6 +23,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import services.AccountBeanInterface;
 import services.RegistrationBeanInterface;
 import services.StatisticsBeanInterface;
@@ -106,19 +107,19 @@ public class AccountBean implements AccountBeanInterface{
     // Follow a board
     @Override
     public void followBoard(Board toFollow){
-        Account currentAccount = em.find(Account.class, currentUser);
-        Collection<Board> boardcollection = currentAccount.getBoardCollection();
-        boardcollection.add(toFollow);
-        currentAccount.setBoardCollection(boardcollection);
+        Query quer = em.createNativeQuery("INSERT INTO boardfollowers VALUES (?1, ?2, 0)");
+        quer.setParameter(1, currentUser);
+        quer.setParameter(2, toFollow.getId());
+        quer.executeUpdate();
     }
     
     // Unfollow a board
     @Override
     public void unfollowBoard(Board toUnFollow){
-        Account currentAccount = em.find(Account.class, currentUser);
-        Collection<Board> boardcollection = currentAccount.getBoardCollection();
-        boardcollection.remove(toUnFollow);
-        currentAccount.setBoardCollection(boardcollection);
+        Query quer = em.createNativeQuery("DELETE FROM boardfollowers WHERE (Userid = ?1 and Boardid = ?2)");
+        quer.setParameter(1, currentUser);
+        quer.setParameter(2, toUnFollow.getId());
+        quer.executeUpdate();
     }
     
     // Follow a person
