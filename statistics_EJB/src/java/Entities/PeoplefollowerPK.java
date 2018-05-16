@@ -20,7 +20,7 @@ public class PeoplefollowerPK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Column(name = "User")
+    @Column(name = "userId")
     private int user;
     @Basic(optional = false)
     @NotNull

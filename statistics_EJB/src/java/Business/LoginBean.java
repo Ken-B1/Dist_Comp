@@ -52,7 +52,7 @@ public class LoginBean implements LoginBeanInterface{
         Account returnvalue = (Account)em.createNamedQuery("Account.findByUsername").setParameter("username", username).getSingleResult();
         if(password.equals(returnvalue.getPassword())) {
             // Log login to statistics
-            //statistics.log(returnvalue);
+            statistics.log(returnvalue);
             return returnvalue.getId();
 
         }else{

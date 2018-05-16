@@ -16,25 +16,26 @@ and open the template in the editor.
         <title>Admin Registration</title>
         <%@include file="headers/header.jsp" %>
         <link rel="stylesheet" href="countrySelect/css/countrySelect.css">
+       
     </head>
     <body style="background-color: #eeeeee">
         <div class="container">
             <div align="center" class="panel panel-default" style="margin-top: 5%;">
                 <div class="panel-body" style="background-color: white; padding: 50px 20px 40px 20px; width: 60%; border-radius: 20px; border:solid; border-width: 1px; border-color: #bbbbbb">
-                    <form action="Adminregistration" method="post">
+                    <form action="Adminregistration" name="signUp" method="post">
                         <p class="font-weight-bold">Register an Administrator</p>
                         <div class="row">
                             <div class="col-sm">
                                 <p>Admin Credentials</p>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="email" placeholder="Email" name="email">                            
+                                    <input type="text" class="form-control" id="email" placeholder="Email" name="email" required>                                    
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="username" placeholder="Username" name="username">
+                                    <input type="text" class="form-control" id="username" placeholder="Username" name="username" required>
 
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                                    <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
 
                                 </div>
                             </div>
@@ -42,11 +43,11 @@ and open the template in the editor.
                             <div class="col-sm">
                                 <p>Personal Details</p>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="fname" placeholder="First Name" name="fname">
+                                    <input type="text" class="form-control" id="fname" placeholder="First Name" name="fname" required>
 
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="lname" placeholder="Last Name" name="lname">
+                                    <input type="text" class="form-control" id="lname" placeholder="Last Name" name="lname" required>
 
                                 </div>
                                 <div class="form-group">                                    
@@ -59,7 +60,7 @@ and open the template in the editor.
                                     </script> 
                                 </div>
                                 <div class="form-group">
-                                    <select class="custom-select" name="gender">
+                                    <select class="custom-select" name="gender" required>
                                         <option selected>Select Gender</option>
                                         <option value="M">Male</option>
                                         <option value="F">Female</option>

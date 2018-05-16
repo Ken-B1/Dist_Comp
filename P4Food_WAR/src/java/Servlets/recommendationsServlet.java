@@ -5,13 +5,22 @@
  */
 package Servlets;
 
+import Business.AccountBean;
+import Entities.Categories;
+import Entities.Pin;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import remotesettings.setRemote;
+import services.AccountBeanInterface;
+import services.boardCrudBeanInterface;
+import services.databaseConnectorInterface;
 
 /**
  *
@@ -19,7 +28,15 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "recommendationsServlet", urlPatterns = {"/recommendations"})
 public class recommendationsServlet extends HttpServlet {
+    
+    private boardCrudBeanInterface boardBean;
+    
+    private databaseConnectorInterface connector;
 
+    /**
+    * The context to be used to perform lookups of remote beans
+    */
+    private static InitialContext ic;    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -31,7 +48,20 @@ public class recommendationsServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("recommendations.jsp").forward(request, response);
+        try{
+            ic = new InitialContext(setRemote.setProperties());    
+            boardBean = (boardCrudBeanInterface)ic.lookup("java:global/statistics_EJB/boardCrudBean!services.boardCrudBeanInterface");
+            connector = (databaseConnectorInterface)ic.lookup("java:global/statistics_EJB/databaseConnector!services.databaseConnectorInterface");
+            
+            AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
+            List<Categories> allCategories = connector.getAllCategories();
+            List<Pin> currentUserPin = currentUser.getTailoredPins();
+
+            request.setAttribute("pinlist", currentUserPin); 
+            request.getRequestDispatcher("recommendations.jsp").forward(request, response);
+        }catch(NamingException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
