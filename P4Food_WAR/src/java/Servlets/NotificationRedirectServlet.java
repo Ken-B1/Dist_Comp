@@ -5,15 +5,17 @@
  */
 package Servlets;
 
-import Business.StatisticsBean;
 import Entities.Notifications;
 import java.io.IOException;
-import javax.ejb.EJB;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import remotesettings.setRemote;
+import services.StatisticsBeanInterface;
 
 /**
  *
@@ -21,8 +23,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "NotificationRedirectServlet", urlPatterns = {"/NotificationRedirect"})
 public class NotificationRedirectServlet extends HttpServlet {
-    @EJB
-    StatisticsBean statsbean;
+    StatisticsBeanInterface statsbean;
+
+    /**
+    * The context to be used to perform lookups of remote beans
+    */
+    private static InitialContext ic;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -49,29 +55,35 @@ public class NotificationRedirectServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        Notifications notif = statsbean.getNotification(id);
-        statsbean.markAsRead(id);
-        
-        switch(notif.getType()){
-            case 1:
-                // Redirect to new board
-                request.setAttribute("id", notif.getDescription());
-                request.getRequestDispatcher("createPin").forward(request, response);
-                break;
-            case 2:
-                // Redirect to new pin
-                request.setAttribute("id", notif.getDescription());
-                request.getRequestDispatcher("fullRecipe").forward(request, response); 
-                break;
-            case 3:
-                // Redirect to new follower
-                response.sendRedirect("profile?username=" + notif.getCreator().getUsername());
-                break;
-            default:
-                response.sendRedirect("pinboard");
+        try{
+            ic = new InitialContext(setRemote.setProperties());
+            statsbean = (StatisticsBeanInterface) ic.lookup("java:global/statistics_EJB/StatisticsBean!services.StatisticsBeanInterface");
+            
+            int id = Integer.parseInt(request.getParameter("id"));
+            Notifications notif = statsbean.getNotification(id);
+            statsbean.markAsRead(id);
+
+            switch(notif.getType()){
+                case 1:
+                    // Redirect to new board
+                    request.setAttribute("id", notif.getDescription());
+                    request.getRequestDispatcher("createPin").forward(request, response);
+                    break;
+                case 2:
+                    // Redirect to new pin
+                    request.setAttribute("id", notif.getDescription());
+                    request.getRequestDispatcher("fullRecipe").forward(request, response); 
+                    break;
+                case 3:
+                    // Redirect to new follower
+                    response.sendRedirect("profile?username=" + notif.getCreator().getUsername());
+                    break;
+                default:
+                    response.sendRedirect("pinboard");
+            }
+        }catch(NamingException e){
+            System.out.println(e.getMessage());
         }
-        
     }
 
     /**

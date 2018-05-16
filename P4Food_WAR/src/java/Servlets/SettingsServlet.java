@@ -5,16 +5,18 @@
  */
 package Servlets;
 
-import Business.AccountBean;
 import Entities.Account;
 import java.io.IOException;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Business_Utility.Status;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import remotesettings.setRemote;
+import services.AccountBeanInterface;
 
 /**
  *
@@ -22,6 +24,10 @@ import Business_Utility.Status;
  */
 @WebServlet(name = "SettingsServlet", urlPatterns = {"/settings"})
 public class SettingsServlet extends HttpServlet {
+    /**
+    * The context to be used to perform lookups of remote beans
+    */
+    private static InitialContext ic;
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -34,9 +40,14 @@ public class SettingsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Account account = ((AccountBean)request.getSession().getAttribute("user")).getAccount();
-        request.setAttribute("accountinfo", account);
-        request.getRequestDispatcher("settings.jsp").forward(request, response);
+        try{
+            ic = new InitialContext(setRemote.setProperties());
+            Account account = ((AccountBeanInterface)request.getSession().getAttribute("user")).getAccount();
+            request.setAttribute("accountinfo", account);
+            request.getRequestDispatcher("settings.jsp").forward(request, response);
+        }catch(NamingException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -50,24 +61,29 @@ public class SettingsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Account account = new Account();
+        try{
+            ic = new InitialContext(setRemote.setProperties());
+            Account account = new Account();
         
-        account.setEmail(request.getParameter("email"));
-        account.setUsername(request.getParameter("username"));
-        account.setFname(request.getParameter("fname"));
-        account.setLname(request.getParameter("lname"));
-        account.setCountry(request.getParameter("country"));
-        account.setGender(request.getParameter("gender"));
-        
-        AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
-        
-        Status result = currentUser.updateAccount(account);
-        if(result.getStatusCode() == 0){
-            response.sendRedirect("settings");
-        }else{
-            request.setAttribute("result", result);
-            request.setAttribute("accountinfo", currentUser);
-            request.getRequestDispatcher("settings.jsp").forward(request, response);
+            account.setEmail(request.getParameter("email"));
+            account.setUsername(request.getParameter("username"));
+            account.setFname(request.getParameter("fname"));
+            account.setLname(request.getParameter("lname"));
+            account.setCountry(request.getParameter("country"));
+            account.setGender(request.getParameter("gender"));
+
+            AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
+
+            Status result = currentUser.updateAccount(account);
+            if(result.getStatusCode() == 0){
+                response.sendRedirect("settings");
+            }else{
+                request.setAttribute("result", result);
+                request.setAttribute("accountinfo", currentUser);
+                request.getRequestDispatcher("settings.jsp").forward(request, response);
+            }
+        }catch(NamingException e){
+            System.out.println(e.getMessage());
         }
     }
 

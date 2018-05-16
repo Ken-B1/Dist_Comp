@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -52,9 +53,9 @@ public class Account implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Collection<Useractions> useractionsCollection;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "creator")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "creator", fetch = FetchType.EAGER)
     private Collection<Notifications> notificationsCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver", fetch = FetchType.EAGER)
     private Collection<Notifications> notificationsCollection1;
 
     @Size(max = 255)
@@ -64,17 +65,17 @@ public class Account implements Serializable {
     @JoinTable(name = "friendrequests", joinColumns = {
         @JoinColumn(name = "requested", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "requester", referencedColumnName = "id")})
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Account> accountCollection; // People requesting this user
-    @ManyToMany(mappedBy = "accountCollection")
+    @ManyToMany(mappedBy = "accountCollection",fetch = FetchType.EAGER)
     private Collection<Account> accountCollection1; // People requested by this user
     
     @JoinTable(name = "friends", joinColumns = {
         @JoinColumn(name = "user1", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "user2", referencedColumnName = "id")})
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Account> accountCollection2; // Friends of this user
-    @ManyToMany(mappedBy = "accountCollection2")
+    @ManyToMany(mappedBy = "accountCollection2",fetch = FetchType.EAGER)
     private Collection<Account> accountCollection3; // Users of which this user is a friend
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver")
@@ -103,7 +104,7 @@ public class Account implements Serializable {
     @JoinTable(name = "accountcategoryjunction", joinColumns = {
         @JoinColumn(name = "accountid", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "categoryid", referencedColumnName = "id")})
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Categories> categoriesCollection;
 
     private static final long serialVersionUID = 1L;
@@ -330,6 +331,7 @@ public class Account implements Serializable {
 
     @XmlTransient
     public Collection<Messages> getMessagesCollection() {
+        messagesCollection.isEmpty();
         return messagesCollection;
     }
 

@@ -47,7 +47,7 @@ public interface AccountBeanInterface {
     
     public int getNumFollowing();
     
-    public void setAccount(Account acc);
+    public void setAccount(int acc);
     
     public Account getAccount();
     

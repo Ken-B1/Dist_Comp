@@ -5,7 +5,6 @@
  */
 package Servlets;
 
-import Business.AccountBean;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.naming.InitialContext;
@@ -18,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import remotesettings.setRemote;
+import services.AccountBeanInterface;
 import services.ImageBeanInterface;
 
 /**
@@ -74,7 +74,7 @@ public class testServlet extends HttpServlet {
         try{
             ic = new InitialContext(setRemote.setProperties());           
             imgbean = (ImageBeanInterface) ic.lookup("java:global/statistics_EJB/ImageBean!services.ImageBeanInterface");
-            AccountBean currentAcc = (AccountBean)request.getSession().getAttribute("user");
+            AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
 
 
             response.setContentType("text/html;charset=UTF-8");

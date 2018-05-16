@@ -5,7 +5,6 @@
  */
 package Servlets;
 
-import Business.AccountBean;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import remotesettings.setRemote;
+import services.AccountBeanInterface;
 import services.LoginBeanInterface;
 
 /**
@@ -63,15 +63,18 @@ public class LoginServlet extends HttpServlet {
         try{
             ic = new InitialContext(setRemote.setProperties());   
             
-            loginBean = (LoginBeanInterface) ic.lookup("java:global/statistics_EJB/LoginBean!services.LoginBeanInterface");        
+            loginBean = (LoginBeanInterface) ic.lookup("java:global/statistics_EJB/LoginBean!services.LoginBeanInterface"); 
+            AccountBeanInterface accountBean = (AccountBeanInterface) ic.lookup("java:global/statistics_EJB/AccountBean!services.AccountBeanInterface");
             // Log the user into his/her account and redirect depending on outcome
             String username = request.getParameter("username");
             String password = request.getParameter("password");
 
             int accountId = loginBean.login(username, password);     
-
+            accountBean.setAccount(accountId);
+            System.out.println(accountId);
+            
             if(accountId != -1) {
-                request.getSession().setAttribute("user", accountId);
+                request.getSession().setAttribute("user", accountBean);
                 request.getSession().setAttribute("userid",username);
                 response.sendRedirect("pinboard");
             }else{

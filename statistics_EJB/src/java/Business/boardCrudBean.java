@@ -9,11 +9,13 @@ import Entities.Account;
 import Entities.Board;
 import Entities.Categories;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import services.StatisticsBeanInterface;
 
 /**
  *
@@ -25,14 +27,30 @@ public class boardCrudBean{
     @PersistenceContext(unitName = "statistics_EJBPU")
     EntityManager em;
     
-    @EJB
-    private StatisticsBean stats;
+    private StatisticsBeanInterface stats;
 
+    /**
+    * The context to be used to perform lookups of remote beans
+    */
+    private static InitialContext ic;
+    
+    public boardCrudBean(){
+         try{
+            ic = new InitialContext();
+            stats = (StatisticsBeanInterface)ic.lookup("java:module/StatisticsBean");
+        }catch(NamingException e){
+            System.out.println("boardCrudBean error:");
+            System.out.println(e.getMessage());
+        }            
+    }
+    
     public void createBoard(String name, Account owner){
         Board newboard = new Board();
         newboard.setBoardname(name);
         newboard.setOwner(owner);
         em.persist(newboard);
+        em.flush();
+        em.refresh(newboard);
         stats.createBoard(owner, newboard);
     }
     
@@ -43,6 +61,7 @@ public class boardCrudBean{
         newboard.setCategory(category);
         em.persist(newboard);
         em.flush();
+        em.refresh(newboard);
         stats.createBoard(owner, newboard);
     }
     

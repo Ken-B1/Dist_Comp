@@ -5,7 +5,6 @@
  */
 package Servlets;
 
-import Business.AccountBean;
 import Entities.Account;
 import java.io.IOException;
 import javax.naming.InitialContext;
@@ -16,7 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import remotesettings.setRemote;
-import services.categoryBeanInterface;
+import services.AccountBeanInterface;
 import services.messageCrudInterface;
 
 /**
@@ -47,7 +46,7 @@ public class WriteMessageServlet extends HttpServlet {
         try{
             ic = new InitialContext(setRemote.setProperties());
             
-            AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
+            AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
             String idString = request.getParameter("id");
             int receiverId;
             if(idString == null){
@@ -88,7 +87,7 @@ public class WriteMessageServlet extends HttpServlet {
             
             messageHandler = (messageCrudInterface) ic.lookup("java:global/statistics_EJB/messageCrud!services.messageCrudInterface");
             
-            AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
+            AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
             int id = Integer.parseInt(request.getParameter("recid"));
             String subject = request.getParameter("subject");
             String message = request.getParameter("content");

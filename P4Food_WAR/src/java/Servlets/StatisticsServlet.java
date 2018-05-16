@@ -5,18 +5,20 @@
  */
 package Servlets;
 
-import Business.AccountBean;
 import Entities.Statistics;
 import java.io.IOException;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import Business.StatisticsBean;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import remotesettings.setRemote;
+import services.AccountBeanInterface;
+import services.StatisticsBeanInterface;
 
 /**
  *
@@ -25,8 +27,13 @@ import Business.StatisticsBean;
 @WebServlet(name = "StatisticsServlet", urlPatterns = {"/statistics"})
 public class StatisticsServlet extends HttpServlet {
     //Statistics bean for fetching entries
-    @EJB
-    StatisticsBean statisticsBean;
+
+    StatisticsBeanInterface statisticsBean;
+    
+    /**
+    * The context to be used to perform lookups of remote beans
+    */
+    private static InitialContext ic;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,14 +45,19 @@ public class StatisticsServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        //Retrieve all logins for this user and display them on the page
-        // TODO: Make this xss resistant??
-        HttpSession session = request.getSession();
-        AccountBean currentUser = (AccountBean)session.getAttribute("user");
-        List<Statistics> logins = statisticsBean.getStatistics(currentUser.getAccount().getId());
-        request.setAttribute("logins", logins);
-        request.getRequestDispatcher("statistics.jsp").forward(request, response);
+        try{
+            ic = new InitialContext(setRemote.setProperties());
+
+            statisticsBean = (StatisticsBeanInterface) ic.lookup("java:global/statistics_EJB/StatisticsBean!services.StatisticsBeanInterface");
+            //Retrieve all logins for this user and display them on the page
+            HttpSession session = request.getSession();
+            AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
+            List<Statistics> logins = statisticsBean.getStatistics(currentUser.getAccount().getId());
+            request.setAttribute("logins", logins);
+            request.getRequestDispatcher("statistics.jsp").forward(request, response);
+        }catch(NamingException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

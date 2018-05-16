@@ -5,7 +5,6 @@
  */
 package Servlets;
 
-import Business.AccountBean;
 import Business.boardCrudBean;
 import Entities.Pin;
 import java.io.IOException;
@@ -22,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import remotesettings.setRemote;
+import services.AccountBeanInterface;
 import services.ImageBeanInterface;
 import services.pinCrudInterface;
 
@@ -61,7 +61,7 @@ public class createPinServlet extends HttpServlet {
             ic = new InitialContext(setRemote.setProperties());   
             
             pinBean = (pinCrudInterface) ic.lookup("java:global/statistics_EJB/pinCrudBean!services.pinCrudInterface");        
-            AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
+            AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
             int id = Integer.parseInt(request.getParameter("id"));
 
             List<Pin> boardPins;

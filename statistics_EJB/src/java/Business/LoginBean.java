@@ -6,13 +6,13 @@
 package Business;
 
 import Entities.Account;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import services.LoginBeanInterface;
+import services.StatisticsBeanInterface;
 
 /**
  *
@@ -25,11 +25,23 @@ public class LoginBean implements LoginBeanInterface{
     private EntityManager em;
 
     // EJB Used to log logins
-    @EJB
-    private StatisticsBean statistics;
+    private StatisticsBeanInterface statistics;
+
+    /**
+    * The context to be used to perform lookups of remote beans
+    */
+    private static InitialContext ic;
     
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    public LoginBean(){
+         try{
+            ic = new InitialContext();
+            statistics = (StatisticsBeanInterface)ic.lookup("java:module/StatisticsBean");
+        }catch(NamingException e){
+            System.out.println("LoginBean error:");
+            System.out.println(e.getMessage());
+        }       
+    }
+    
     @Override
     public int login(String username, String password) {
         if((long)em.createNamedQuery("Account.existsName").setParameter("username", username).getSingleResult() == 0){
@@ -40,8 +52,7 @@ public class LoginBean implements LoginBeanInterface{
         Account returnvalue = (Account)em.createNamedQuery("Account.findByUsername").setParameter("username", username).getSingleResult();
         if(password.equals(returnvalue.getPassword())) {
             // Log login to statistics
-            statistics.log(returnvalue);
-            InitialContext ic;
+            //statistics.log(returnvalue);
             return returnvalue.getId();
 
         }else{

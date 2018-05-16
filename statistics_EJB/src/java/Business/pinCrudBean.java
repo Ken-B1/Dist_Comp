@@ -8,10 +8,12 @@ package Business;
 import Entities.Board;
 import Entities.Pin;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import services.StatisticsBeanInterface;
 import services.pinCrudInterface;
 
 /**
@@ -23,9 +25,19 @@ public class pinCrudBean implements pinCrudInterface{
     @PersistenceContext(unitName = "statistics_EJBPU")
     EntityManager em;
     
-    @EJB
-    private StatisticsBean stats;
+    private StatisticsBeanInterface stats;
 
+    private static InitialContext ic;
+    
+    public pinCrudBean(){
+         try{
+            ic = new InitialContext();
+            stats = (StatisticsBeanInterface)ic.lookup("java:module/StatisticsBean");
+        }catch(NamingException e){
+            System.out.println("pinCrudBean error:");
+            System.out.println(e.getMessage());
+        }            
+    }
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     @Override
@@ -36,6 +48,8 @@ public class pinCrudBean implements pinCrudInterface{
         newpin.setRecipe(recipe);
         newpin.setLocation(url);
         em.persist(newpin);
+        em.flush();
+        em.refresh(newpin);
         stats.createPin(board.getOwner(), newpin);
     }
     

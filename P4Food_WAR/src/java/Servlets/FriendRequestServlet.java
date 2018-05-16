@@ -5,17 +5,20 @@
  */
 package Servlets;
 
-import Business.AccountBean;
 import Business.friendsBean;
 import Entities.Account;
 import java.io.IOException;
 import java.util.Collection;
 import javax.ejb.EJB;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import remotesettings.setRemote;
+import services.AccountBeanInterface;
 
 /**
  *
@@ -25,7 +28,10 @@ import javax.servlet.http.HttpServletResponse;
 public class FriendRequestServlet extends HttpServlet {
     @EJB
     private friendsBean friends;
-
+    /**
+    * The context to be used to perform lookups of remote beans
+    */
+    private static InitialContext ic;
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -37,15 +43,20 @@ public class FriendRequestServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
-        
-        Collection<Account> thisfriends = friends.getFriends(currentUser.getAccount().getId());
-        Collection<Account> thisrequests = friends.getFriendRequests(currentUser.getAccount().getId());
-        
-        request.setAttribute("friends", thisfriends);
-        request.setAttribute("requests", thisrequests);
-        
-        request.getRequestDispatcher("friends.jsp").forward(request, response);
+        try{
+            ic = new InitialContext(setRemote.setProperties());
+            AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
+
+            Collection<Account> thisfriends = friends.getFriends(currentUser.getAccount().getId());
+            Collection<Account> thisrequests = friends.getFriendRequests(currentUser.getAccount().getId());
+
+            request.setAttribute("friends", thisfriends);
+            request.setAttribute("requests", thisrequests);
+
+            request.getRequestDispatcher("friends.jsp").forward(request, response);
+        }catch(NamingException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -59,36 +70,41 @@ public class FriendRequestServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
-        int currentUserId = currentUser.getAccount().getId();
-        String id = request.getParameter("id");
-        String type = request.getParameter("type");
-        
-        if(id == null || type == null){
-            //Parameters not correctly set
-            request.getRequestDispatcher("pinboard").forward(request, response);
-            return;
+        try{
+            ic = new InitialContext(setRemote.setProperties());
+            AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
+            int currentUserId = currentUser.getAccount().getId();
+            String id = request.getParameter("id");
+            String type = request.getParameter("type");
+
+            if(id == null || type == null){
+                //Parameters not correctly set
+                request.getRequestDispatcher("pinboard").forward(request, response);
+                return;
+            }
+
+            int idInt = Integer.parseInt(id);
+
+            if(type.equals("request")){
+                // New friend request
+                friends.sendFriendRequest(currentUserId, idInt);
+            }else if(type.equals("accept")){
+                // Friend request accept
+                friends.acceptFriendRequest(idInt, currentUserId);
+            }else if(type.equals("deny")){
+                // Friend request deny
+                friends.removeFriendRequest(idInt, currentUserId);
+            }else if(type.equals("remove")){
+                // Remove friend
+                friends.sendunFriendRequest(currentUserId, idInt);
+            }else{
+                // Unknown parameter
+                request.getRequestDispatcher("pinboard").forward(request, response);
+            }
+            response.sendRedirect("FriendRequest");
+        }catch(NamingException e){
+            System.out.println(e.getMessage());
         }
-        
-        int idInt = Integer.parseInt(id);
-        
-        if(type.equals("request")){
-            // New friend request
-            friends.sendFriendRequest(currentUserId, idInt);
-        }else if(type.equals("accept")){
-            // Friend request accept
-            friends.acceptFriendRequest(idInt, currentUserId);
-        }else if(type.equals("deny")){
-            // Friend request deny
-            friends.removeFriendRequest(idInt, currentUserId);
-        }else if(type.equals("remove")){
-            // Remove friend
-            friends.sendunFriendRequest(currentUserId, idInt);
-        }else{
-            // Unknown parameter
-            request.getRequestDispatcher("pinboard").forward(request, response);
-        }
-        response.sendRedirect("FriendRequest");
     }
 
     /**

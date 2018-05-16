@@ -5,7 +5,6 @@
  */
 package services;
 
-import Business.AccountBean;
 import javax.ejb.Remote;
 
 /**

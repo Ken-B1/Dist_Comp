@@ -5,15 +5,18 @@
  */
 package Servlets;
 
-import Business.AccountBean;
 import Entities.Messages;
 import java.io.IOException;
 import java.util.Collection;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import remotesettings.setRemote;
+import services.AccountBeanInterface;
 
 /**
  *
@@ -21,7 +24,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "MessageOverviewServlet", urlPatterns = {"/MessageOverview"})
 public class MessageOverviewServlet extends HttpServlet {
-
+    /**
+    * The context to be used to perform lookups of remote beans
+    */
+    private static InitialContext ic;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -33,11 +39,16 @@ public class MessageOverviewServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
-        Collection<Messages> messages = currentUser.getMessages();
-        
-        request.setAttribute("messages",messages);
-        request.getRequestDispatcher("messageoverview.jsp").forward(request, response);
+        try{
+            ic = new InitialContext(setRemote.setProperties());
+            AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
+            Collection<Messages> messages = currentUser.getMessages();
+
+            request.setAttribute("messages",messages);
+            request.getRequestDispatcher("messageoverview.jsp").forward(request, response);
+        }catch(NamingException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

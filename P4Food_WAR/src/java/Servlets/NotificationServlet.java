@@ -5,17 +5,20 @@
  */
 package Servlets;
 
-import Business.AccountBean;
 import Entities.Notifications;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import remotesettings.setRemote;
+import services.AccountBeanInterface;
 
 /**
  *
@@ -23,7 +26,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "NotificationServlet", urlPatterns = {"/Notifications"})
 public class NotificationServlet extends HttpServlet {
-
+    /**
+    * The context to be used to perform lookups of remote beans
+    */
+    private static InitialContext ic;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -54,36 +60,41 @@ public class NotificationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
-        List<Notifications> notifications = new ArrayList(currentUser.getAccount().getNotificationsCollection1());
-        
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            for(Notifications u: notifications){
-                if(u.getIsread() == 1){
-                    continue;
+        try{
+            ic = new InitialContext(setRemote.setProperties());
+            response.setContentType("text/html;charset=UTF-8");
+            AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
+            List<Notifications> notifications = new ArrayList(currentUser.getAccount().getNotificationsCollection1());
+
+            try (PrintWriter out = response.getWriter()) {
+                /* TODO output your page here. You may use following sample code. */
+                for(Notifications u: notifications){
+                    if(u.getIsread() == 1){
+                        continue;
+                    }
+                    out.write("<a href=\"");
+                    out.write("NotificationRedirect?id=" + u.getIdnotifications());
+                    out.write("\" class=\"list-group-item list-group-item-action flex-column align-items-start\"><div class=\"d-flex w-100 justify-content-between\"><h5 class=\"mb-1\">");
+                    switch(u.getType()){
+                        case 1:
+                            out.write(u.getCreator().getUsername() + " created a new board.");
+                            break;
+                        case 2:
+                            // Redirect to new pin    
+                            out.write(u.getCreator().getUsername() + " created a new pin.");
+                            break;
+                        case 3:
+                            // Redirect to new follower
+                            out.write(u.getCreator().getUsername() + " started following you.");
+                            break;
+                        default:
+                    }                
+                    out.write("</h5></div></a>");
                 }
-                out.write("<a href=\"");
-                out.write("NotificationRedirect?id=" + u.getIdnotifications());
-                out.write("\" class=\"list-group-item list-group-item-action flex-column align-items-start\"><div class=\"d-flex w-100 justify-content-between\"><h5 class=\"mb-1\">");
-                switch(u.getType()){
-                    case 1:
-                        out.write(u.getCreator().getUsername() + " created a new board.");
-                        break;
-                    case 2:
-                        // Redirect to new pin    
-                        out.write(u.getCreator().getUsername() + " created a new pin.");
-                        break;
-                    case 3:
-                        // Redirect to new follower
-                        out.write(u.getCreator().getUsername() + " started following you.");
-                        break;
-                    default:
-                }                
-                out.write("</h5></div></a>");
-            }
-        }       
+            }       
+        }catch(NamingException e){
+            System.out.println(e.getMessage());
+        }    
     }
 
     /**

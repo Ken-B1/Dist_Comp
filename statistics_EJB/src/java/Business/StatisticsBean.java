@@ -16,24 +16,24 @@ import Entities.Useractions;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import services.StatisticsBeanInterface;
 
 /**
  *
  * @author ken
  */
 @Stateless
-@LocalBean
-public class StatisticsBean{
+public class StatisticsBean implements StatisticsBeanInterface{
 
     @PersistenceContext(unitName = "statistics_EJBPU")
     private EntityManager em;
 
+    @Override
     public void log(final Account username) {
         Statistics stats = new Statistics();
         stats.setUserid(username);
@@ -49,10 +49,12 @@ public class StatisticsBean{
          - follow: 3
     */
     
+    @Override
     public void createBoard(Account user, Board board){
-        em.refresh(board);
         try{
+            System.out.println("1");
             for(Account receiver: user.getAccountCollection2()){
+                System.out.println("2");
                 // Add a notification for each friend
                 Notifications newnot = new Notifications();
                 newnot.setCreator(user);
@@ -65,6 +67,7 @@ public class StatisticsBean{
             List<Peoplefollower> followers = new ArrayList(user.getPeoplefollowerCollection1());
 
             for(Peoplefollower receiver: followers){
+                System.out.println("3");
                 Account actualRec = receiver.getAccount();
                 Notifications newnot = new Notifications();
                 newnot.setCreator(user);
@@ -85,7 +88,9 @@ public class StatisticsBean{
         }
     }
     
+    @Override
     public void createPin(Account user, Pin pin){   
+
         for(Account receiver: user.getAccountCollection2()){
             // Add a notification for each friend
             Notifications newnot = new Notifications();
@@ -109,6 +114,7 @@ public class StatisticsBean{
         }
     }
     
+    @Override
     public void follow( Account follower, Account followed){
         Notifications newnot = new Notifications();
         newnot.setCreator(follower);
@@ -117,6 +123,7 @@ public class StatisticsBean{
         em.persist(newnot);         
     }
     
+    @Override
     public void boardCategory(Account user, Categories category){
         Useractions action = new Useractions();
         action.setCategory(category);
@@ -125,16 +132,19 @@ public class StatisticsBean{
         em.persist(action);
     }   
     
+    @Override
     public void markAsRead(int notificationId){
         Notifications not = em.find(Notifications.class, notificationId);
         not.setIsread((short)1);
         em.flush();
     }
     
+    @Override
     public Notifications getNotification(int notificationId){
         return em.find(Notifications.class, notificationId);
     }
     
+    @Override
     public List<Statistics> getStatistics(final int id) {
         Account returnvalue = (Account)em.createNamedQuery("Account.findById").setParameter("id", id).getSingleResult();
         return em.createNamedQuery("Statistics.findByUserid").setParameter("userid", returnvalue).getResultList();

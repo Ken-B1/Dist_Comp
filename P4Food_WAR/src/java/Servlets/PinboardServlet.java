@@ -5,7 +5,6 @@
  */
 package Servlets;
 
-import Business.AccountBean;
 import Business.boardCrudBean;
 import Business.databaseConnector;
 import Entities.Categories;
@@ -13,11 +12,15 @@ import Entities.Pin;
 import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import remotesettings.setRemote;
+import services.AccountBeanInterface;
 
 /**
  *
@@ -31,6 +34,10 @@ public class PinboardServlet extends HttpServlet {
     @EJB
     private databaseConnector connector;
     /**
+    * The context to be used to perform lookups of remote beans
+    */
+    private static InitialContext ic;
+    /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -41,16 +48,21 @@ public class PinboardServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AccountBean currentUser = (AccountBean)request.getSession().getAttribute("user");
-        List<Categories> allCategories = connector.getAllCategories();
-        List<Pin> currentUserPin = currentUser.getTailoredPins();
-        
-        request.setAttribute("pinlist", currentUserPin);       
-        
-        request.setAttribute("isAdmin", currentUser.getAccount().getAdmin());
-        request.setAttribute("hasCategories", currentUser.hasCategories());
-        request.setAttribute("Categories", allCategories);
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        try{
+            ic = new InitialContext(setRemote.setProperties());
+            AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
+            List<Categories> allCategories = connector.getAllCategories();
+            List<Pin> currentUserPin = currentUser.getTailoredPins();
+
+            request.setAttribute("pinlist", currentUserPin);       
+
+            request.setAttribute("isAdmin", currentUser.getAccount().getAdmin());
+            request.setAttribute("hasCategories", currentUser.hasCategories());
+            request.setAttribute("Categories", allCategories);
+            request.getRequestDispatcher("home.jsp").forward(request, response);
+        }catch(NamingException e){
+            System.out.println(e.getMessage());
+        }
         
         
     }

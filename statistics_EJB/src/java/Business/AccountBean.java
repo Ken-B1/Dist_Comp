@@ -18,30 +18,29 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
-import javax.ejb.EJB;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import services.AccountBeanInterface;
+import services.RegistrationBeanInterface;
+import services.StatisticsBeanInterface;
 
 /**
  *
  * @author Ken
  */
 @Stateful
-@LocalBean
-public class AccountBean{
+public class AccountBean implements AccountBeanInterface{
     @PersistenceContext(unitName = "statistics_EJBPU")
     private EntityManager em;
     
     // Stateless bean used for registration and validation
-    private Registration reg;
+    private RegistrationBeanInterface reg;
     
     // Stateless bean used to log actions
-    @EJB
-    private StatisticsBean stats;
+    private StatisticsBeanInterface stats;
     
     // Entity object representing current user in database
     private int currentUser;
@@ -50,13 +49,12 @@ public class AccountBean{
     * The context to be used to perform lookups of remote beans
     */
     private static InitialContext ic;
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+
     public AccountBean(){
         try{
             ic = new InitialContext();
-            reg = (Registration)ic.lookup("java:global/statistics_EJB/Registration");
-        
+            reg = (RegistrationBeanInterface)ic.lookup("java:global/statistics_EJB/Registration!services.RegistrationBeanInterface");
+            stats = (StatisticsBeanInterface)ic.lookup("java:global/statistics_EJB/StatisticsBean!services.StatisticsBeanInterface");
         }catch(NamingException e){
             System.out.println("Accountbean error:");
             System.out.println(e.getMessage());
@@ -69,6 +67,7 @@ public class AccountBean{
     }
     
     // Put all crud functionalities here?
+    @Override
     public Status updateAccount(Account account) {
         Status result = reg.validate(account.getEmail(), account.getUsername());
         if(result.getStatusCode() == 0){
@@ -85,14 +84,17 @@ public class AccountBean{
         return result;
     }
     
+    @Override
     public boolean hasCategories(){
         return !em.find(Account.class, currentUser).getCategoriesCollection().isEmpty();
     }
     
+    @Override
     public Collection<Categories> getUserCategories(){
         return em.find(Account.class, currentUser).getCategoriesCollection();
     }
     
+    @Override
     public void addUserCategory(Categories newCategory){
         Account user = em.find(Account.class, currentUser);
         Collection<Categories> categories = user.getCategoriesCollection();
@@ -102,6 +104,7 @@ public class AccountBean{
     }
     
     // Follow a board
+    @Override
     public void followBoard(Board toFollow){
         Account currentAccount = em.find(Account.class, currentUser);
         Collection<Board> boardcollection = currentAccount.getBoardCollection();
@@ -110,6 +113,7 @@ public class AccountBean{
     }
     
     // Unfollow a board
+    @Override
     public void unfollowBoard(Board toUnFollow){
         Account currentAccount = em.find(Account.class, currentUser);
         Collection<Board> boardcollection = currentAccount.getBoardCollection();
@@ -118,6 +122,7 @@ public class AccountBean{
     }
     
     // Follow a person
+    @Override
     public void followPerson(int toFollow){
         Peoplefollower newFollower = new Peoplefollower(currentUser, toFollow);
         newFollower.setAccount(em.find(Account.class, currentUser));
@@ -127,6 +132,7 @@ public class AccountBean{
     }    
     
     // Unfollow a person
+    @Override
     public void unfollowPerson(int toUnFollow){
         Peoplefollower toRemove = em.find(Peoplefollower.class, new PeoplefollowerPK(currentUser, toUnFollow));
         if(toRemove != null){
@@ -138,6 +144,7 @@ public class AccountBean{
     }    
     
     // Block a follower
+    @Override
     public void blockPerson(int toBlock){
         Peoplefollower blockedPerson = em.find(Peoplefollower.class, new PeoplefollowerPK(toBlock, currentUser));
         if(blockedPerson != null){
@@ -155,6 +162,7 @@ public class AccountBean{
     }
     
     // Unblock a follower
+    @Override
     public void unblockPerson(int tounBlock){
         Peoplefollower unblockedPerson = em.find(Peoplefollower.class, new PeoplefollowerPK(tounBlock, currentUser));
         if(unblockedPerson != null){
@@ -173,17 +181,20 @@ public class AccountBean{
     }
     
     // Get this user's messages
+    @Override
     public Collection<Messages> getMessages(){
         Account user = em.find(Account.class, currentUser);
         return user.getMessagesCollection();
     }
     
     // Get number of followers and following
+    @Override
     public int getNumFollowers(){
         Account user =  em.find(Account.class, currentUser);
         return user.getPeoplefollowerCollection().size();
     }
     
+    @Override
     public int getNumFollowing(){
         Account user =  em.find(Account.class, currentUser);
         return user.getPeoplefollowerCollection1().size();
@@ -191,15 +202,18 @@ public class AccountBean{
     // Getters and setters for account entity
     
     // Add an account and make it managed by entity manager
-    public void setAccount(Account acc){
-        currentUser = em.merge(acc).getId();
+    @Override
+    public void setAccount(int acc){
+        currentUser = acc;
         
     }
     
+    @Override
     public Account getAccount(){
         return em.find(Account.class, currentUser);
     }
     
+    @Override
     public Account getAccount(String username){
         Account account = null;
         try{
@@ -210,14 +224,17 @@ public class AccountBean{
         return account;
     }
     
+    @Override
     public Account getAccountForId(int id){
         return em.find(Account.class, id);
     }
     
+    @Override
     public List<Pin> getTailoredPins(){
         return getTailoredPins(20, 30);
     }
     
+    @Override
     public List<Pin> getTailoredPins(int numFromBoard, int numFromCategories){
         List<Pin> resultList = new ArrayList();
         Account acc = getAccount();
