@@ -42,7 +42,7 @@ public class Peoplefollower implements Serializable {
     @JoinColumn(name = "FollowedUser", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Account account;
-    @JoinColumn(name = "User", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "userId", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Account account1;
 

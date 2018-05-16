@@ -51,7 +51,7 @@ public class Useractions implements Serializable {
     @JoinColumn(name = "category", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Categories category;
-    @JoinColumn(name = "user", referencedColumnName = "id")
+    @JoinColumn(name = "userId", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Account user;
 
