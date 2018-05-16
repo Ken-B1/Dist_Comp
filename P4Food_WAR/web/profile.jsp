@@ -24,10 +24,10 @@
                 </div>
                 <!-- TO DO Following and Followers to updated -->
                 <c:if test="${!ownProfile}">
-                    <a href="FollowPerson?PersonId=${userId}">Follow</a>
-                    <a href="#">Friend</a>
-                    <a href="WriteMessage?id=${userId}">Send message</a>
-                    <a href="#">Block</a>
+                    <a href="FollowPerson?PersonId=${userId}" class="btn btn-info">Follow</a>
+                    <a href="#" class="btn btn-success">Friend</a>
+                    <a href="WriteMessage?id=${userId}" class="btn btn-primary">Message</a>
+                    <a href="#" class="btn btn-danger">Block</a>
                 </c:if>
                 <div class="row">
                     <div class="col"></div>

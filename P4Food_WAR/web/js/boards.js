@@ -19,6 +19,40 @@ function openTab(evt, tabName) {
     evt.currentTarget.className += " active";
 }
 
-function showBoards(){
-    document.getElementById("boards").style.display ="block";
+function showBoards() {
+    document.getElementById("boards").style.display = "block";
+}
+
+function validateForm() {
+    var email = document.forms["signUp"]["email"].value;
+    var uname = document.forms["signUp"]["username"].value;
+    var pwd = document.forms["signUp"]["password"].value;
+    var fname = document.forms["signUp"]["fname"].value;
+    var lname = document.forms["signUp"]["lname"].value;
+    var gender = document.forms["signUp"]["gender"].value;
+    //console.log("email id is got");
+    if(!email.toString().includes("@")){
+        document.getElementById("emailError").innerHTML = "Please provide proper email";
+        return false;
+    }
+    if(uname.length > 45){
+        document.getElementById("unameError").innerHTML = "Username should contain 45 charecters";
+        return false;
+    }
+    if(pwd.length > 45){
+        document.getElementById("pwdError").innerHTML = "Password should contain 45 charecters";
+        return false;
+    }
+    if(fname.length > 45){
+        document.getElementById("fnameError").innerHTML = "Firstname should contain 45 charecters";
+        return false;
+    }
+    if(lname.length > 45){
+        document.getElementById("lnameError").innerHTML = "Lastname should contain 45 charecters";
+        return false;
+    }
+     if(gender.toString().includes("Gender")){
+        document.getElementById("gError").innerHTML = "Select Gender";
+        return false;
+    }
 }
