@@ -22,11 +22,14 @@
         <link rel="icon" href="images\icons\logo.png">      
     </head>
     <body style="background-color: #eeeeee">
-        <form action="UnfollowBoard" method="post"id="js-upload-form">
-            <input type="text" name="BoardId" value="14" style="display:none"></input>
+        <form action="FriendRequest" method="post"id="js-upload-form">
+            <input type="text" name="id" value="2" style="display:none"></input>
+            <input type="text" name="type" value="request" style="display:none"></input>
             <div class="col">
                 <button type="submit" class="btn btn-sm btn-primary" id="js-upload-submit">Upload Pins</button>                                                                                                                                                               
             </div>                                           
-        </form>        
+        </form>      
+        
+        
     </body>
 </html>

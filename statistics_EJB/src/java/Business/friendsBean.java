@@ -7,19 +7,18 @@ package Business;
 
 import Entities.Account;
 import java.util.Collection;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import services.friendsBeanInterface;
 
 /**
  *
  * @author ken
  */
 @Stateless
-@LocalBean
-public class friendsBean{
+public class friendsBean implements friendsBeanInterface{
 
     @PersistenceContext(unitName = "statistics_EJBPU")
     private EntityManager em;
@@ -31,7 +30,9 @@ public class friendsBean{
      * @param requesterId
      * @param requestedId 
      */
+    @Override
     public void sendFriendRequest(int requesterId, int requestedId){
+        System.out.println("Called");
         Account requester = em.find(Account.class, requesterId);
         Account requested = em.find(Account.class, requestedId);
         if(requester == null || requested == null){
@@ -61,6 +62,7 @@ public class friendsBean{
      * @param requesterId
      * @param requestedId 
      */
+    @Override
     public void sendunFriendRequest(int requesterId, int requestedId){
         Account requester = em.find(Account.class, requesterId);
         Account requested = em.find(Account.class, requestedId);
@@ -90,6 +92,7 @@ public class friendsBean{
      * @param requesterId the id of the person that sent the original request
      * @param requestedId the id of the person that wants to accept the request
      */
+    @Override
     public void acceptFriendRequest(int requesterId, int requestedId){
         Account requester = em.find(Account.class, requesterId);
         Account requested = em.find(Account.class, requestedId);
@@ -123,6 +126,7 @@ public class friendsBean{
      * @param requesterId
      * @param requestedId 
      */
+    @Override
     public void removeFriendRequest(int requesterId, int requestedId){
         Account requester = em.find(Account.class, requesterId);
         Account requested = em.find(Account.class, requestedId);
@@ -147,11 +151,13 @@ public class friendsBean{
         em.flush();        
     }
     
+    @Override
     public Collection<Account> getFriends(int userId){
         Account currentUser = em.find(Account.class, userId);
         return currentUser.getAccountCollection2();
     }
     
+    @Override
     public Collection<Account> getFriendRequests(int userId){
         Account currentUser = em.find(Account.class, userId);
         return currentUser.getAccountCollection();

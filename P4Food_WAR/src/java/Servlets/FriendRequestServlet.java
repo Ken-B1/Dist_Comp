@@ -5,11 +5,9 @@
  */
 package Servlets;
 
-import Business.friendsBean;
 import Entities.Account;
 import java.io.IOException;
 import java.util.Collection;
-import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -19,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import remotesettings.setRemote;
 import services.AccountBeanInterface;
+import services.friendsBeanInterface;
 
 /**
  *
@@ -26,8 +25,7 @@ import services.AccountBeanInterface;
  */
 @WebServlet(name = "FriendRequestServlet", urlPatterns = {"/FriendRequest"})
 public class FriendRequestServlet extends HttpServlet {
-    @EJB
-    private friendsBean friends;
+    private friendsBeanInterface friends;
     /**
     * The context to be used to perform lookups of remote beans
     */
@@ -45,6 +43,7 @@ public class FriendRequestServlet extends HttpServlet {
             throws ServletException, IOException {
         try{
             ic = new InitialContext(setRemote.setProperties());
+            friends = (friendsBeanInterface)ic.lookup("java:global/statistics_EJB/friendsBean!services.friendsBeanInterface");
             AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
 
             Collection<Account> thisfriends = friends.getFriends(currentUser.getAccount().getId());
@@ -72,6 +71,7 @@ public class FriendRequestServlet extends HttpServlet {
             throws ServletException, IOException {
         try{
             ic = new InitialContext(setRemote.setProperties());
+            friends = (friendsBeanInterface)ic.lookup("java:global/statistics_EJB/friendsBean!services.friendsBeanInterface");
             AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
             int currentUserId = currentUser.getAccount().getId();
             String id = request.getParameter("id");

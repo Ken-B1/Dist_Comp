@@ -7,11 +7,13 @@ package services;
 
 import Entities.Account;
 import java.util.Collection;
+import javax.ejb.Remote;
 
 /**
  *
  * @author ken
  */
+@Remote
 public interface friendsBeanInterface {
     public void sendFriendRequest(int requesterId, int requestedId);
     
