@@ -37,6 +37,10 @@
     <ejb>
       <ejb-name>StatisticsBean</ejb-name>
       <jndi-name>java:global/statistics_EJB/StatisticsBean!services.StatisticsBeanInterface</jndi-name>
+    </ejb>       
+    <ejb>
+      <ejb-name>Admin</ejb-name>
+      <jndi-name>java:global/statistics_EJB/Admin!services.AdminInterface</jndi-name>
     </ejb>           
   </enterprise-beans>
 </glassfish-ejb-jar>

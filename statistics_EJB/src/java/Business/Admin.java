@@ -10,12 +10,13 @@ import Entities.Account;
 import Entities.Categories;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import services.AdminInterface;
+import services.RegistrationBeanInterface;
 
 /**
  *
@@ -24,19 +25,18 @@ import javax.persistence.PersistenceContext;
  * Gives an error, but this might be a netbeans problem. It should work when running
  */
 @Stateful
-@LocalBean
-public class Admin{
+public class Admin implements AdminInterface{
     @PersistenceContext(unitName = "statistics_EJBPU")
     private EntityManager em;
     
-    Registration regBean;
+    RegistrationBeanInterface regBean;
     
     public Admin(){
         InitialContext ic;
             try{
                 // Use jndi lookup to create a container managed instance of the accountbean
                 ic = new InitialContext();
-                regBean = (Registration)ic.lookup("java:global/statistics_EJB/Registration!services.RegistrationBeanInterface");
+                regBean = (RegistrationBeanInterface)ic.lookup("java:global/statistics_EJB/Registration!services.RegistrationBeanInterface");
             }catch(NamingException e){
                 System.out.println("Admin error:");
                 System.out.println(e.getMessage());
@@ -46,8 +46,8 @@ public class Admin{
     /*
     * Create a new account then set to admin
     */
+    @Override
     public Status createAdminAccount(String email,String userName,String password,String fname,String lname,String country,String gender){
-
         Status result = regBean.createAccount(email, userName, password, fname, lname, country, gender);
         
         if(result.getStatusCode() == 0){
@@ -56,18 +56,21 @@ public class Admin{
         return result;
     }
     
+    @Override
     public void makeAdmin(String username){
         Account toChange = (Account) em.createNamedQuery("Account.findByUsername").setParameter("username", username).getSingleResult();
         toChange.setAdmin(true);
         em.flush();
     }
     
+    @Override
     public void addCategory(String name){
         Categories newcategory = new Categories();
         newcategory.setName(name);
         em.persist(newcategory);
     }
     
+    @Override
     public List<String> getCategoryNames(){
         List<Categories> categorieslist = getCategories();
         List<String> returnlist = new ArrayList<String>();
@@ -77,23 +80,27 @@ public class Admin{
         return returnlist;
     }
     
+    @Override
     public List<Categories> getCategories(){
         return em.createNamedQuery("Categories.findAll").getResultList();
     }
     
     // Block, unblock or remove users
+    @Override
     public void blockUser(int userId){
         Account toBlock = em.find(Account.class, userId);
         toBlock.setIsBlocked((short)1);
         em.flush();
     }
     
+    @Override
     public void unblockUser(int userId){
         Account toUnBlock = em.find(Account.class, userId);
         toUnBlock.setIsBlocked((short)0);
         em.flush();
     }
     
+    @Override
     public void removeUser(int userId){
         Account toRemove = em.find(Account.class, userId);
         em.remove(toRemove);
