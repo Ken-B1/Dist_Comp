@@ -21,7 +21,7 @@ import services.databaseConnectorInterface;
  * Class that represents a restful api for category retrieval.
  * @author ken
  */
-@Path("Categories")
+@Path("/categories")
 public class Categories {
     /**
     * The context to be used to perform lookups of remote beans
@@ -42,7 +42,7 @@ public class Categories {
     }
     @GET
     @Produces("application/json")
-    public String getHtml() {
+    public String getAllCategories() {
         List<Entities.Categories> allCats = connector.getAllCategories();
         JsonObjectBuilder x = Json.createObjectBuilder();
         JsonArrayBuilder array = Json.createArrayBuilder();
@@ -50,7 +50,7 @@ public class Categories {
         for(Entities.Categories cat: allCats){
             array.add(Json.createObjectBuilder().add("id", cat.getId()).add("name", cat.getName()));
         }
-        x.add("Pins",array);
+        x.add("Categories",array);
         return x.build().toString();
     }
 }
