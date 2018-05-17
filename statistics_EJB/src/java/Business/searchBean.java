@@ -8,6 +8,7 @@ package Business;
 import Entities.Account;
 import Entities.Board;
 import Entities.Pin;
+import static java.lang.Integer.min;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -64,7 +65,7 @@ public class searchBean implements searchBeanInterface{
             resultList.addAll(currentList);
         }
         
-        return resultList.subList(0, limit);
+        return resultList.subList(0, min(resultList.size(), limit));
     }
 
     /**
@@ -115,8 +116,7 @@ public class searchBean implements searchBeanInterface{
             resultList.removeAll(currentList);            
             resultList.addAll(currentList);
         }
-        
-        return resultList.subList(0, limit);
+        return resultList.subList(0, min(resultList.size(), limit));
     }
     
     /**
@@ -155,7 +155,6 @@ public class searchBean implements searchBeanInterface{
             resultList.removeAll(currentList);            
             resultList.addAll(currentList);
         }
-        
-        return resultList.subList(0, limit);
+        return resultList.subList(0, min(resultList.size(), limit));
     }    
 }
