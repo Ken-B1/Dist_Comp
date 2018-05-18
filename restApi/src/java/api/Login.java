@@ -10,39 +10,56 @@ import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.ws.rs.GET;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import services.AccountBeanInterface;
+import services.LoginBeanInterface;
 /**
  *
  * @author ken
  */
-@Path("Login")
+@Path("login")
 public class Login {
     /**
     * The context to be used to perform lookups of remote beans
     */
     private static InitialContext ic;
 
-    private AccountBeanInterface account;
+    private LoginBeanInterface login;
     
     public Login(){
         try{
             ic = new InitialContext(setRemote.setProperties());
-            System.out.println("1");
-            account = (AccountBeanInterface)ic.lookup("java:global/statistics_EJB/AccountBean!services.AccountBeanInterface");
-            account.setAccount(1);
+            login = (LoginBeanInterface)ic.lookup("java:global/statistics_EJB/LoginBean!services.LoginBeanInterface");
         }catch(NamingException e){
             System.out.println("UserCategoriesAPI error:");
             System.out.println(e.getMessage());
         }
     }
-    @GET
+    
+    @POST
     @Produces("application/json")
-    public String getHtml() {
+    public String log(@FormParam("username") String username, @FormParam("password") String password) {
+        System.out.println(username);
+        System.out.println(password);
         JsonObjectBuilder x = Json.createObjectBuilder();
-        x.add("test", "a");
+        
+        if(username==null && password==null){
+            x.add("status", "400");
+            x.add("reason", "Incorrect request body");   
+            return x.build().toString();
+        }
+        
+        int result = login.login(username, password);
+        if(result != -1){
+            x.add("status", "200");
+            x.add("id", result);
+        }else{
+            x.add("status", "401");
+            x.add("reason", "Incorrect credentials");
+        }
+
         return x.build().toString();
     }
 }
