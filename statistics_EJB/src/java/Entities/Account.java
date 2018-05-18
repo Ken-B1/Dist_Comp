@@ -78,9 +78,9 @@ public class Account implements Serializable {
     @ManyToMany(mappedBy = "accountCollection2",fetch = FetchType.EAGER)
     private Collection<Account> accountCollection3; // Users of which this user is a friend
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver", fetch = FetchType.EAGER)
     private Collection<Messages> messagesCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sender")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sender", fetch = FetchType.EAGER)
     private Collection<Messages> messagesCollection1;
 
     @Basic(optional = false)
