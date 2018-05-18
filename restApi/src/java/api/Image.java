@@ -6,43 +6,63 @@
 package api;
 
 import configuration.setRemote;
-import javax.json.Json;
-import javax.json.JsonObjectBuilder;
+import java.io.IOException;
+import java.io.OutputStream;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
 import services.AccountBeanInterface;
+import services.ImageBeanInterface;
 /**
  *
  * @author ken
  */
-@Path("Image")
+@Path("image")
 public class Image {
     /**
     * The context to be used to perform lookups of remote beans
     */
     private static InitialContext ic;
 
-    private AccountBeanInterface account;
+    private ImageBeanInterface img;
+    
+    @Context
+    private HttpServletResponse response;
     
     public Image(){
         try{
             ic = new InitialContext(setRemote.setProperties());
-            System.out.println("1");
-            account = (AccountBeanInterface)ic.lookup("java:global/statistics_EJB/AccountBean!services.AccountBeanInterface");
-            account.setAccount(1);
+            img = (ImageBeanInterface)ic.lookup("java:global/statistics_EJB/ImageBean!services.ImageBeanInterface");
         }catch(NamingException e){
-            System.out.println("UserCategoriesAPI error:");
+            System.out.println("imageAPI error:");
             System.out.println(e.getMessage());
         }
     }
     @GET
-    @Produces("application/json")
-    public String getHtml() {
-        JsonObjectBuilder x = Json.createObjectBuilder();
-        x.add("test", "a");
-        return x.build().toString();
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response getHtml() {
+        String url = "0qkaVYr.jpg";
+        
+        StreamingOutput stream = new StreamingOutput() {
+            @Override
+            public void write(OutputStream output) throws IOException {
+              try {
+                  output.write(img.getImage(url));
+              } catch (Exception e) {
+                 e.printStackTrace();
+              }
+            }
+          };
+ 
+        return Response.ok(stream, "image/png") //TODO: set content-type of your file
+            .header("content-disposition", "attachment; filename = "+ url)
+            .build();
     }
 }
