@@ -13,6 +13,7 @@ import javax.naming.NamingException;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -46,10 +47,9 @@ public class Image {
         }
     }
     @GET
+    @Path("/{url}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response getHtml() {
-        String url = "0qkaVYr.jpg";
-        
+    public Response getHtml(@PathParam("url") String url) {  
         StreamingOutput stream = new StreamingOutput() {
             @Override
             public void write(OutputStream output) throws IOException {
@@ -61,7 +61,7 @@ public class Image {
             }
           };
  
-        return Response.ok(stream, "image/png") //TODO: set content-type of your file
+        return Response.ok(stream, "image/png")
             .header("content-disposition", "attachment; filename = "+ url)
             .build();
     }
