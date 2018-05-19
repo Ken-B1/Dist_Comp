@@ -111,7 +111,7 @@ public class PinSettingsServlet extends HttpServlet {
             String recipe = request.getParameter("recipe");   
             int pinId = Integer.parseInt(request.getParameter("pinId"));
             
-            pinCRUD.updatePin(pinId,recipeName,recipe,pinId);          
+            pinCRUD.updatePin(pinId,recipeName,recipe);          
 
 
             response.sendRedirect("fullRecipe?id=" + pinId);

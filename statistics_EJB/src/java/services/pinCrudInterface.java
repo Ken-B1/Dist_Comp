@@ -24,7 +24,7 @@ public interface pinCrudInterface {
     
     public List<Pin> getPinsForBoard(Board board);
     
-    public void updatePin(int id, String name, String recipe, int boardId);
+    public void updatePin(int id, String name, String recipe);
     
     public void deletePin(int pinId);
 }

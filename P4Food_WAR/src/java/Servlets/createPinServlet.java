@@ -95,18 +95,23 @@ public class createPinServlet extends HttpServlet {
             boardBean = (boardCrudBeanInterface) ic.lookup("java:global/statistics_EJB/boardCrudBean!services.boardCrudBeanInterface");
             
             String recipeName = request.getParameter("recipeTitle");
-            String recipe = request.getParameter("recipe");   
+            String recipe = request.getParameter("recipe");
             int boardId = Integer.parseInt(request.getParameter("id"));
-            final Part filePart = request.getPart("file");
-            final String fileName = getFileName(filePart);
-            InputStream inputStream = filePart.getInputStream();
-            byte [] mydata = new byte[1024*1024];
-            inputStream.read(mydata);
-            String url = imgbean.storeImage(fileName, mydata);
-
-            pinBean.createPin(recipeName, recipe, boardId, url);          
-
-
+            if(!recipeName.equals("") && !recipe.equals("")){     
+                final Part filePart = request.getPart("file");
+                String fileName = getFileName(filePart);
+                if(fileName.equals("")){
+                    // Set default image
+                    fileName = "default.jpg";
+                }
+                
+                InputStream inputStream = filePart.getInputStream();
+                byte [] mydata = new byte[1024*1024];
+                inputStream.read(mydata);
+                String url = imgbean.storeImage(fileName, mydata);
+                pinBean.createPin(recipeName, recipe, boardId, url);          
+            }
+            
             response.sendRedirect("createPin?id=" + boardId);
         }catch(NamingException e){
             System.out.println(e.getMessage());

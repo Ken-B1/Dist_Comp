@@ -5,6 +5,8 @@ Done:
 - Explore feature check. New topics still have to be added (If time permits)
 - Check if person is blocked 
 - General board stuff seems fine
+- pin creation 
 
 Todo:
 Private settings for board
+add default image

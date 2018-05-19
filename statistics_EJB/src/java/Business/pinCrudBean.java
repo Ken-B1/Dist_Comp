@@ -13,7 +13,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.validation.ConstraintViolation;
 import services.StatisticsBeanInterface;
 import services.pinCrudInterface;
 
@@ -39,10 +38,23 @@ public class pinCrudBean implements pinCrudInterface{
             System.out.println(e.getMessage());
         }            
     }
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    
+    /**
+     * Creates a pin. Pin won't be created if name == null or "" or if recipe == null or "". If url == null or "" the url will be default.jpg
+     * @param name
+     * @param recipe
+     * @param board
+     * @param url 
+     */
     @Override
     public void createPin(String name, String recipe, Board board, String url){
+        if("".equals(name) || name == null || "".equals(recipe) || recipe == null){
+            return;
+        }
+        
+        if("".equals(url) || url == null){
+            url = "default.jpg";
+        }
         Pin newpin = new Pin();
 
         newpin.setRecipeName(name);
@@ -56,35 +68,68 @@ public class pinCrudBean implements pinCrudInterface{
 
         stats.createPin(board.getOwner(), newpin);
     }
-    
+    /**
+     *
+     * Creates a pin. Pin won't be created if name == null or "" or if recipe == null or "". If url == null or "" the url will be default.jpg
+     * @param name
+     * @param recipe
+     * @param boardId
+     * @param url 
+     */
     @Override
     public void createPin(String name, String recipe, int boardId, String url){
         createPin(name, recipe, em.find(Board.class, boardId), url);
     }   
     
+    /**
+     * Returns a pin
+     * @param id
+     * @return 
+     */
     @Override
     public Pin getPin(int id){
         return em.find(Pin.class, id);
     }
     
+    /**
+     * Returns all pins in a board
+     * @param board
+     * @return 
+     */
     @Override
     public List<Pin> getPinsForBoard(Board board){
         List<Pin> resultlist = em.createNamedQuery("Pin.findByBoard").setParameter("board", board).getResultList();
         return resultlist;
     }
     
+    /**
+     * Updates a pin. Pin won't be updated if name == null or "" or if recipe == null or "". If url == null or "" the url will be default.jpg
+     * @param id
+     * @param name
+     * @param recipe
+     */
     @Override
-    public void updatePin(int id, String name, String recipe, int boardId){
+    public void updatePin(int id, String name, String recipe){
         Pin toUpdate = em.find(Pin.class, id);
+        if(toUpdate == null || "".equals(name) || name == null || "".equals(recipe) || recipe == null){
+            return;
+        }
+        
         toUpdate.setRecipe(recipe);
         toUpdate.setRecipeName(name);
-        //toUpdate.setBoard(em.find(Board.class, boardId));
         em.flush();
     }
     
+    /**
+     * Deletes the corresponding pin
+     * @param pinId 
+     */
     @Override
     public void deletePin(int pinId){
         Pin toDelete = em.find(Pin.class, pinId);
+        if(toDelete == null){
+            return;
+        }
         em.remove(toDelete);
         em.flush();
     }
