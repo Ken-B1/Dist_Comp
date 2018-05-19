@@ -6,7 +6,9 @@ Done:
 - Check if person is blocked 
 - General board stuff seems fine
 - pin creation 
+- pin Update
 
 Todo:
 Private settings for board
 add default image
+Add requested feature (If a user receives 5 recipes, he/she should keep seeing the same recipes for an entire week)

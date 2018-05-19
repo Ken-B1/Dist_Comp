@@ -109,7 +109,13 @@ public class PinSettingsServlet extends HttpServlet {
             
             String recipeName = request.getParameter("recipeTitle");
             String recipe = request.getParameter("recipe");   
-            int pinId = Integer.parseInt(request.getParameter("pinId"));
+            int pinId = Integer.parseInt(request.getParameter("pinId"));            
+            int boardId = pinCRUD.getPin(pinId).getBoard().getId();
+            if("".equals(recipeName) || "".equals(recipe)){
+                // Name and recipe cannot be empty
+                response.sendRedirect("createPin?id=" + boardId);
+                return;
+            }
             
             pinCRUD.updatePin(pinId,recipeName,recipe);          
 
