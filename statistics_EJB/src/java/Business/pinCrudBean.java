@@ -78,7 +78,7 @@ public class pinCrudBean implements pinCrudInterface{
         Pin toUpdate = em.find(Pin.class, id);
         toUpdate.setRecipe(recipe);
         toUpdate.setRecipeName(name);
-        toUpdate.setBoard(em.find(Board.class, boardId));
+        //toUpdate.setBoard(em.find(Board.class, boardId));
         em.flush();
     }
     
