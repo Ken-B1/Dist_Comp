@@ -111,10 +111,14 @@ public class userFilter implements Filter {
             res.sendRedirect("login");
         } else {
             // Continue request
-            request.setAttribute("Loggedin", true);
             AccountBeanInterface currentUser = (AccountBeanInterface)req.getSession().getAttribute("user");
-            request.setAttribute("isAdmin", currentUser.getAccount().getAdmin());
-            chain.doFilter(request, response); // Logged-in user found, so just continue request.
+            if(currentUser.getAccount().getIsBlocked() == 1){
+                res.sendRedirect("blocked.jsp");
+            }else{
+                request.setAttribute("Loggedin", true);
+                request.setAttribute("isAdmin", currentUser.getAccount().getAdmin());
+                chain.doFilter(request, response); // Logged-in user found, so just continue request.
+            }
         }
     }
 

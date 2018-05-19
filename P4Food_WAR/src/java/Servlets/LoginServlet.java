@@ -74,6 +74,10 @@ public class LoginServlet extends HttpServlet {
             System.out.println(accountId);
             
             if(accountId != -1) {
+                if(accountBean.getAccount().getIsBlocked() == 1){
+                    response.sendRedirect("blocked.jsp");
+                    return;
+                }
                 request.getSession().setAttribute("user", accountBean);
                 request.getSession().setAttribute("userid",username);
                 response.sendRedirect("pinboard");

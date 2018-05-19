@@ -15,7 +15,7 @@
             <div class="row justify-content-md-center" style="margin-top: 5%">
                 <div class="alert alert-success" role="alert">
                     <h4 class="alert-heading"><i class="fas fa-ban fa-1x"></i> You are blocked!</h4>
-                    <p>You have been blocked to visit this web-site as you are not following usage policiy.</p>
+                    <p>You have been blocked to visit this web-site as you are not following usage policy.</p>
                 </div>
             </div>
         </div>
