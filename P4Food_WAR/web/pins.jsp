@@ -66,6 +66,8 @@
                             <div class="card-header">
                                 <span class="d-inline-block text-truncate" style="max-width: 200px;">
                                     ${pin.getRecipeName()}
+                                    </span>
+                                    <span class="float-right"><a href="pinsSettings?pinId=${pin.getId()}" alt="Edit this board"><i class="fas fa-pencil-alt fa-lg"></a></i>
                                 </span>                                
                             </div>
                         </div>
