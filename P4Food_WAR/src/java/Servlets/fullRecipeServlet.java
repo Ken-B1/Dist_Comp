@@ -5,13 +5,23 @@
  */
 package Servlets;
 
+import Entities.Pin;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import remotesettings.setRemote;
+import services.AccountBeanInterface;
+import services.pinCrudInterface;
 
 /**
  *
@@ -19,7 +29,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "fullRecipeServlet", urlPatterns = {"/fullRecipe"})
 public class fullRecipeServlet extends HttpServlet {
-
+    private pinCrudInterface pinBean;
+    
+    private static InitialContext ic;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -30,8 +43,19 @@ public class fullRecipeServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, NamingException {
+        ic = new InitialContext(setRemote.setProperties());
+        
+        pinBean = (pinCrudInterface) ic.lookup("java:global/statistics_EJB/pinCrudBean!services.pinCrudInterface");
+        AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
+        int id = Integer.parseInt(request.getParameter("id"));
+        
+        Pin boardPin = pinBean.getPin(id);
+        
+        request.setAttribute("pin", boardPin);        
+        request.setAttribute("isAdmin", currentUser.getAccount().getAdmin());
         request.getRequestDispatcher("fullPin.jsp").forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -46,7 +70,11 @@ public class fullRecipeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (NamingException ex) {
+            Logger.getLogger(fullRecipeServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -60,7 +88,11 @@ public class fullRecipeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (NamingException ex) {
+            Logger.getLogger(fullRecipeServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -73,4 +105,13 @@ public class fullRecipeServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private String getFileName(final Part part) {
+    for (String content : part.getHeader("content-disposition").split(";")) {
+        if (content.trim().startsWith("filename")) {
+            return content.substring(
+                    content.indexOf('=') + 1).trim().replace("\"", "");
+        }
+    }
+    return null;
+    }
 }
