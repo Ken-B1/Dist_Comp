@@ -39,13 +39,14 @@ public class categoryBean implements categoryBeanInterface{
     
     /**
      * Returns the most followed categories 
-     * @param amount Amount of categories to be retrieved. Can return more if there are multiple categories with same amount of popularities
+     * @param amount Amount of categories to be retrieved.
      * @return 
      */
     @Override
-    public List<Categories> getTopCategories(int amount){      
+    public List<Categories> getTopCategories(int amount){   
+        System.out.println(amount);
         List<Integer> popularities = new ArrayList<>();
-        List<Categories> allcats = em.createNamedQuery("Categories.findAll").getResultList();
+        List<Categories> allcats = em.createNamedQuery("Categories.findAll").setMaxResults(amount).getResultList();
         List<Categories> resultList = new ArrayList<>();
         
         for(Categories x: allcats){
@@ -65,12 +66,13 @@ public class categoryBean implements categoryBeanInterface{
     }
     
     /**
-     * Returns the most followed categories during the last week
-     * @param amount Amount of categories to be retrieved. Can return more if there are multiple categories with same amount of popularities
+     * Returns the categories for which the most new boards have been created since last week
+     * @param amount Amount of categories to be retrieved.
      * @return 
      */
     @Override
     public List<Categories> getRisingCategories(int amount){      
+        System.out.println("Rising: " + amount);
         return em.createNamedQuery("Useractions.findCategoryFollows").setParameter("timestamp",  new Date(System.currentTimeMillis()-604800000)).setMaxResults(amount).getResultList();
     }
 }

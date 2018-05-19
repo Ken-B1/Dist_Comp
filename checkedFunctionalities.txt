@@ -1,3 +1,4 @@
 - Signup & login with new accounts
 - Create new admin
-- Create new category for admin & check if user is admin
+- Create new category for admin & check if user is admin in header
+- Explore feature check. New topics still have to be added (If time permits)
