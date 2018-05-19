@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import javax.naming.InitialContext;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -19,6 +20,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import services.AccountBeanInterface;
 
 /**
  *
@@ -110,6 +112,8 @@ public class userFilter implements Filter {
         } else {
             // Continue request
             request.setAttribute("Loggedin", true);
+            AccountBeanInterface currentUser = (AccountBeanInterface)req.getSession().getAttribute("user");
+            request.setAttribute("isAdmin", currentUser.getAccount().getAdmin());
             chain.doFilter(request, response); // Logged-in user found, so just continue request.
         }
     }

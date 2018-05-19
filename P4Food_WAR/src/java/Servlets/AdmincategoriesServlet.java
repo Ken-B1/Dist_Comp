@@ -72,8 +72,16 @@ public class AdmincategoriesServlet extends HttpServlet {
             
             admin = (AdminInterface) ic.lookup("java:global/statistics_EJB/Admin!services.AdminInterface"); 
             String name = request.getParameter("category");
-            admin.addCategory(name);
-            response.sendRedirect("Admincategories");
+            if(name == null || name.equals("")){
+                System.out.println("check");
+                List<String> categories = admin.getCategoryNames();
+                request.setAttribute("categorylist", categories);
+                request.setAttribute("error", "Please enter a category name");
+                request.getRequestDispatcher("admincategories.jsp").forward(request, response);
+            }else{
+                admin.addCategory(name);
+                response.sendRedirect("Admincategories");
+            }
         }catch(NamingException e){
             System.out.println(e.getMessage());
         }   

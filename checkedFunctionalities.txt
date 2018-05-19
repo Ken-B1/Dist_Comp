@@ -1,2 +1,3 @@
 - Signup & login with new accounts
 - Create new admin
+- Create new category for admin & check if user is admin

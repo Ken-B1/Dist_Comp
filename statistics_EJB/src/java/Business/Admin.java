@@ -72,11 +72,14 @@ public class Admin implements AdminInterface{
     
     /**
      * Creates a new category with name name.
-     * @param name 
+     * @param name If name is null or the empty string, category won't be added
      */
     @Override
     public void addCategory(String name){
         Categories newcategory = new Categories();
+        if(name == null){
+            return;
+        }
         newcategory.setName(name);
         em.persist(newcategory);
     }
