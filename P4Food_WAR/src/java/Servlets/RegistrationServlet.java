@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import remotesettings.setRemote;
 import services.RegistrationBeanInterface;
-import services.categoryBeanInterface;
 
 /**
  *

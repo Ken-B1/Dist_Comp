@@ -56,13 +56,24 @@ public class Admin implements AdminInterface{
         return result;
     }
     
+    /**
+     * Method to turn a existing user into an admin
+     * @param username 
+     */
     @Override
     public void makeAdmin(String username){
         Account toChange = (Account) em.createNamedQuery("Account.findByUsername").setParameter("username", username).getSingleResult();
+        if(toChange == null){
+            return;
+        }
         toChange.setAdmin(true);
         em.flush();
     }
     
+    /**
+     * Creates a new category with name name.
+     * @param name 
+     */
     @Override
     public void addCategory(String name){
         Categories newcategory = new Categories();
@@ -70,6 +81,10 @@ public class Admin implements AdminInterface{
         em.persist(newcategory);
     }
     
+    /**
+     * Returns all existing names of categories.
+     * @return 
+     */
     @Override
     public List<String> getCategoryNames(){
         List<Categories> categorieslist = getCategories();

@@ -51,6 +51,11 @@ public class User {
     public String getSettings(@PathParam("username") String username) {
         Account user = account.getAccount(username);
         JsonObjectBuilder x = Json.createObjectBuilder();
+        if(user == null){
+            x.add("status", "400");
+            x.add("reason", "User not found");
+            return x.build().toString();
+        }
         x.add("id", user.getId());
         x.add("username", user.getUsername());
         x.add("fname", user.getFname());

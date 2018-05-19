@@ -68,7 +68,9 @@ public class Registration implements RegistrationBeanInterface{
         if(usernameexists != 0){
             return new Status(2, "Username is already in use");
         }
-        long emailexists = (long)em.createNamedQuery("Account.existsEmail").setParameter("email", userName).getSingleResult();
+        System.out.println(email);
+        long emailexists = (long)em.createNamedQuery("Account.existsEmail").setParameter("email", email).getSingleResult();
+        System.out.println(emailexists);
         if(emailexists != 0){
             return new Status(1, "Email address is already in use");
         }

@@ -10,6 +10,7 @@ import Entities.Board;
 import Entities.Pin;
 import static java.lang.Integer.min;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -65,13 +66,14 @@ public class searchBean implements searchBeanInterface{
             resultList.addAll(currentList);
         }
         
+        Collections.shuffle(resultList);
         return resultList.subList(0, min(resultList.size(), limit));
     }
 
     /**
      * Method which returns a List of boards that contain parts of the searchFunction in it's boardName or Category.
      * The searchfunction is split up in words and for each word boards with names or belonging to categories containing that word will be returned.
-     * The first 20 results will be returned for each searchword
+     * The first 20 results will be returned for each searchword 
      * @param searchFunction
      * @return
      */
@@ -81,16 +83,17 @@ public class searchBean implements searchBeanInterface{
         List<Board> resultList = new ArrayList<>();
         for(String x: searchList){
             // Look for names containing word
-            List<Board> currentList = em.createNamedQuery("Board.findByExpression").setParameter("expression", "%" + x + "%").setMaxResults(20).getResultList();
+            List<Board> currentList = em.createNamedQuery("Board.findByExpression").setParameter("expression", "%" + x + "%").setMaxResults(10).getResultList();
             resultList.removeAll(currentList);            
             resultList.addAll(currentList);
             
             // Look for categories containing word
-            currentList = em.createNamedQuery("Board.findByExpressionCategory").setParameter("expression", "%" + x + "%").setMaxResults(20).getResultList();
+            currentList = em.createNamedQuery("Board.findByExpressionCategory").setParameter("expression", "%" + x + "%").setMaxResults(10).getResultList();
             resultList.removeAll(currentList);            
             resultList.addAll(currentList);
         }
         
+        Collections.shuffle(resultList);
         return resultList;
     }
     
@@ -116,6 +119,8 @@ public class searchBean implements searchBeanInterface{
             resultList.removeAll(currentList);            
             resultList.addAll(currentList);
         }
+        
+        Collections.shuffle(resultList);
         return resultList.subList(0, min(resultList.size(), limit));
     }
     
@@ -155,6 +160,8 @@ public class searchBean implements searchBeanInterface{
             resultList.removeAll(currentList);            
             resultList.addAll(currentList);
         }
+        
+        Collections.shuffle(resultList);
         return resultList.subList(0, min(resultList.size(), limit));
     }    
 }

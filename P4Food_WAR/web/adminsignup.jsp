@@ -24,6 +24,7 @@ and open the template in the editor.
                 <div class="panel-body" style="background-color: white; padding: 50px 20px 40px 20px; width: 60%; border-radius: 20px; border:solid; border-width: 1px; border-color: #bbbbbb">
                     <form action="Adminregistration" name="signUp" method="post">
                         <p class="font-weight-bold">Register an Administrator</p>
+                        <p style="color: red;">${Status.getReturnmessage()}</p>
                         <div class="row">
                             <div class="col-sm">
                                 <p>Admin Credentials</p>

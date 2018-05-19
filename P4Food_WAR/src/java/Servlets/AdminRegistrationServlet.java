@@ -73,7 +73,7 @@ public class AdminRegistrationServlet extends HttpServlet {
 
             if(result.getStatusCode() != 0){
                 request.setAttribute("Status", result);
-                request.getRequestDispatcher("Adminregistration").forward(request, response);
+                request.getRequestDispatcher("adminsignup.jsp").forward(request, response);
             }else{
                 response.sendRedirect("admin");
             }

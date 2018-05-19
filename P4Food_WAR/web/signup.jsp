@@ -24,6 +24,7 @@ and open the template in the editor.
                 <div class="panel-body" style="background-color: white; padding: 50px 20px 40px 20px; width: 50%; border-radius: 20px; border:solid; border-width: 1px; border-color: #bbbbbb">
                     <form action="Registration" name="signUp" onsubmit="return validateForm()" method="post">
                         <p class="font-weight-bold">Register to Pinterest 4 Food</p>
+                        <p style="color: red;">${Status.getReturnmessage()}</p>
                         <div class="row">
                             <div class="col-sm">
                                 <p>Credentials</p>
