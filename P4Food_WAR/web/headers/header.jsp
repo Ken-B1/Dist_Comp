@@ -49,7 +49,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="login">
-                <img src="images\icons\logo.png" width="30" height="25" class="d-inline-block align-top" alt="">
+                <img src="images\icons\Logo.png" width="30" height="25" class="d-inline-block align-top" alt="">
                 Eat What You Wish
             </a>   
             <div class="collapse navbar-collapse" id="navbarSupportedContent"> 

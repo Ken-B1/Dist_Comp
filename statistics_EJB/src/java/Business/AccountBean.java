@@ -16,6 +16,7 @@ import Entities.PeoplefollowerPK;
 import Entities.Pin;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import javax.ejb.Stateful;
@@ -253,16 +254,24 @@ public class AccountBean implements AccountBeanInterface{
     
     @Override
     public List<Pin> getTailoredPins(){
-        return getTailoredPins(20, 30);
+        return getTailoredPins(5, 5);
     }
     
+    /**
+     * Returns numFromBoard + numFromCategories pins based on the categories which the current user follows and the boards which this user follows.
+     * @param numFromBoard
+     * @param numFromCategories
+     * @return 
+     */
     @Override
     public List<Pin> getTailoredPins(int numFromBoard, int numFromCategories){
         List<Pin> resultList = new ArrayList();
         Account acc = getAccount();
         em.refresh(acc);
+        
         List<Boardfollowers> listofBoards = em.createNamedQuery("Boardfollowers.findByUserid").setParameter("userid", acc.getId()).getResultList();
         Collection<Categories> listofCategories = acc.getCategoriesCollection();
+        
         Random rand = new Random(System.currentTimeMillis());
         
         for(int x = 0; x < numFromBoard ; x++){
@@ -278,6 +287,7 @@ public class AccountBean implements AccountBeanInterface{
         }
         
         for(int x = 0; x < numFromCategories ; x++){
+            System.out.println("X:" + x);
             if(listofCategories.isEmpty()){
                 break;
             }
@@ -286,19 +296,21 @@ public class AccountBean implements AccountBeanInterface{
             Categories currentCategory = (Categories)listofCategories.toArray()[currentIndex];
             Object res = em.createNamedQuery("Board.maxIdForCategory").setParameter("category", currentCategory).getSingleResult();
             if(res == null){
-                return resultList;
+                continue;
             }
             int maxIdForCat = (int)res;
+            System.out.println(maxIdForCat);
             int boardId = rand.nextInt(maxIdForCat + 1);
             Board selectedBoard = (Board)em.createNamedQuery("Board.firstOccurencesAfterId").setParameter("id", boardId).setMaxResults(1).getSingleResult();
             Collection<Pin> allPins = selectedBoard.getPinCollection();
-            if(allPins.size() == 0){
+            if(allPins.isEmpty()){
                 continue;
             }
             int pinIndex = rand.nextInt(allPins.size());
             resultList.add((Pin)allPins.toArray()[pinIndex]);            
         }
         
+        Collections.shuffle(resultList);
         return resultList;
     }
     

@@ -24,3 +24,5 @@ Following and follower on profile
 Overview for friends and friend requests
 Allow admins to block and remove users
 Board and pin deletion?
+Password change
+Follow boards
