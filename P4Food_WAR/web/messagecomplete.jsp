@@ -26,10 +26,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form action="WriteMessage" method="GET">
-                            <textarea class="form-control" aria-label="With textarea" value="${message.getSender().getId()}" name="id" style="display:none;"></textarea>
-                            <input type="submit" class="btn btn-primary" value="Reply"></input>                   
-                        </form> 
+                        <a href="WriteMessage?id=${message.getSender().getId()}"><button class="btn btn-primary" value="Reply">Reply</button></a>                   
                     </div>
 
                 </div>

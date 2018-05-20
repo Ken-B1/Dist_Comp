@@ -49,10 +49,11 @@ public class WriteMessageServlet extends HttpServlet {
             AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
             String idString = request.getParameter("id");
             int receiverId;
-            if(idString == null){
+            
+            if(idString == null || "".equals(idString)){
                 // Something went wrong
                 request.getRequestDispatcher("pinboard").forward(request, response);
-                System.out.println("id = null");
+                System.out.println("id = null or id = empty");
             }else{
                 receiverId = Integer.parseInt(idString);
                 Account receiver = currentUser.getAccountForId(receiverId);
@@ -91,7 +92,16 @@ public class WriteMessageServlet extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("recid"));
             String subject = request.getParameter("subject");
             String message = request.getParameter("content");
-
+            if("".equals(subject) || subject == null){
+                // Subject has to be entered
+                request.setAttribute("error", "Please enter a subject");
+                Account receiver = currentUser.getAccountForId(id);
+                request.setAttribute("receiverName", receiver.getUsername());
+                request.setAttribute("receiverId", receiver.getId());
+                request.getRequestDispatcher("messagewrite.jsp").forward(request, response);
+                return;
+            }
+            
             messageHandler.createMessage(currentUser.getAccount().getId(), id, subject, message);
             
             request.getRequestDispatcher("MessageOverview").forward(request, response);

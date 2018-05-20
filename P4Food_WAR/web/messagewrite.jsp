@@ -15,6 +15,7 @@
                             <b>Receiver:</b> ${receiverName}
                         </div>
                         <div class="card-header">
+                            <p style="color: red">${error}</p>
                             <b>Subject: </b> <input class="form-control" type="text" name="subject">
                         </div>
                         <div class="card-body">

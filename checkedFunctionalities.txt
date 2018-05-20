@@ -7,6 +7,8 @@ Done:
 - General board stuff seems fine
 - pin C/R/U
 - Search function
+- Person follow/unfollow
+- Message CR
 
 Todo:
 Private settings for board
@@ -15,3 +17,4 @@ Add requested feature (If a user receives 5 recipes, he/she should keep seeing t
 Blocked functionalities for following users
 Update entity classes?
 New image and name for p4food
+Results of follow checken
