@@ -91,9 +91,9 @@ public class Account implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
     private Collection<Boardfollowers> boardfollowersCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
-    private Collection<Peoplefollower> peoplefollowerCollection;
+    private Collection<Peoplefollower> peoplefollowerCollection; // People following this account
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "account1")
-    private Collection<Peoplefollower> peoplefollowerCollection1;
+    private Collection<Peoplefollower> peoplefollowerCollection1; // Accounts followed by this person
 
     @Basic(optional = false)
     @NotNull

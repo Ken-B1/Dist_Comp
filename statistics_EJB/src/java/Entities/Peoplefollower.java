@@ -29,7 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Peoplefollower.findAll", query = "SELECT p FROM Peoplefollower p")
     , @NamedQuery(name = "Peoplefollower.findByUser", query = "SELECT p FROM Peoplefollower p WHERE p.peoplefollowerPK.user = :user")
     , @NamedQuery(name = "Peoplefollower.findByFollowedUser", query = "SELECT p FROM Peoplefollower p WHERE p.peoplefollowerPK.followedUser = :followedUser")
-    , @NamedQuery(name = "Peoplefollower.findByIsBlocked", query = "SELECT p FROM Peoplefollower p WHERE p.isBlocked = :isBlocked")})
+    , @NamedQuery(name = "Peoplefollower.findByIsBlocked", query = "SELECT p FROM Peoplefollower p WHERE p.isBlocked = :isBlocked")
+    , @NamedQuery(name = "Peoplefollower.checkIfExists", query = "SELECT count(p) FROM Peoplefollower p WHERE (p.peoplefollowerPK.user = :follower and p.peoplefollowerPK.followedUser = :followed)")})
 public class Peoplefollower implements Serializable {
 
     private static final long serialVersionUID = 1L;

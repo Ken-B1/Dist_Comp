@@ -63,9 +63,10 @@ public class profileServlet extends HttpServlet {
                 userBoards = boardBean.getBoardsForUser(currentUser.getAccount());
             }else{
                 // The requested profile is another user's profile
-                request.setAttribute("ownProfile", false);
                 Account acc = currentUser.getAccount(requestedUser);
                 userBoards = boardBean.getBoardsForUser(acc);
+                request.setAttribute("isFollowed", currentUser.followsUser(acc));
+                request.setAttribute("ownProfile", false);
                 request.setAttribute("userId", acc.getId());
             }
 

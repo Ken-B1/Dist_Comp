@@ -38,6 +38,20 @@ public class UnfollowPersonServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try{
+            ic = new InitialContext(setRemote.setProperties());
+            String id = request.getParameter("PersonId");
+            AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
+            int personId;
+            if(id != null){
+                // If id == null, something went wrong
+                personId = Integer.parseInt(id);
+                currentUser.unfollowPerson(personId);
+                response.sendRedirect(request.getHeader("Referer"));
+            }
+        }catch(NamingException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     /**

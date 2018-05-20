@@ -5,10 +5,13 @@ Done:
 - Explore feature check. New topics still have to be added (If time permits)
 - Check if person is blocked 
 - General board stuff seems fine
-- pin creation 
-- pin Update
+- pin C/R/U
+- Search function
 
 Todo:
 Private settings for board
-add default image
+add default image + improve naming to prevent duplicates
 Add requested feature (If a user receives 5 recipes, he/she should keep seeing the same recipes for an entire week)
+Blocked functionalities for following users
+Update entity classes?
+New image and name for p4food

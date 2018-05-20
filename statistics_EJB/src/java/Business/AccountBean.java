@@ -122,25 +122,46 @@ public class AccountBean implements AccountBeanInterface{
         quer.executeUpdate();
     }
     
-    // Follow a person
+    /**
+     * Follow a person. If the currentUser or the toFollow user dont exist, this method does nothing.
+     * @param toFollow the id of the person to be followed
+     */
     @Override
     public void followPerson(int toFollow){
         Peoplefollower newFollower = new Peoplefollower(currentUser, toFollow);
-        newFollower.setAccount(em.find(Account.class, currentUser));
-        newFollower.setAccount1(em.find(Account.class, toFollow));
+        Account currentUsr = em.find(Account.class, currentUser);
+        Account followedUsr = em.find(Account.class, toFollow);
+
+        if(currentUsr == null || followedUsr == null){
+            return;
+        }
+   
+        if(followsUser(followedUsr)){
+            // User is already following toFollow
+            return;
+        }
+       
+        newFollower.setAccount(currentUsr);
+        newFollower.setAccount1(followedUsr);
+        System.out.println(currentUsr.getId());
+        System.out.println(followedUsr.getId());
+        System.out.println("______________");
         em.persist(newFollower);
+        
         stats.follow(em.find(Account.class, currentUser), em.find(Account.class, toFollow));
     }    
     
-    // Unfollow a person
+    /**
+     * Unfollow a person. If the person to unfollow doesnt exist, this method does nothing. 
+     * @param toUnFollow 
+     */
     @Override
     public void unfollowPerson(int toUnFollow){
         Peoplefollower toRemove = em.find(Peoplefollower.class, new PeoplefollowerPK(currentUser, toUnFollow));
         if(toRemove != null){
             em.remove(toRemove);
         }else{
-            // Something went wrong
-            throw new NullPointerException("Tried to unfollow a person that could not be found");
+            return;
         }
     }    
     
@@ -281,4 +302,15 @@ public class AccountBean implements AccountBeanInterface{
         return resultList;
     }
     
+    /**
+     * Check if current user follows an account.
+     * @param acc
+     * @return 
+     */
+    @Override
+    public boolean followsUser(Account acc){
+        Account currentAcc = em.find(Account.class, currentUser);
+        em.refresh(currentAcc);
+        return (long)em.createNamedQuery("Peoplefollower.checkIfExists").setParameter("follower", currentAcc.getId()).setParameter("followed", acc.getId()).getSingleResult() > 0;
+    }
 }

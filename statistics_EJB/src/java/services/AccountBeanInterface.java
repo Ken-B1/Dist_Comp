@@ -58,4 +58,6 @@ public interface AccountBeanInterface {
     public List<Pin> getTailoredPins();
     
     public List<Pin> getTailoredPins(int numFromBoard, int numFromCategories);
+    
+    public boolean followsUser(Account acc);
 }

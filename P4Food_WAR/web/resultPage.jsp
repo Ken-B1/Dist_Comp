@@ -25,7 +25,7 @@ and open the template in the editor.
                             Pins
                         </a>
                         <c:forEach items="${resultingPins}" var="currentPin">
-                            <a href="#" class="list-group-item list-group-item-action">${currentPin.getRecipeName()}</a>
+                            <a href="fullRecipe?id=${currentPin.getId()}" class="list-group-item list-group-item-action">${currentPin.getRecipeName()}</a>
                         </c:forEach>
                     </div>
                 </div>
@@ -36,7 +36,7 @@ and open the template in the editor.
                             Boards
                         </a>
                         <c:forEach items="${resultingBoards}" var="currentBoard">
-                            <a href="#" class="list-group-item list-group-item-action">${currentBoard.getBoardname()}</a>
+                            <a href="createPin?id=${currentBoard.getId()}" class="list-group-item list-group-item-action">${currentBoard.getBoardname()}</a>
                         </c:forEach>
                     </div>
                 </div>
@@ -46,7 +46,7 @@ and open the template in the editor.
                             Users
                         </a>
                          <c:forEach items="${resultingUsers}" var="currentUser">
-                            <a href="#" class="list-group-item list-group-item-action">${currentUser.getUsername()}</a>
+                            <a href="profile?username=${currentUser.getUsername()}" class="list-group-item list-group-item-action">${currentUser.getUsername()}</a>
                         </c:forEach>
                     </div>
                 </div>

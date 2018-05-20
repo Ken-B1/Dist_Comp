@@ -24,7 +24,12 @@
                 </div>
                 <!-- TO DO Following and Followers to updated -->
                 <c:if test="${!ownProfile}">
-                    <a href="FollowPerson?PersonId=${userId}" class="btn btn-info">Follow</a>
+                    <c:if test="${!isFollowed}">
+                        <a href="FollowPerson?PersonId=${userId}" class="btn btn-info">Follow</a>
+                    </c:if>
+                    <c:if test="${isFollowed}">
+                        <a href="UnfollowPerson?PersonId=${userId}" class="btn btn-danger">Unfollow</a>
+                    </c:if>    
                     <a href="#" class="btn btn-success">Friend</a>
                     <a href="WriteMessage?id=${userId}" class="btn btn-primary">Message</a>
                     <a href="#" class="btn btn-danger">Block</a>

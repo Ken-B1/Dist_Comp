@@ -114,8 +114,14 @@ public class StatisticsBean implements StatisticsBeanInterface{
         }
     }
     
+    /**
+     * Records the action of following someone in the database. Used for notifications
+     * @param follower
+     * @param followed 
+     */
     @Override
     public void follow( Account follower, Account followed){
+        System.out.println("called");
         Notifications newnot = new Notifications();
         newnot.setCreator(follower);
         newnot.setReceiver(followed);
