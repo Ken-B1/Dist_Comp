@@ -27,12 +27,11 @@ public class friendsBean implements friendsBeanInterface{
      * Method that sends a friendRequest to a user.
      * Friend request won't be sent if already friends or if requester is blocked
      * 
-     * @param requesterId
-     * @param requestedId 
+     * @param requesterId Id of person requesting the friendship
+     * @param requestedId Id of person being requested
      */
     @Override
     public void sendFriendRequest(int requesterId, int requestedId){
-        System.out.println("Called");
         Account requester = em.find(Account.class, requesterId);
         Account requested = em.find(Account.class, requestedId);
         if(requester == null || requested == null){
@@ -50,8 +49,8 @@ public class friendsBean implements friendsBeanInterface{
         }
         
         Query query = em.createNativeQuery("INSERT INTO friendrequests VALUES(?1, ?2)");
-        query.setParameter(1,requesterId);
-        query.setParameter(2,requestedId);
+        query.setParameter(2,requesterId);
+        query.setParameter(1,requestedId);
         query.executeUpdate();
         em.flush();
     }

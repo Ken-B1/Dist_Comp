@@ -9,6 +9,8 @@ Done:
 - Search function
 - Person follow/unfollow
 - Message CR
+- People friends/unfriends/accept/deny
+- User statistics
 
 Todo:
 Private settings for board
@@ -18,3 +20,7 @@ Blocked functionalities for following users
 Update entity classes?
 New image and name for p4food
 Results of follow checken
+Following and follower on profile
+Overview for friends and friend requests
+Allow admins to block and remove users
+Board and pin deletion?

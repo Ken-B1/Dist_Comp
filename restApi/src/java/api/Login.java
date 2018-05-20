@@ -41,8 +41,6 @@ public class Login {
     @POST
     @Produces("application/json")
     public String log(@FormParam("username") String username, @FormParam("password") String password) {
-        System.out.println(username);
-        System.out.println(password);
         JsonObjectBuilder x = Json.createObjectBuilder();
         
         if(username==null && password==null){

@@ -313,4 +313,16 @@ public class AccountBean implements AccountBeanInterface{
         em.refresh(currentAcc);
         return (long)em.createNamedQuery("Peoplefollower.checkIfExists").setParameter("follower", currentAcc.getId()).setParameter("followed", acc.getId()).getSingleResult() > 0;
     }
+    
+    /**
+     * Check if user is friends with other user
+     * @param acc
+     * @return 
+     */
+    @Override
+    public boolean isFriends(Account acc){
+        Account currentAcc = em.find(Account.class, currentUser);
+        em.refresh(currentAcc);
+        return currentAcc.getAccountCollection2().contains(acc);
+    }
 }

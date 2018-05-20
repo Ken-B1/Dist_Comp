@@ -66,6 +66,7 @@ public class profileServlet extends HttpServlet {
                 Account acc = currentUser.getAccount(requestedUser);
                 userBoards = boardBean.getBoardsForUser(acc);
                 request.setAttribute("isFollowed", currentUser.followsUser(acc));
+                request.setAttribute("isFriend", currentUser.isFriends(acc));
                 request.setAttribute("ownProfile", false);
                 request.setAttribute("userId", acc.getId());
             }
@@ -74,10 +75,9 @@ public class profileServlet extends HttpServlet {
             Collection<Categories> userCategories = currentUser.getUserCategories();
             request.setAttribute("boardList", userBoards);
             request.setAttribute("userCategories", userCategories);
-            //request.setAttribute("followerNum", currentUser.getNumFollowers());
-            request.setAttribute("followerNum", 0);
-            //request.setAttribute("followingNum", currentUser.getNumFollowing());
-            request.setAttribute("followingNum", 0);
+            request.setAttribute("followerNum", currentUser.getNumFollowers());
+            request.setAttribute("followingNum", currentUser.getNumFollowing());
+
 
 
             List<Categories> allCategories = connector.getAllCategories();

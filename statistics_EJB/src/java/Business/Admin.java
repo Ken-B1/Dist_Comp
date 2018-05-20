@@ -43,9 +43,17 @@ public class Admin implements AdminInterface{
             }
     }
     
-    /*
-    * Create a new account then set to admin
-    */
+    /**
+     * Create a new account and make this account an admin
+     * @param email
+     * @param userName
+     * @param password
+     * @param fname
+     * @param lname
+     * @param country
+     * @param gender
+     * @return 
+     */
     @Override
     public Status createAdminAccount(String email,String userName,String password,String fname,String lname,String country,String gender){
         Status result = regBean.createAccount(email, userName, password, fname, lname, country, gender);

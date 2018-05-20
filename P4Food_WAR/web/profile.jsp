@@ -30,7 +30,17 @@
                     <c:if test="${isFollowed}">
                         <a href="UnfollowPerson?PersonId=${userId}" class="btn btn-danger">Unfollow</a>
                     </c:if>    
-                    <a href="#" class="btn btn-success">Friend</a>
+                    <form action="FriendRequest" method="POST" style="display: inline">
+                        <input type="text" name="id" value="${userId}" style="display:none;"></input>
+                        <c:if test="${!isFriend}">
+                            <input type="text" name="type" value="request" style="display:none;"></input>
+                            <input type="submit" class="btn btn-success" value="Friend"></button>
+                        </c:if>
+                        <c:if test="${isFriend}">
+                            <input type="text" name="type" value="remove" style="display:none;"></input>
+                            <input type="submit" class="btn btn-danger" value="Unfriend"></button>
+                        </c:if>                            
+                    </form>
                     <a href="WriteMessage?id=${userId}" class="btn btn-primary">Message</a>
                     <a href="#" class="btn btn-danger">Block</a>
                 </c:if>

@@ -60,4 +60,6 @@ public interface AccountBeanInterface {
     public List<Pin> getTailoredPins(int numFromBoard, int numFromCategories);
     
     public boolean followsUser(Account acc);
+    
+    public boolean isFriends(Account acc);
 }
