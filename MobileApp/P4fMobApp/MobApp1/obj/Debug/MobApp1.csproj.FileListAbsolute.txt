@@ -1,3 +1,0 @@
-C:\Users\PC\source\repos\P4fMobApp\MobApp1\obj\Debug\MobApp1.csproj.App.config
-C:\Users\PC\source\repos\P4fMobApp\MobApp1\obj\Debug\MobApp1.csprojResolveAssemblyReference.cache
-C:\Users\PC\source\repos\P4fMobApp\MobApp1\obj\Debug\MobApp1.csproj.CoreCompileInputs.cache
