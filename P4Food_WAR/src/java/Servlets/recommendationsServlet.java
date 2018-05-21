@@ -55,8 +55,8 @@ public class recommendationsServlet extends HttpServlet {
             
             AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
             List<Categories> allCategories = connector.getAllCategories();
-            List<Pin> currentUserPin = currentUser.getTailoredPins();
-
+            List<Pin> currentUserPin = currentUser.getRecommendations();
+            currentUser.getRecommendations();
             request.setAttribute("pinlist", currentUserPin); 
             request.getRequestDispatcher("recommendations.jsp").forward(request, response);
         }catch(NamingException e){

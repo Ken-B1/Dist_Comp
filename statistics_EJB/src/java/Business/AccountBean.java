@@ -14,11 +14,16 @@ import Entities.Messages;
 import Entities.Peoplefollower;
 import Entities.PeoplefollowerPK;
 import Entities.Pin;
+import Entities.Suggestions;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import javax.ejb.Stateful;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -394,16 +399,67 @@ public class AccountBean implements AccountBeanInterface{
     @Override
     public List<Pin> getRecommendations(){      
         Account user = em.find(Account.class, currentUser);
+        List<Pin> ret = new ArrayList<>();
+        Suggestions sug;
         if(user == null){
             return null;
         }
-        Object res = em.createNamedQuery("Suggestions.findByUserid").setParameter("userid", currentUser).getSingleResult();
+        List<Suggestions> res = em.createNamedQuery("Suggestions.findByUserid").setParameter("userid", currentUser).getResultList();
         
-        if(res == null){
-            
+        if(res.isEmpty()){
+            List<Pin> listOfPins = getTailoredPins(50, 50);
+            Set<Pin> UniqueSet = new HashSet<Pin>(listOfPins);
+            List<Pin> uniquePins = new ArrayList<Pin>(UniqueSet);
+            Collections.shuffle(uniquePins);
+            uniquePins = uniquePins.subList(0,5);
+            if(uniquePins.isEmpty()){
+                return new ArrayList<Pin>();
+            }
+            while(uniquePins.size() < 5){
+                // Repeat first pin because not enough content
+                uniquePins.add(uniquePins.get(0));
+            }
+            Query quer = em.createNativeQuery("INSERT INTO suggestions(userid, meal1, meal2, meal3, meal4, meal5, timestamp) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)");
+            quer.setParameter(1, currentUser);
+            quer.setParameter(2, uniquePins.get(0).getId());
+            quer.setParameter(3, uniquePins.get(1).getId());
+            quer.setParameter(4, uniquePins.get(2).getId());
+            quer.setParameter(5, uniquePins.get(3).getId());
+            quer.setParameter(6, uniquePins.get(4).getId());
+            quer.setParameter(7, new Date(System.currentTimeMillis()));
+            quer.executeUpdate();
+            sug = em.find(Suggestions.class, currentUser);
         }else{
-            
+            sug = em.find(Suggestions.class, currentUser);
+            Date today = new Date(System.currentTimeMillis());
+            long diff = today.getTime() - sug.getTimestamp().getTime();
+            if(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) > 5){
+                List<Pin> listOfPins = getTailoredPins(50, 50);
+                Set<Pin> UniqueSet = new HashSet<Pin>(listOfPins);
+                List<Pin> uniquePins = new ArrayList<Pin>(UniqueSet);
+                Collections.shuffle(uniquePins);
+                uniquePins = uniquePins.subList(0,5);
+                if(uniquePins.isEmpty()){
+                    return new ArrayList<Pin>();
+                }
+                while(uniquePins.size() < 5){
+                    // Repeat first pin because not enough content
+                    uniquePins.add(uniquePins.get(0));
+                }
+                sug.setMeal1(uniquePins.get(0));
+                sug.setMeal2(uniquePins.get(1));
+                sug.setMeal3(uniquePins.get(2));
+                sug.setMeal4(uniquePins.get(3));
+                sug.setMeal5(uniquePins.get(4));
+                sug.setTimestamp(new Date(System.currentTimeMillis()));
+                em.flush();
+            }
         }
-        return null;
+        ret.add(sug.getMeal1());
+        ret.add(sug.getMeal2());
+        ret.add(sug.getMeal3());
+        ret.add(sug.getMeal4());
+        ret.add(sug.getMeal5());
+        return ret;
     }
 }
