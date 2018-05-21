@@ -106,7 +106,7 @@ public class friendsBean implements friendsBeanInterface{
         em.refresh(requested);
 
         if(!requester.getAccountCollection1().contains(requested)){
-            // Friend request no longer exists
+            // Friend request no longer exists 
             return;
         }
 
@@ -115,6 +115,7 @@ public class friendsBean implements friendsBeanInterface{
         Query query = em.createNativeQuery("INSERT INTO friends VALUES(?1, ?2), (?2, ?1)");
         query.setParameter(1,requesterId);
         query.setParameter(2,requestedId);
+
         query.executeUpdate();
         em.flush();           
     }
@@ -150,15 +151,33 @@ public class friendsBean implements friendsBeanInterface{
         em.flush();        
     }
     
+    /**
+     * Returns friends of a user. If the user is not found, null is returned.
+     * @param userId
+     * @return 
+     */
     @Override
     public Collection<Account> getFriends(int userId){
         Account currentUser = em.find(Account.class, userId);
+        if(currentUser == null){
+            return null;
+        }
+        em.refresh(currentUser);
         return currentUser.getAccountCollection2();
     }
     
+    /**
+     * Returns friendrequests for a user. If the user is not found, null is returned.
+     * @param userId The id of the user 
+     * @return 
+     */
     @Override
     public Collection<Account> getFriendRequests(int userId){
         Account currentUser = em.find(Account.class, userId);
+        if(currentUser == null){
+            return null;
+        }
+        em.refresh(currentUser);
         return currentUser.getAccountCollection();
     }
 }

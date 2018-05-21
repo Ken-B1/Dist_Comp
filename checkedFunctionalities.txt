@@ -18,8 +18,6 @@ add default image + improve naming to prevent duplicates
 Add requested feature (If a user receives 5 recipes, he/she should keep seeing the same recipes for an entire week)
 Blocked functionalities for following users
 Update entity classes?
-New image and name for p4food
-Results of follow checken
 Following and follower on profile
 Overview for friends and friend requests
 Allow admins to block and remove users

@@ -23,7 +23,6 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="http://code.jquery.com/jquery.js"></script>
         
-        
         <% String userprf = (String) session.getAttribute("userid");
             if (userprf == null) {
                 System.out.println("This is not a user");
@@ -49,7 +48,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="login">
-                <img src="images\icons\Logo.png" width="30" height="25" class="d-inline-block align-top" alt="">
+                <img src="images\icons\logo.png" width="30" height="25" class="d-inline-block align-top" alt="">
                 Eat What You Wish
             </a>   
             <div class="collapse navbar-collapse" id="navbarSupportedContent"> 
