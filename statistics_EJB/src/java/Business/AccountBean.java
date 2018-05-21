@@ -71,12 +71,21 @@ public class AccountBean implements AccountBeanInterface{
     // Put all crud functionalities here?
     @Override
     public Status updateAccount(Account account) {
-        Status result = reg.validate(account.getEmail(), account.getUsername());
+        Account user = em.find(Account.class, currentUser);
+        Status result = new Status(0, "");
+        if(!account.getEmail().equals(user.getEmail())){
+            result = reg.validate(account.getEmail(), "");   
+        }
+        
+        if(result.getStatusCode() == 0 && !account.getUsername().equals(user.getUsername())){
+            result=reg.validate("", account.getUsername());
+        }
+        
         if(result.getStatusCode() == 0){
-            Account user = em.find(Account.class, currentUser);
             user.setEmail(account.getEmail());
             user.setFname(account.getFname());
             user.setLname(account.getLname());
+            user.setPassword(account.getPassword());
             user.setCountry(account.getCountry());
             user.setGender(account.getGender());
             user.setUsername(account.getUsername());

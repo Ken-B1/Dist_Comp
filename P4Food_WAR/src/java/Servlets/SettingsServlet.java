@@ -67,6 +67,7 @@ public class SettingsServlet extends HttpServlet {
         
             account.setEmail(request.getParameter("email"));
             account.setUsername(request.getParameter("username"));
+            account.setPassword(request.getParameter("password"));
             account.setFname(request.getParameter("fname"));
             account.setLname(request.getParameter("lname"));
             account.setCountry(request.getParameter("country"));
@@ -79,7 +80,7 @@ public class SettingsServlet extends HttpServlet {
                 response.sendRedirect("settings");
             }else{
                 request.setAttribute("result", result);
-                request.setAttribute("accountinfo", currentUser);
+                request.setAttribute("accountinfo", currentUser.getAccount());           
                 request.getRequestDispatcher("settings.jsp").forward(request, response);
             }
         }catch(NamingException e){
