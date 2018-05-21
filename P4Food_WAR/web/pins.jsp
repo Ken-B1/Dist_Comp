@@ -12,8 +12,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <h1 class="display-4">Pin4FooD</h1>
-                        <p class="lead">Add Your board and Share your pins</p>
+                        <h1 class="display-4">${boardName}</h1>
                     </div>
                     <div class="col-6 col-md-4">
                         <!-- TO DO Add User Image here -->
@@ -30,10 +29,25 @@
                     <div class="col"></div>
                     <div class="col-6 col-md-4"><a href="#"><span class="badge badge-primary">${followerNum}</span></a> Followers</div>
                 </div>
+                <c:if test="${!isOwner}">
                 <div class="row">
                     <div class="col"></div>
-                    <div class="col-6 col-md-4"><a href="#"><span class="badge badge-primary">FollowBoard</span></a></div>
+                    <div class="col-6 col-md-4">
+                        <c:if test="${!isFollowing}">
+                            <form action="FollowBoard" method="POST">
+                                <input type="text" value="${boardId}" style="display:none" name="BoardId"></input>
+                                <input class="btn btn-info" type="submit" value="Follow"></input>
+                            </form>
+                        </c:if>
+                        <c:if test="${isFollowing}">
+                            <form action="UnfollowBoard" method="POST">
+                                <input type="text" value="${boardId}" style="display:none" name="BoardId"></input>
+                                <input class="btn btn-danger" type="submit" value="Unfollow"></input>
+                            </form>                            
+                        </c:if>
+                    </div>
                 </div>
+                </c:if>
             </div>
 
             <div class="container">
@@ -46,15 +60,17 @@
             <div class="dropdown-divider"></div>
 
             <div class="row">
-
-                <div class="col-sm-4">
-                    <div class="card bg-light mb-3" style="height:15rem;">
-                        <div class="card-header">Create Pin</div>
-                        <div class="card-body" align="center" style="padding: 3.5rem">
-                            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus-circle fa-lg"></i></button>
+                <c:if test="${isOwner}">
+                    <div class="col-sm-4">
+                        <div class="card bg-light mb-3" style="height:15rem;">
+                            <div class="card-header">Create Pin</div>
+                            <div class="card-body" align="center" style="padding: 3.5rem">
+                                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus-circle fa-lg"></i></button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </c:if>
+                
                 <c:forEach items = "${pinList}" var="pin" >
                     <div class="col-sm-4">
                         <div class="card bg-light mb-3">     
@@ -67,7 +83,9 @@
                                 <span class="d-inline-block text-truncate" style="max-width: 200px;">
                                     ${pin.getRecipeName()}
                                     </span>
-                                    <span class="float-right"><a href="pinsSettings?pinId=${pin.getId()}" alt="Edit this board"><i class="fas fa-pencil-alt fa-lg"></a></i>
+                                    <c:if test="${isOwner}">
+                                        <span class="float-right"><a href="pinsSettings?pinId=${pin.getId()}" alt="Edit this board"><i class="fas fa-pencil-alt fa-lg"></a></i>
+                                    </c:if>
                                 </span>                                
                             </div>
                         </div>

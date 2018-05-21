@@ -33,6 +33,8 @@ public interface AccountBeanInterface {
     
     public void unfollowBoard(Board toUnFollow);
     
+    public boolean followsBoard(int boardId);
+    
     public void followPerson(int toFollow);
     
     public void unfollowPerson(int toUnFollow);

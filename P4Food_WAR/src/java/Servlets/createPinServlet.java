@@ -5,6 +5,7 @@
  */
 package Servlets;
 
+import Entities.Board;
 import Entities.Pin;
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,15 +62,17 @@ public class createPinServlet extends HttpServlet {
             pinBean = (pinCrudInterface) ic.lookup("java:global/statistics_EJB/pinCrudBean!services.pinCrudInterface");        
             AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
             int id = Integer.parseInt(request.getParameter("id"));
-
+            Board currentBoard = boardBean.getBoard(id);
             List<Pin> boardPins;
 
-            boardPins = pinBean.getPinsForBoard(boardBean.getBoard(id));
+            boardPins = pinBean.getPinsForBoard(currentBoard);
 
             request.setAttribute("pinList", boardPins);           
-
+            request.setAttribute("isOwner", currentBoard.getOwner().getId().equals(currentUser.getAccount().getId()));
             request.setAttribute("isAdmin", currentUser.getAccount().getAdmin());
             request.setAttribute("boardId", id);
+            request.setAttribute("boardName", currentBoard.getBoardname());
+            request.setAttribute("isFollowing", currentUser.followsBoard(id));
             request.getRequestDispatcher("pins.jsp").forward(request, response);
         }catch(NamingException e){
             System.out.println(e.getMessage());

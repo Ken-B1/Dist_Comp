@@ -14,12 +14,10 @@ Done:
 - Friends functionalities
 
 Todo:
-add default image + improve naming to prevent duplicates
 Add requested feature (If a user receives 5 recipes, he/she should keep seeing the same recipes for an entire week)
 Blocked functionalities for following users
-Update entity classes?
 Following and follower on profile
 Allow admins to block and remove users
 Board and pin deletion?
 Private settings for board
-Follow boards
+Notifications

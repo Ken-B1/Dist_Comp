@@ -62,8 +62,9 @@ public class FollowBoardServlet extends HttpServlet {
             ic = new InitialContext(setRemote.setProperties());
             boardbean = (boardCrudBeanInterface) ic.lookup("java:global/statistics_EJB/boardCrudBean!services.boardCrudBeanInterface");
             
-            String id = request.getParameter("BoardId");          
+            String id = request.getParameter("BoardId");    
             AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
+            
             int BoardId;
             if(id != null){
                 // If id == null, something went wrong
@@ -73,7 +74,7 @@ public class FollowBoardServlet extends HttpServlet {
                 if(requestedBoard != null){
                     // If requestedBoard is null, a nonexistend board is requested
                     currentUser.followBoard(requestedBoard);
-                    //response.sendRedirect(request.getHeader("Referer"));
+                    response.sendRedirect(request.getHeader("Referer"));
                 }
             }
         }catch(NamingException e){

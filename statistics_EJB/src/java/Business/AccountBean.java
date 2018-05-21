@@ -114,16 +114,28 @@ public class AccountBean implements AccountBeanInterface{
         em.flush();
     }
     
-    // Follow a board
+    /**
+     * Follow a board
+     * @param toFollow 
+     */
     @Override
     public void followBoard(Board toFollow){
-        Query quer = em.createNativeQuery("INSERT INTO boardfollowers VALUES (?1, ?2, 0)");
-        quer.setParameter(1, currentUser);
-        quer.setParameter(2, toFollow.getId());
+        System.out.println("called");
+        if(followsBoard(toFollow.getId())){
+            // User is already following board
+            return;
+        }
+
+        Query quer = em.createNativeQuery("INSERT INTO boardfollowers(boardid, userid, isblocked) VALUES (?1, ?2, 0)");
+        quer.setParameter(2, currentUser);
+        quer.setParameter(1, toFollow.getId());
         quer.executeUpdate();
     }
     
-    // Unfollow a board
+    /**
+     * Unfollow a board
+     * @param toUnFollow 
+     */
     @Override
     public void unfollowBoard(Board toUnFollow){
         Query quer = em.createNativeQuery("DELETE FROM boardfollowers WHERE (Userid = ?1 and Boardid = ?2)");
@@ -132,6 +144,18 @@ public class AccountBean implements AccountBeanInterface{
         quer.executeUpdate();
     }
     
+    /**
+     * Check if the current user is following a board
+     * @param boardId
+     * @return 
+     */
+    @Override
+    public boolean followsBoard(int boardId){
+        Query check = em.createNativeQuery("SELECT count(*) FROM boardfollowers WHERE (boardid = ?2 and userid = ?1)");
+        check.setParameter(1, currentUser);
+        check.setParameter(2, boardId);  
+        return (int)check.getSingleResult() != 0;
+    }
     /**
      * Follow a person. If the currentUser or the toFollow user dont exist, this method does nothing.
      * @param toFollow the id of the person to be followed
@@ -296,7 +320,6 @@ public class AccountBean implements AccountBeanInterface{
         }
         
         for(int x = 0; x < numFromCategories ; x++){
-            System.out.println("X:" + x);
             if(listofCategories.isEmpty()){
                 break;
             }
@@ -308,9 +331,8 @@ public class AccountBean implements AccountBeanInterface{
                 continue;
             }
             int maxIdForCat = (int)res;
-            System.out.println(maxIdForCat);
             int boardId = rand.nextInt(maxIdForCat + 1);
-            Board selectedBoard = (Board)em.createNamedQuery("Board.firstOccurencesAfterId").setParameter("id", boardId).setMaxResults(1).getSingleResult();
+            Board selectedBoard = (Board)em.createNamedQuery("Board.firstOccurencesAfterId").setParameter("id", boardId).setParameter("category", currentCategory).setMaxResults(1).getSingleResult();
             Collection<Pin> allPins = selectedBoard.getPinCollection();
             if(allPins.isEmpty()){
                 continue;

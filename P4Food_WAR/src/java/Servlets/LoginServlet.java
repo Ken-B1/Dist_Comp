@@ -71,7 +71,6 @@ public class LoginServlet extends HttpServlet {
 
             int accountId = loginBean.login(username, password);     
             accountBean.setAccount(accountId);
-            System.out.println(accountId);
             
             if(accountId != -1) {
                 if(accountBean.getAccount().getIsBlocked() == 1){
