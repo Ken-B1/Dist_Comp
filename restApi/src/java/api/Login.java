@@ -6,14 +6,18 @@
 package api;
 
 import configuration.setRemote;
+import java.io.StringReader;
 import javax.json.Json;
+import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonReader;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.ws.rs.FormParam;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import services.LoginBeanInterface;
 /**
  *
@@ -40,12 +44,23 @@ public class Login {
     
     @POST
     @Produces("application/json")
-    public String log(@FormParam("username") String username, @FormParam("password") String password) {
-        JsonObjectBuilder x = Json.createObjectBuilder();
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String log(String toTest) {
+        StringReader strReader = new StringReader(toTest);
+        JsonObjectBuilder x = Json.createObjectBuilder();        
+        JsonReader reader = Json.createReader(strReader);
+        JsonObject jsonObject = reader.readObject();
+        if(!jsonObject.containsKey("username") || !jsonObject.containsKey("password")){
+            x.add("status", "400");
+            x.add("reason", "Incorrect request body (missing username or password)");   
+            return x.build().toString();
+        }
+        String username = jsonObject.getString("username");
+        String password = jsonObject.getString("password");
         
         if(username==null && password==null){
             x.add("status", "400");
-            x.add("reason", "Incorrect request body");   
+            x.add("reason", "Incorrect request body (username or password is null)");   
             return x.build().toString();
         }
         
