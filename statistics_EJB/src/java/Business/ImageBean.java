@@ -7,6 +7,7 @@ package Business;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import static java.io.File.createTempFile;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -29,10 +30,14 @@ public class ImageBean implements ImageBeanInterface{
     public String storeImage(String fileName, byte[] data){
         String dirString = System.getProperty("user.home") + File.separator + "p4foodPictures";
         File dir = new File(fileName);
-
         new File(dirString).mkdirs();
         try{
-            dir.createNewFile();
+            boolean Check = dir.createNewFile();
+            while(!Check){
+                fileName = createTempFile("GEN", "").getName();
+                dir = new File(fileName);
+                Check = dir.createNewFile();
+            }
         } catch(IOException e){
             System.out.println(e.getMessage());
         }
