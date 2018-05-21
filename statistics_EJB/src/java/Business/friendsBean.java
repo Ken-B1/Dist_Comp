@@ -8,9 +8,13 @@ package Business;
 import Entities.Account;
 import java.util.Collection;
 import javax.ejb.Stateless;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import services.RegistrationBeanInterface;
+import services.StatisticsBeanInterface;
 import services.friendsBeanInterface;
 
 /**
@@ -22,6 +26,24 @@ public class friendsBean implements friendsBeanInterface{
 
     @PersistenceContext(unitName = "statistics_EJBPU")
     private EntityManager em;
+    
+    // Stateless bean used to log actions
+    private StatisticsBeanInterface stats;
+    
+    /**
+    * The context to be used to perform lookups of remote beans
+    */
+    private static InitialContext ic;
+    
+    public friendsBean(){
+        try{
+            ic = new InitialContext();
+            stats = (StatisticsBeanInterface)ic.lookup("java:global/statistics_EJB/StatisticsBean!services.StatisticsBeanInterface");
+        }catch(NamingException e){
+            System.out.println("Friendsbean error:");
+            System.out.println(e.getMessage());
+        }
+    }
     
     /**
      * Method that sends a friendRequest to a user.
@@ -53,6 +75,7 @@ public class friendsBean implements friendsBeanInterface{
         query.setParameter(1,requestedId);
         query.executeUpdate();
         em.flush();
+        stats.friend(requester, requested);
     }
     
     /**

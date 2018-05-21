@@ -47,14 +47,13 @@ public class StatisticsBean implements StatisticsBeanInterface{
          - createBoard: 1
          - createPin: 2
          - follow: 3
+         - friend: 4
     */
     
     @Override
     public void createBoard(Account user, Board board){
         try{
-            System.out.println("1");
             for(Account receiver: user.getAccountCollection2()){
-                System.out.println("2");
                 // Add a notification for each friend
                 Notifications newnot = new Notifications();
                 newnot.setCreator(user);
@@ -67,7 +66,6 @@ public class StatisticsBean implements StatisticsBeanInterface{
             List<Peoplefollower> followers = new ArrayList(user.getPeoplefollowerCollection1());
 
             for(Peoplefollower receiver: followers){
-                System.out.println("3");
                 Account actualRec = receiver.getAccount();
                 Notifications newnot = new Notifications();
                 newnot.setCreator(user);
@@ -121,12 +119,25 @@ public class StatisticsBean implements StatisticsBeanInterface{
      */
     @Override
     public void follow( Account follower, Account followed){
-        System.out.println("called");
         Notifications newnot = new Notifications();
         newnot.setCreator(follower);
         newnot.setReceiver(followed);
         newnot.setType(3);
         em.persist(newnot);         
+    }
+    
+    /**
+     * Records the action of friend requesting
+     * @param requester
+     * @param requested 
+     */
+    @Override
+    public void friend( Account requester, Account requested){
+        Notifications newnot = new Notifications();
+        newnot.setCreator(requester);
+        newnot.setReceiver(requested);
+        newnot.setType(4);
+        em.persist(newnot);
     }
     
     @Override

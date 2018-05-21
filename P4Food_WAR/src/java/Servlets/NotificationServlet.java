@@ -87,6 +87,10 @@ public class NotificationServlet extends HttpServlet {
                             // Redirect to new follower
                             out.write(u.getCreator().getUsername() + " started following you.");
                             break;
+                        case 4:
+                            // Redirect to new follower
+                            out.write(u.getCreator().getUsername() + " wants to be your friend.");
+                            break;    
                         default:
                     }                
                     out.write("</h5></div></a>");

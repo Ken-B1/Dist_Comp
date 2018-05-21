@@ -28,6 +28,8 @@ public interface StatisticsBeanInterface {
     
     public void follow( Account follower, Account followed);
     
+    public void friend( Account requester, Account requested);
+    
     public void boardCategory(Account user, Categories category);
     
     public void markAsRead(int notificationId);
