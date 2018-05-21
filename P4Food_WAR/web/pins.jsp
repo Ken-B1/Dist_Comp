@@ -85,7 +85,7 @@
                                     </span>
                                     <c:if test="${isOwner}">
                                         <span class="float-right"><a href="pinsSettings?pinId=${pin.getId()}" alt="Edit this board"><i class="fas fa-pencil-alt fa-lg"></a></i>
-                                        <span class="float-right"><a href="removePin?pinId=${pin.getId()}" alt="Edit this board" style="margin-left: 10px;"><i class="fas fa-trash-alt fa-lg" style="color: red"></a></i>
+                                        <span class="float-right"><a href="deletePin?pinId=${pin.getId()}&id=${boardId}" alt="Edit this board" style="margin-left: 10px;"><i class="fas fa-trash-alt fa-lg" style="color: red"></a></i>
                                     </c:if>
                                 </span>                                
                             </div>

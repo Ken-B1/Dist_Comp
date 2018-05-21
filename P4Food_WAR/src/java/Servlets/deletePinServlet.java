@@ -54,12 +54,18 @@ public class deletePinServlet extends HttpServlet {
             throws ServletException, IOException { 
         try{
             ic = new InitialContext(setRemote.setProperties());
-            pinBean = (pinCrudInterface) ic.lookup("java:global/statistics_EJB/pinCrudBean!services.pinCrudInterface");        
+            pinBean = (pinCrudInterface) ic.lookup("java:global/statistics_EJB/pinCrudBean!services.pinCrudInterface");       
+            boardBean = (boardCrudBeanInterface) ic.lookup("java:global/statistics_EJB/boardCrudBean!services.boardCrudBeanInterface");            
             AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
             int id = Integer.parseInt(request.getParameter("id"));
             Board currentBoard = boardBean.getBoard(id);
             List<Pin> boardPins;
-
+            String pinnid = request.getParameter("pinId");
+            if(pinnid == null || "".equals(pinnid)){
+                response.sendRedirect("pinboard");
+            }
+            int pinId = Integer.parseInt(pinnid);
+            pinBean.deletePin(pinId);
             boardPins = pinBean.getPinsForBoard(currentBoard);
 
             request.setAttribute("pinList", boardPins);           

@@ -18,6 +18,5 @@ Add requested feature (If a user receives 5 recipes, he/she should keep seeing t
 Blocked functionalities for following users
 Following and follower on profile
 Allow admins to block and remove users
-Board and pin deletion?
 Private settings for board
 Notifications
