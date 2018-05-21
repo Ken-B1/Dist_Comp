@@ -16,7 +16,7 @@ Done:
 Todo:
 Add requested feature (If a user receives 5 recipes, he/she should keep seeing the same recipes for an entire week)
 Blocked functionalities for following users
-Following and follower on profile
 Allow admins to block and remove users
 Private settings for board
 Notifications
+block follower

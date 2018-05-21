@@ -111,7 +111,10 @@ public class Admin implements AdminInterface{
         return em.createNamedQuery("Categories.findAll").getResultList();
     }
     
-    // Block, unblock or remove users
+    /**
+     * Block a user
+     * @param userId 
+     */
     @Override
     public void blockUser(int userId){
         Account toBlock = em.find(Account.class, userId);
@@ -120,7 +123,7 @@ public class Admin implements AdminInterface{
     }
     
     @Override
-    public void unblockUser(int userId){
+    public void unblockUser(int userId){     
         Account toUnBlock = em.find(Account.class, userId);
         toUnBlock.setIsBlocked((short)0);
         em.flush();

@@ -21,8 +21,8 @@ import services.AdminInterface;
  *
  * @author ken
  */
-@WebServlet(name = "blockPersonServlet", urlPatterns = {"/BlockPerson"})
-public class blockPersonServlet extends HttpServlet {
+@WebServlet(name = "UnblockPersonServlet", urlPatterns = {"/Adminunblock"})
+public class adminUnblockServlet extends HttpServlet {
     /**
     * The context to be used to perform lookups of remote beans
     */
@@ -54,19 +54,19 @@ public class blockPersonServlet extends HttpServlet {
             throws ServletException, IOException {
         try{
             ic = new InitialContext(setRemote.setProperties());
-            AdminInterface adminBean = (AdminInterface)ic.lookup("java:global/statistics_EJB/Admin!services.AdminInterface");
             String id = request.getParameter("PersonId");
-            AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
+            AdminInterface adminBean = (AdminInterface)ic.lookup("java:global/statistics_EJB/Admin!services.AdminInterface");
             int personId;
             if(id != null){
                 // If id == null, something went wrong
                 personId = Integer.parseInt(id);
-                currentUser.blockPerson(personId);
+                adminBean.unblockUser(personId);
                 response.sendRedirect(request.getHeader("Referer"));
             }
         }catch(NamingException e){
             System.out.println(e.getMessage());
         }
+        
     }
 
     /**

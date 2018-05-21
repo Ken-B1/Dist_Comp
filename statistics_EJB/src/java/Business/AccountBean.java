@@ -236,20 +236,30 @@ public class AccountBean implements AccountBeanInterface{
         
     }
     
-    // Get this user's messages
+    /**
+     * Get messages for the current user
+     * @return 
+     */
     @Override
     public Collection<Messages> getMessages(){
         Account user = em.find(Account.class, currentUser);
         return user.getMessagesCollection();
     }
     
-    // Get number of followers and following
+    /**
+     * Get the number of followers for current user
+     * @return 
+     */
     @Override
     public int getNumFollowers(){
         Account user =  em.find(Account.class, currentUser);
         return user.getPeoplefollowerCollection().size();
     }
     
+    /**
+     * Get the number of people following the current user
+     * @return 
+     */
     @Override
     public int getNumFollowing(){
         Account user =  em.find(Account.class, currentUser);
@@ -257,7 +267,11 @@ public class AccountBean implements AccountBeanInterface{
     }
     // Getters and setters for account entity
     
-    // Add an account and make it managed by entity manager
+    
+    /**
+     * Set the currently managed account for this accountBean
+     * @param acc 
+     */
     @Override
     public void setAccount(int acc){
         currentUser = acc;
@@ -266,7 +280,9 @@ public class AccountBean implements AccountBeanInterface{
     
     @Override
     public Account getAccount(){
-        return em.find(Account.class, currentUser);
+        Account currentAcc = em.find(Account.class, currentUser);
+        em.refresh(currentAcc);
+        return currentAcc;
     }
     
     @Override
@@ -274,6 +290,8 @@ public class AccountBean implements AccountBeanInterface{
         Account account = null;
         try{
             account = (Account)em.createNamedQuery("Account.findByUsername").setParameter("username", username).getSingleResult();
+            em.refresh(account);
+            System.out.println(account.getIsBlocked());
         }catch(Exception e){
             System.out.println(e.getMessage());
         }

@@ -40,10 +40,22 @@
                             <input type="text" name="type" value="remove" style="display:none;"></input>
                             <input type="submit" class="btn btn-danger" value="Unfriend"></button>
                         </c:if>                            
-                    </form>
+                    </form>       
                     <a href="WriteMessage?id=${userId}" class="btn btn-primary">Message</a>
                     <a href="#" class="btn btn-danger">Block</a>
-                </c:if>
+                </c:if>                  
+                    <c:if test="${isAdmin && isBlocked == 0}">
+                        <form action="adminBlock" method="POST">
+                            <input type="text" name="PersonId" value="${userId}" style="display:none;"></input>
+                            <input type="submit" class="btn btn-danger" value="Block from site"></button>
+                        </form>
+                    </c:if>   
+                    <c:if test="${isAdmin && isBlocked == 1}">
+                        <form action="Adminunblock" method="POST">
+                            <input type="text" name="PersonId" value="${userId}" style="display:none;"></input>
+                            <input type="submit" class="btn btn-danger" value="Unblock from site"></button>
+                        </form>
+                    </c:if>                        
                 <div class="row">
                     <div class="col"></div>
                     <div class="col-6 col-md-4"><a href="#"><span class="badge badge-primary">${followingNum}</span></a> Following</div>

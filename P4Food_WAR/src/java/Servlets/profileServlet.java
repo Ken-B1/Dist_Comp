@@ -60,6 +60,8 @@ public class profileServlet extends HttpServlet {
             if(requestedUser == null || currentUser.getAccount().getUsername().equals(requestedUser)){
                 // The requested profile is the current user's profile
                 request.setAttribute("ownProfile", true);
+                request.setAttribute("userId", currentUser.getAccount().getId());
+                request.setAttribute("isBlocked", currentUser.getAccount().getIsBlocked());
                 userBoards = boardBean.getBoardsForUser(currentUser.getAccount());
             }else{
                 // The requested profile is another user's profile
@@ -69,6 +71,7 @@ public class profileServlet extends HttpServlet {
                 request.setAttribute("isFriend", currentUser.isFriends(acc));
                 request.setAttribute("ownProfile", false);
                 request.setAttribute("userId", acc.getId());
+                request.setAttribute("isBlocked", acc.getIsBlocked());
             }
 
 
@@ -83,6 +86,7 @@ public class profileServlet extends HttpServlet {
             List<Categories> allCategories = connector.getAllCategories();
             request.setAttribute("categoryList", allCategories);
             request.setAttribute("isAdmin", currentUser.getAccount().getAdmin());
+            
             request.getRequestDispatcher("profile.jsp").forward(request, response);
         }catch(NamingException e){
             System.out.println(e.getMessage());
