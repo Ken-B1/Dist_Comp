@@ -64,4 +64,6 @@ public interface AccountBeanInterface {
     public boolean followsUser(Account acc);
     
     public boolean isFriends(Account acc);
+    
+    public List<Pin> getRecommendations();
 }

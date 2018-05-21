@@ -14,6 +14,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import services.StatisticsBeanInterface;
 import services.boardCrudBeanInterface;
 
@@ -107,9 +108,20 @@ public class boardCrudBean implements boardCrudBeanInterface{
         em.flush();
     }
     
+    /**
+     * Delete a board
+     * @param boardId 
+     */
     @Override
     public void deleteBoard(int boardId){
         Board toDelete = em.find(Board.class, boardId);
+        if(toDelete == null){
+            return;
+        }
+        // Delete all pins in this board(Derby maybe does not have on delete cascade)
+        Query quer = em.createNativeQuery("DELETE FROM pin WHERE board = ?1");
+        quer.setParameter(1, boardId);
+        quer.executeUpdate();
         em.remove(toDelete);
         em.flush();
     }

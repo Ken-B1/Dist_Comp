@@ -6,7 +6,9 @@
 package Entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,10 +19,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -37,6 +41,17 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Pin.findByBoard", query = "SELECT p FROM Pin p WHERE p.board = :board")
     , @NamedQuery(name = "Pin.findByExpression", query = "SELECT p FROM Pin p WHERE p.recipeName LIKE :expression")})
 public class Pin implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "meal1")
+    private Collection<Suggestions> suggestionsCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "meal2")
+    private Collection<Suggestions> suggestionsCollection1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "meal3")
+    private Collection<Suggestions> suggestionsCollection2;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "meal4")
+    private Collection<Suggestions> suggestionsCollection3;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "meal5")
+    private Collection<Suggestions> suggestionsCollection4;
 
     @Basic(optional = false)
     @NotNull
@@ -140,6 +155,51 @@ public class Pin implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    @XmlTransient
+    public Collection<Suggestions> getSuggestionsCollection() {
+        return suggestionsCollection;
+    }
+
+    public void setSuggestionsCollection(Collection<Suggestions> suggestionsCollection) {
+        this.suggestionsCollection = suggestionsCollection;
+    }
+
+    @XmlTransient
+    public Collection<Suggestions> getSuggestionsCollection1() {
+        return suggestionsCollection1;
+    }
+
+    public void setSuggestionsCollection1(Collection<Suggestions> suggestionsCollection1) {
+        this.suggestionsCollection1 = suggestionsCollection1;
+    }
+
+    @XmlTransient
+    public Collection<Suggestions> getSuggestionsCollection2() {
+        return suggestionsCollection2;
+    }
+
+    public void setSuggestionsCollection2(Collection<Suggestions> suggestionsCollection2) {
+        this.suggestionsCollection2 = suggestionsCollection2;
+    }
+
+    @XmlTransient
+    public Collection<Suggestions> getSuggestionsCollection3() {
+        return suggestionsCollection3;
+    }
+
+    public void setSuggestionsCollection3(Collection<Suggestions> suggestionsCollection3) {
+        this.suggestionsCollection3 = suggestionsCollection3;
+    }
+
+    @XmlTransient
+    public Collection<Suggestions> getSuggestionsCollection4() {
+        return suggestionsCollection4;
+    }
+
+    public void setSuggestionsCollection4(Collection<Suggestions> suggestionsCollection4) {
+        this.suggestionsCollection4 = suggestionsCollection4;
     }
     
 }

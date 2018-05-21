@@ -368,4 +368,24 @@ public class AccountBean implements AccountBeanInterface{
         em.refresh(currentAcc);
         return currentAcc.getAccountCollection2().contains(acc);
     }
+    
+    /**
+     * Gets 5 pins as recommentations. If the user did not get any recommendations yet, or recommendations are outdated, create 5 new
+     * @return 
+     */
+    @Override
+    public List<Pin> getRecommendations(){      
+        Account user = em.find(Account.class, currentUser);
+        if(user == null){
+            return null;
+        }
+        Object res = em.createNamedQuery("Suggestions.findByUserid").setParameter("userid", currentUser).getSingleResult();
+        
+        if(res == null){
+            
+        }else{
+            
+        }
+        return null;
+    }
 }

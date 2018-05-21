@@ -89,7 +89,10 @@
                                         <span class="d-inline-block text-truncate" style="max-width: 200px;">
                                           ${board.getBoardname()}
                                         </span>
-                                        <span class="float-right"><a href="boardSettings?boardId=${board.getId()}" alt="Edit this board"><i class="fas fa-pencil-alt fa-lg"></a></i>
+                                        <c:if test="${ownProfile}">
+                                            <span class="float-right"><a href="boardSettings?boardId=${board.getId()}" alt="Edit this board"><i class="fas fa-pencil-alt fa-lg"></a></i>
+                                            <span class="float-right"><a href="deleteBoard?boardId=${board.getId()}" alt="Edit this board" style="margin-left: 10px;"><i class="fas fa-trash-alt fa-lg" style="color: red"></a></i>
+                                        </c:if>
                                         </span>
                                     </div>
                                 </div>
