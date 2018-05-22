@@ -42,7 +42,6 @@
                         </c:if>                            
                     </form>       
                     <a href="WriteMessage?id=${userId}" class="btn btn-primary">Message</a>
-                    <a href="#" class="btn btn-danger">Block</a>
                 </c:if>                  
                     <c:if test="${isAdmin && isBlocked == 0}">
                         <form action="adminBlock" method="POST">
