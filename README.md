@@ -13,3 +13,15 @@ To run the code:
 	
 API:
  - To run the api, deploy both statistics_ejb and restAPI
+ 
+ 
+MobileAPP:
+ - Deploy restapi on any machine
+Alternative One:
+ - Extract the zip Eat What You Wish, change the ip address of all the pages associated on which machine restApi runs.
+ - Change the ipaddress also in the pin.html for the image display(Not mandatory but for viewing the pin image).
+ - Open the code in Visual Studio, build it and run with similation on browser.
+
+Alternative Two:
+ - If we dont have VisualStudio installed. Install http-server using this cmd -> npm install http-server -g and go to the project directory and enter cmd -> http-server and run that http on any browser for the mobile app view.
+
