@@ -1,0 +1,27 @@
+<div class="dropdown-divider"></div>
+   <div class="card" style="width: 18rem;">
+        <div class="card-header">
+            Boards
+        </div>
+        <ul class="list-group list-group-flush" ng-repeat="Board in results.Boards">
+            <li class="list-group-item">{{Board.name}}</li>
+        </ul>
+    </div>
+    <div class="dropdown-divider"></div>
+    <div class="card" style="width: 18rem;">
+        <div class="card-header">
+            Pins
+        </div>
+        <ul class="list-group list-group-flush" ng-repeat="Pin in results.Pins">
+            <li class="list-group-item">{{Pin.name}}</li>
+        </ul>
+    </div>
+    <div class="dropdown-divider"></div>
+    <div class="card" style="width: 18rem;">
+        <div class="card-header">
+            Users
+        </div>
+        <ul class="list-group list-group-flush" ng-repeat="user in results.users">
+            <li class="list-group-item">{{user.name}}</li>
+        </ul>
+    </div>
