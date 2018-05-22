@@ -408,13 +408,13 @@ public class AccountBean implements AccountBeanInterface{
             Set<Pin> UniqueSet = new HashSet<Pin>(listOfPins);
             List<Pin> uniquePins = new ArrayList<Pin>(UniqueSet);
             Collections.shuffle(uniquePins);
-            uniquePins = uniquePins.subList(0,5);
-            if(uniquePins.isEmpty()){
-                return new ArrayList<Pin>();
-            }
             while(uniquePins.size() < 5){
                 // Repeat first pin because not enough content
                 uniquePins.add(uniquePins.get(0));
+            }            
+            uniquePins = uniquePins.subList(0,5);
+            if(uniquePins.isEmpty()){
+                return new ArrayList<Pin>();
             }
             Query quer = em.createNativeQuery("INSERT INTO suggestions(userid, meal1, meal2, meal3, meal4, meal5, timestamp) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)");
             quer.setParameter(1, currentUser);
