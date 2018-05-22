@@ -72,9 +72,18 @@ public class boardCrudBean implements boardCrudBeanInterface{
         createBoard(name, em.find(Categories.class, categoryId), owner);
     }
     
+    /**
+     * Returns a board. If the board is null ,null is returned
+     * @param boardId
+     * @return 
+     */
     @Override
     public Board getBoard(int boardId){
         Board returnboard = em.find(Board.class, boardId);
+        if(returnboard == null){
+            return null;
+        }
+        
         return returnboard;
     }
     

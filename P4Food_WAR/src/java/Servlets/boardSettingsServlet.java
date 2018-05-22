@@ -58,6 +58,7 @@ public class boardSettingsServlet extends HttpServlet {
                 request.getRequestDispatcher("pinboard").forward(request, response);
             }else{
                 int boardid = Integer.parseInt(Stringid);
+                System.out.println(boardid);
                 Board currentBoard = boardCRUD.getBoard(boardid);
                 request.setAttribute("board", currentBoard);
                 List<Categories> allCategories = connector.getAllCategories();

@@ -16,5 +16,5 @@ Done:
 Todo:
 Blocked functionalities for following users
 Private settings for board
-Notifications
 block follower
+Maybe change image location to working directory

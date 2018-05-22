@@ -100,6 +100,9 @@
                                     <div class="card-header">
                                         <span class="d-inline-block text-truncate" style="max-width: 200px;">
                                           ${board.getBoardname()}
+                                        <c:if test="${board.getIsprivate() == 1}">
+                                            <i class="fas fa-user-secret" style="color: #cccccc"></i>
+                                        </c:if>                                          
                                         </span>
                                         <c:if test="${ownProfile}">
                                             <span class="float-right"><a href="boardSettings?boardId=${board.getId()}" alt="Edit this board"><i class="fas fa-pencil-alt fa-lg"></a></i>

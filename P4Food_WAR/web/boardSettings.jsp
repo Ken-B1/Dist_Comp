@@ -26,7 +26,7 @@
                                 <label>Board Name</label>
                                 <input type="text" class="form-control" name="boardname" value="${board.getBoardname()}">
                                 <div class="dropdown-divider"></div>
-                                <input type="checkbox" name="isPrivate">Private</input>
+                                <input type="checkbox" name="isPrivate" <c:if test="${board.getIsprivate() == 1}">checked</c:if>>Private</input>
                             </div>                                       
                         </div>
                         <div class="modal-footer">
