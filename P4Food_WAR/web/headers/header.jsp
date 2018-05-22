@@ -156,8 +156,10 @@
             $( document ).ready(function() {
                 $.get("Notifications", function(data){
                     $( ".notifications" ).append(data);
-                    $("#notIcon").toggle();
-
+                    alert(data.length);
+                    if(data.length > 0){
+                        $("#notIcon").toggle();
+                    }
                 });
             });
         </script>

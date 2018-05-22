@@ -66,18 +66,20 @@ public class NotificationRedirectServlet extends HttpServlet {
             switch(notif.getType()){
                 case 1:
                     // Redirect to new board
-                    request.setAttribute("id", notif.getDescription());
-                    request.getRequestDispatcher("createPin").forward(request, response);
+                    response.sendRedirect("createPin?id=" + notif.getDescription());
                     break;
                 case 2:
                     // Redirect to new pin
-                    request.setAttribute("id", notif.getDescription());
-                    request.getRequestDispatcher("fullRecipe").forward(request, response); 
+                    response.sendRedirect("fullRecipe?id=" + notif.getDescription());
                     break;
                 case 3:
                     // Redirect to new follower
                     response.sendRedirect("profile?username=" + notif.getCreator().getUsername());
                     break;
+                case 4:
+                    // Redirect to new follower
+                    response.sendRedirect("FriendRequest");
+                    break;                    
                 default:
                     response.sendRedirect("pinboard");
             }
