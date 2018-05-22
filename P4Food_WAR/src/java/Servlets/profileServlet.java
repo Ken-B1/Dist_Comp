@@ -61,6 +61,7 @@ public class profileServlet extends HttpServlet {
                 // The requested profile is the current user's profile
                 request.setAttribute("ownProfile", true);
                 request.setAttribute("userId", currentUser.getAccount().getId());
+                request.setAttribute("userName", currentUser.getAccount().getUsername());
                 request.setAttribute("isBlocked", currentUser.getAccount().getIsBlocked());
                 userBoards = boardBean.getBoardsForUser(currentUser.getAccount());
             }else{
@@ -71,6 +72,7 @@ public class profileServlet extends HttpServlet {
                 request.setAttribute("isFriend", currentUser.isFriends(acc));
                 request.setAttribute("ownProfile", false);
                 request.setAttribute("userId", acc.getId());
+                request.setAttribute("userName", acc.getUsername());
                 request.setAttribute("isBlocked", acc.getIsBlocked());
             }
 

@@ -156,7 +156,6 @@
             $( document ).ready(function() {
                 $.get("Notifications", function(data){
                     $( ".notifications" ).append(data);
-                    alert(data.length);
                     if(data.length > 0){
                         $("#notIcon").toggle();
                     }

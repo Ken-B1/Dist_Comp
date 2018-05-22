@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
     <head>
-        <title>Boards - Pin4FooD</title>
+        <title>Boards - Eat What You Wish</title>
         <%@include file="headers/header.jsp" %>               
     </head>
 
@@ -13,7 +13,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <h1 class="display-4">Pin4FooD</h1>
+                        <h1 class="display-4">${userName}</h1>
                         <p class="lead">Add Your board and Share your pins</p>
                     </div>
                     <div class="col-6 col-md-4">
@@ -55,15 +55,17 @@
                             <input type="text" name="PersonId" value="${userId}" style="display:none;"></input>
                             <input type="submit" class="btn btn-danger" value="Unblock from site"></button>
                         </form>
-                    </c:if>                        
-                <div class="row">
-                    <div class="col"></div>
-                    <div class="col-6 col-md-4"><a href="GetFollowing"><span class="badge badge-primary">${followingNum}</span></a> Following</div>
-                </div>
-                <div class="row">
-                    <div class="col"></div>
-                    <div class="col-6 col-md-4"><a href="GetFollowers"><span class="badge badge-primary">${followerNum}</span></a> Followers</div>
-                </div>
+                    </c:if>       
+                <c:if test="${ownProfile}">    
+                    <div class="row">
+                        <div class="col"></div>
+                        <div class="col-6 col-md-4"><a href="GetFollowing"><span class="badge badge-primary">${followingNum}</span></a> Following</div>
+                    </div>
+                    <div class="row">
+                        <div class="col"></div>
+                        <div class="col-6 col-md-4"><a href="GetFollowers"><span class="badge badge-primary">${followerNum}</span></a> Followers</div>
+                    </div>
+                </c:if>    
             </div>
 
 

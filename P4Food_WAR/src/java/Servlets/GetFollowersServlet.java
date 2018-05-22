@@ -5,11 +5,9 @@
  */
 package Servlets;
 
-import Entities.Account;
 import Entities.Peoplefollower;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.List;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;

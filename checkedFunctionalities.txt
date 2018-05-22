@@ -15,4 +15,3 @@ Done:
 
 Todo:
 Blocked functionalities for following users
-Following and followers stuff for different accounts
