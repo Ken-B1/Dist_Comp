@@ -1,6 +1,8 @@
 Pinterest 4 Food#
 #################
 
+WebAPP:
+
 To run the code:
  - Load the p4food, p4food_war and statistics_ejb projects into netbeans
  - Add the reference database to netbeans by copying it to the correct directory
@@ -9,3 +11,5 @@ To run the code:
 
  - Clean and build p4food_war and statistics_ejb. Deploy both and run the warfile
 	
+API:
+ - To run the api, deploy both statistics_ejb and restAPI
