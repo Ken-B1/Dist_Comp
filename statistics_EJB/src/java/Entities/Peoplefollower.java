@@ -10,6 +10,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -41,10 +42,10 @@ public class Peoplefollower implements Serializable {
     @Column(name = "isBlocked")
     private short isBlocked;
     @JoinColumn(name = "FollowedUser", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch=FetchType.EAGER)
     private Account account;
     @JoinColumn(name = "userId", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch=FetchType.EAGER)
     private Account account1;
 
     public Peoplefollower() {

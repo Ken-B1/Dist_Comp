@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import remotesettings.setRemote;
 import services.AccountBeanInterface;
-import services.AdminInterface;
 
 /**
  *
@@ -54,7 +53,6 @@ public class blockPersonServlet extends HttpServlet {
             throws ServletException, IOException {
         try{
             ic = new InitialContext(setRemote.setProperties());
-            AdminInterface adminBean = (AdminInterface)ic.lookup("java:global/statistics_EJB/Admin!services.AdminInterface");
             String id = request.getParameter("PersonId");
             AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
             int personId;

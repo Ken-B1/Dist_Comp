@@ -10,6 +10,7 @@ import Entities.Account;
 import Entities.Board;
 import Entities.Categories;
 import Entities.Messages;
+import Entities.Peoplefollower;
 import Entities.Pin;
 import java.util.Collection;
 import java.util.List;
@@ -66,4 +67,8 @@ public interface AccountBeanInterface {
     public boolean isFriends(Account acc);
     
     public List<Pin> getRecommendations();
+    
+    public Collection<Peoplefollower> getFollowers();
+    
+    public Collection<Peoplefollower> getFollowing(); 
 }

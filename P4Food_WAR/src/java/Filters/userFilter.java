@@ -26,7 +26,7 @@ import services.AccountBeanInterface;
  *
  * @author ken
  */
-@WebFilter(filterName = "userFilter", urlPatterns = {"/pinboard", "/admin", "/Admincategories", "/settings", "/statistics", "/createBoard", "/createPin", "/Adminregistration", "/MessageOverview", "/FullMessage", "/WriteMessage", "/Search", "/UnblockPerson", "/Messages", "/PinSettings", "/FollowBoard", "/ChooseInitialCategories", "/AdminStatistics", "/FollowPerson", "/explore", "/fullRecipe", "/profile", "/recommendations", "/boardSettings", "/BlockPerson", "/UnfollowPerson","/UnfollowBoard", "/Search", "/Notifications", "/FriendRequest", "/NotificationRedirect"})
+@WebFilter(filterName = "userFilter", urlPatterns = {"/GetFollowing", "/GetFollowers", "/pinboard", "/admin", "/Admincategories", "/settings", "/statistics", "/createBoard", "/createPin", "/Adminregistration", "/MessageOverview", "/FullMessage", "/WriteMessage", "/Search", "/UnblockPerson", "/Messages", "/PinSettings", "/FollowBoard", "/ChooseInitialCategories", "/AdminStatistics", "/FollowPerson", "/explore", "/fullRecipe", "/profile", "/recommendations", "/boardSettings", "/BlockPerson", "/UnfollowPerson","/UnfollowBoard", "/Search", "/Notifications", "/FriendRequest", "/NotificationRedirect"})
 public class userFilter implements Filter {
     
     private static final boolean debug = true;

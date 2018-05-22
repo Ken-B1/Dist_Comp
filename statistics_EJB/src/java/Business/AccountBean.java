@@ -182,9 +182,6 @@ public class AccountBean implements AccountBeanInterface{
        
         newFollower.setAccount(currentUsr);
         newFollower.setAccount1(followedUsr);
-        System.out.println(currentUsr.getId());
-        System.out.println(followedUsr.getId());
-        System.out.println("______________");
         em.persist(newFollower);
         
         stats.follow(em.find(Account.class, currentUser), em.find(Account.class, toFollow));
@@ -461,5 +458,35 @@ public class AccountBean implements AccountBeanInterface{
         ret.add(sug.getMeal4());
         ret.add(sug.getMeal5());
         return ret;
+    }
+    
+    /**
+     * Return all the followers for current loged in user
+     * @return 
+     */
+    @Override
+    public Collection<Peoplefollower> getFollowers(){
+        List<Account> ret = new ArrayList<>();
+        Account user = em.find(Account.class, currentUser);
+        em.refresh(user);
+        if(user == null){
+            return null;
+        }
+        return user.getPeoplefollowerCollection();
+    }
+    
+    /**
+     * Return the accounts followed by this user
+     * @return 
+     */
+    @Override
+    public Collection<Peoplefollower> getFollowing(){
+        List<Account> ret = new ArrayList<>();
+        Account user = em.find(Account.class, currentUser);
+        em.refresh(user);
+        if(user == null){
+            return null;
+        }
+        return user.getPeoplefollowerCollection1();
     }
 }

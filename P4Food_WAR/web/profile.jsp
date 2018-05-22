@@ -58,11 +58,11 @@
                     </c:if>                        
                 <div class="row">
                     <div class="col"></div>
-                    <div class="col-6 col-md-4"><a href="#"><span class="badge badge-primary">${followingNum}</span></a> Following</div>
+                    <div class="col-6 col-md-4"><a href="GetFollowing"><span class="badge badge-primary">${followingNum}</span></a> Following</div>
                 </div>
                 <div class="row">
                     <div class="col"></div>
-                    <div class="col-6 col-md-4"><a href="#"><span class="badge badge-primary">${followerNum}</span></a> Followers</div>
+                    <div class="col-6 col-md-4"><a href="GetFollowers"><span class="badge badge-primary">${followerNum}</span></a> Followers</div>
                 </div>
             </div>
 
