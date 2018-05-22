@@ -5,13 +5,10 @@
  */
 package Servlets;
 
-import Business.boardCrudBean;
-import Business.databaseConnector;
 import Entities.Categories;
 import Entities.Pin;
 import java.io.IOException;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;

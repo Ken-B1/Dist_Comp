@@ -5,7 +5,6 @@
  */
 package Servlets;
 
-import Business.searchBean;
 import Entities.Account;
 import Entities.Board;
 import Entities.Pin;

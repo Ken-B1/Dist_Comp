@@ -5,7 +5,6 @@
  */
 package Servlets;
 
-import Business.AccountBean;
 import Entities.Categories;
 import Entities.Pin;
 import java.io.IOException;
