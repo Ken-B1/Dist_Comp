@@ -17,6 +17,7 @@ API:
  
 MobileAPP:
  - Deploy restapi on any machine
+ 
 Alternative One:
  - Extract the zip Eat What You Wish, change the ip address of all the pages associated on which machine restApi runs.
  - Change the ipaddress also in the pin.html for the image display(Not mandatory but for viewing the pin image).
