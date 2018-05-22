@@ -49,7 +49,6 @@ public class PinboardServlet extends HttpServlet {
             AccountBeanInterface currentUser = (AccountBeanInterface)request.getSession().getAttribute("user");
             List<Categories> allCategories = connector.getAllCategories();
             List<Pin> currentUserPin = currentUser.getTailoredPins();
-
             request.setAttribute("pinlist", currentUserPin);       
 
             request.setAttribute("isAdmin", currentUser.getAccount().getAdmin());
